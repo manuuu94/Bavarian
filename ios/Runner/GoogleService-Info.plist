@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>618814665384-bv3j372k7t7obgssm3qd3lq8i97qm97b.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.618814665384-bv3j372k7t7obgssm3qd3lq8i97qm97b</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>618814665384-j5kncfus3ijgisucomp58rk4c8jvvlnq.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBZkFFrkoIN5DPU4mybN7Hcsy6Yb2EdHbY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>618814665384</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.camapake.progradispmoviles</string>
+	<key>PROJECT_ID</key>
+	<string>bavarian-autoshop</string>
+	<key>STORAGE_BUCKET</key>
+	<string>bavarian-autoshop.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:618814665384:ios:1a9b3a1b214cb158f9089d</string>
+</dict>
+</plist>
