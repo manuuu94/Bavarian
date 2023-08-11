@@ -1,20 +1,8 @@
-# Bavarian
 
-A new Flutter project.
+# Bavarian Autoshop
 
-## Getting Started
+El sistema está diseñado para brindar una experiencia completa y conveniente en los procesos de compra y cotización. Nuestra aplicación será desarrollada teniendo en cuenta las necesidades como usuario, brindando funcionalidades clave para simplificar las interacciones con el negocio Bavarian Autoshop. 
 
-FlutterFlow projects are built to run on the Flutter _stable_ release.
 
-### Getting started continued:
+![Logo](https://scontent.fsyq1-1.fna.fbcdn.net/v/t1.6435-9/122149788_173914104357927_6591774906044615200_n.jpg?_nc_cat=105&cb=99be929b-3346023f&ccb=1-7&_nc_sid=7a1959&_nc_ohc=17MW7CsBkpwAX_YfyrN&_nc_ht=scontent.fsyq1-1.fna&oh=00_AfA6w_2TvUQpG0AbJ3mFozp6ajMlL6U6uSiPJcZZc5utVA&oe=64FD175F)
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
