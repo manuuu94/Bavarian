@@ -1,6 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/components/bs_edit_profile/bs_edit_profile_widget.dart';
-import '/components/internal_drawer/internal_drawer_widget.dart';
+import '/components/bs_editar_perfil/bs_editar_perfil_widget.dart';
+import '/components/menu_lateral/menu_lateral_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -121,9 +121,9 @@ class _PerfilWidgetState extends State<PerfilWidget>
         child: Drawer(
           elevation: 16.0,
           child: wrapWithModel(
-            model: _model.internalDrawerModel,
+            model: _model.menuLateralModel,
             updateCallback: () => setState(() {}),
-            child: InternalDrawerWidget(),
+            child: MenuLateralWidget(),
           ),
         ),
       ),
@@ -171,7 +171,7 @@ class _PerfilWidgetState extends State<PerfilWidget>
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          if (currentUserUid == 'm2CVamHMawQSkQh8MKlmRKMkgxn1')
+                          if (currentUserUid == '3TG5jvY5czerUIlvsS9CL9HU9AG3')
                             InkWell(
                               splashColor: Colors.transparent,
                               focusColor: Colors.transparent,
@@ -365,7 +365,7 @@ class _PerfilWidgetState extends State<PerfilWidget>
                                       height:
                                           MediaQuery.sizeOf(context).height *
                                               0.5,
-                                      child: BsEditProfileWidget(),
+                                      child: BsEditarPerfilWidget(),
                                     ),
                                   );
                                 },

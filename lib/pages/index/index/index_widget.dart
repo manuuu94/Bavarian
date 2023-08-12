@@ -1,5 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/components/internal_drawer/internal_drawer_widget.dart';
+import '/components/menu_lateral/menu_lateral_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -95,9 +95,9 @@ class _IndexWidgetState extends State<IndexWidget>
         child: Drawer(
           elevation: 16.0,
           child: wrapWithModel(
-            model: _model.internalDrawerModel,
+            model: _model.menuLateralModel,
             updateCallback: () => setState(() {}),
-            child: InternalDrawerWidget(),
+            child: MenuLateralWidget(),
           ),
         ),
       ),
@@ -145,7 +145,7 @@ class _IndexWidgetState extends State<IndexWidget>
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          if (currentUserUid == 'm2CVamHMawQSkQh8MKlmRKMkgxn1')
+                          if (currentUserUid == '3TG5jvY5czerUIlvsS9CL9HU9AG3')
                             InkWell(
                               splashColor: Colors.transparent,
                               focusColor: Colors.transparent,

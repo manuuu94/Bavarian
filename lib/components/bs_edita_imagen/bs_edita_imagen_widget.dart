@@ -9,18 +9,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'bs_img_edit_model.dart';
-export 'bs_img_edit_model.dart';
+import 'bs_edita_imagen_model.dart';
+export 'bs_edita_imagen_model.dart';
 
-class BsImgEditWidget extends StatefulWidget {
-  const BsImgEditWidget({Key? key}) : super(key: key);
+class BsEditaImagenWidget extends StatefulWidget {
+  const BsEditaImagenWidget({Key? key}) : super(key: key);
 
   @override
-  _BsImgEditWidgetState createState() => _BsImgEditWidgetState();
+  _BsEditaImagenWidgetState createState() => _BsEditaImagenWidgetState();
 }
 
-class _BsImgEditWidgetState extends State<BsImgEditWidget> {
-  late BsImgEditModel _model;
+class _BsEditaImagenWidgetState extends State<BsEditaImagenWidget> {
+  late BsEditaImagenModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -31,7 +31,7 @@ class _BsImgEditWidgetState extends State<BsImgEditWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => BsImgEditModel());
+    _model = createModel(context, () => BsEditaImagenModel());
 
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {

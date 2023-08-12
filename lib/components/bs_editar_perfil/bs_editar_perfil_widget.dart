@@ -1,6 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/components/bs_img_edit/bs_img_edit_widget.dart';
+import '/components/bs_edita_imagen/bs_edita_imagen_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -10,18 +10,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'bs_edit_profile_model.dart';
-export 'bs_edit_profile_model.dart';
+import 'bs_editar_perfil_model.dart';
+export 'bs_editar_perfil_model.dart';
 
-class BsEditProfileWidget extends StatefulWidget {
-  const BsEditProfileWidget({Key? key}) : super(key: key);
+class BsEditarPerfilWidget extends StatefulWidget {
+  const BsEditarPerfilWidget({Key? key}) : super(key: key);
 
   @override
-  _BsEditProfileWidgetState createState() => _BsEditProfileWidgetState();
+  _BsEditarPerfilWidgetState createState() => _BsEditarPerfilWidgetState();
 }
 
-class _BsEditProfileWidgetState extends State<BsEditProfileWidget> {
-  late BsEditProfileModel _model;
+class _BsEditarPerfilWidgetState extends State<BsEditarPerfilWidget> {
+  late BsEditarPerfilModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -32,7 +32,7 @@ class _BsEditProfileWidgetState extends State<BsEditProfileWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => BsEditProfileModel());
+    _model = createModel(context, () => BsEditarPerfilModel());
 
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
@@ -122,7 +122,7 @@ class _BsEditProfileWidgetState extends State<BsEditProfileWidget> {
                           builder: (context) {
                             return Padding(
                               padding: MediaQuery.viewInsetsOf(context),
-                              child: BsImgEditWidget(),
+                              child: BsEditaImagenWidget(),
                             );
                           },
                         ).then((value) => setState(() {}));

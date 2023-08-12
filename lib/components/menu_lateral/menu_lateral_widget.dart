@@ -8,18 +8,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'internal_drawer_model.dart';
-export 'internal_drawer_model.dart';
+import 'menu_lateral_model.dart';
+export 'menu_lateral_model.dart';
 
-class InternalDrawerWidget extends StatefulWidget {
-  const InternalDrawerWidget({Key? key}) : super(key: key);
+class MenuLateralWidget extends StatefulWidget {
+  const MenuLateralWidget({Key? key}) : super(key: key);
 
   @override
-  _InternalDrawerWidgetState createState() => _InternalDrawerWidgetState();
+  _MenuLateralWidgetState createState() => _MenuLateralWidgetState();
 }
 
-class _InternalDrawerWidgetState extends State<InternalDrawerWidget> {
-  late InternalDrawerModel _model;
+class _MenuLateralWidgetState extends State<MenuLateralWidget> {
+  late MenuLateralModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -30,7 +30,7 @@ class _InternalDrawerWidgetState extends State<InternalDrawerWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => InternalDrawerModel());
+    _model = createModel(context, () => MenuLateralModel());
 
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {

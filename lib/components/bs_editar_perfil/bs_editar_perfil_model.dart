@@ -1,6 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/components/bs_img_edit/bs_img_edit_widget.dart';
+import '/components/bs_edita_imagen/bs_edita_imagen_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -11,7 +11,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class BsEditProfileModel extends FlutterFlowModel {
+class BsEditarPerfilModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this component.
 
   // State field(s) for txtEditName widget.

@@ -1,5 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/components/internal_drawer/internal_drawer_widget.dart';
+import '/components/menu_lateral/menu_lateral_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -59,9 +59,9 @@ class _SolicitudesAdminUsuarioWidgetState
         child: Drawer(
           elevation: 16.0,
           child: wrapWithModel(
-            model: _model.internalDrawerModel,
+            model: _model.menuLateralModel,
             updateCallback: () => setState(() {}),
-            child: InternalDrawerWidget(),
+            child: MenuLateralWidget(),
           ),
         ),
       ),
