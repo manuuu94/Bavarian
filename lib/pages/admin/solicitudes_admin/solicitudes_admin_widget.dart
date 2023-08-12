@@ -102,7 +102,7 @@ class _SolicitudesAdminWidgetState extends State<SolicitudesAdminWidget> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          if (currentUserUid == 'm2CVamHMawQSkQh8MKlmRKMkgxn1')
+                          if (currentUserUid == '3TG5jvY5czerUIlvsS9CL9HU9AG3')
                             InkWell(
                               splashColor: Colors.transparent,
                               focusColor: Colors.transparent,
@@ -235,7 +235,7 @@ class _SolicitudesAdminWidgetState extends State<SolicitudesAdminWidget> {
                                           .override(
                                             fontFamily: 'Poppins',
                                             color: FlutterFlowTheme.of(context)
-                                                .sideBarMenu,
+                                                .primary,
                                           ),
                                     ),
                                   ],

@@ -108,7 +108,7 @@ class _SolicitudeCotizacionesAdminWidgetState
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          if (currentUserUid == 'm2CVamHMawQSkQh8MKlmRKMkgxn1')
+                          if (currentUserUid == '3TG5jvY5czerUIlvsS9CL9HU9AG3')
                             InkWell(
                               splashColor: Colors.transparent,
                               focusColor: Colors.transparent,

@@ -289,31 +289,9 @@ class _PerfilWidgetState extends State<PerfilWidget>
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          AuthUserStreamWidget(
-                            builder: (context) => Text(
-                              currentUserDisplayName,
-                              textAlign: TextAlign.start,
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    color: FlutterFlowTheme.of(context).text,
-                                    fontSize: 20.0,
-                                  ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          20.0, 20.0, 20.0, 20.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
                           Text(
-                            currentUserEmail,
+                            'Hello World',
+                            textAlign: TextAlign.start,
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
@@ -332,17 +310,35 @@ class _PerfilWidgetState extends State<PerfilWidget>
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          AuthUserStreamWidget(
-                            builder: (context) => Text(
-                              currentPhoneNumber,
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    color: FlutterFlowTheme.of(context).text,
-                                    fontSize: 20.0,
-                                  ),
-                            ),
+                          Text(
+                            'Hello World ',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Poppins',
+                                  color: FlutterFlowTheme.of(context).text,
+                                  fontSize: 20.0,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          20.0, 20.0, 20.0, 20.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Hello World',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Poppins',
+                                  color: FlutterFlowTheme.of(context).text,
+                                  fontSize: 20.0,
+                                ),
                           ),
                         ],
                       ),

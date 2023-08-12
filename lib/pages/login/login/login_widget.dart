@@ -34,7 +34,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     });
 
     _model.emailAddressController ??= TextEditingController();
-    _model.passwordLoginController ??= TextEditingController();
+    _model.contraLoginController ??= TextEditingController();
   }
 
   @override
@@ -220,8 +220,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 5.0, 5.0, 5.0, 5.0),
                             child: TextFormField(
-                              controller: _model.passwordLoginController,
-                              obscureText: !_model.passwordLoginVisibility,
+                              controller: _model.contraLoginController,
+                              obscureText: !_model.contraLoginVisibility,
                               decoration: InputDecoration(
                                 labelStyle:
                                     FlutterFlowTheme.of(context).bodySmall,
@@ -268,12 +268,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     .secondaryBackground,
                                 suffixIcon: InkWell(
                                   onTap: () => setState(
-                                    () => _model.passwordLoginVisibility =
-                                        !_model.passwordLoginVisibility,
+                                    () => _model.contraLoginVisibility =
+                                        !_model.contraLoginVisibility,
                                   ),
                                   focusNode: FocusNode(skipTraversal: true),
                                   child: Icon(
-                                    _model.passwordLoginVisibility
+                                    _model.contraLoginVisibility
                                         ? Icons.visibility_outlined
                                         : Icons.visibility_off_outlined,
                                     color: FlutterFlowTheme.of(context)
@@ -283,7 +283,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 ),
                               ),
                               style: FlutterFlowTheme.of(context).bodyMedium,
-                              validator: _model.passwordLoginControllerValidator
+                              validator: _model.contraLoginControllerValidator
                                   .asValidator(context),
                             ),
                           ),
@@ -301,7 +301,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                       final user = await authManager.signInWithEmail(
                         context,
                         _model.emailAddressController.text,
-                        _model.passwordLoginController.text,
+                        _model.contraLoginController.text,
                       );
                       if (user == null) {
                         return;
