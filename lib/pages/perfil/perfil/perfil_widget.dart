@@ -1,5 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/components/bs_editar_perfil/bs_editar_perfil_widget.dart';
+import '/components/bs_opcionentrega_seleccionar/bs_opcionentrega_seleccionar_widget.dart';
 import '/components/menu_lateral/menu_lateral_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -100,6 +101,10 @@ class _PerfilWidgetState extends State<PerfilWidget>
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       await actions.lockOrientation();
     });
+
+    _model.nameController ??= TextEditingController();
+    _model.telefonoController ??= TextEditingController();
+    _model.correoController ??= TextEditingController();
   }
 
   @override
@@ -171,19 +176,22 @@ class _PerfilWidgetState extends State<PerfilWidget>
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          if (currentUserUid == '3TG5jvY5czerUIlvsS9CL9HU9AG3')
-                            InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                context.pushNamed('SolicitudesAdminMenu');
-                              },
-                              child: Icon(
-                                Icons.admin_panel_settings_outlined,
-                                color: FlutterFlowTheme.of(context).text,
-                                size: 40.0,
+                          if (valueOrDefault(currentUserDocument?.role, '') ==
+                              'Admin.')
+                            AuthUserStreamWidget(
+                              builder: (context) => InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  context.pushNamed('SolicitudesAdminMenu');
+                                },
+                                child: Icon(
+                                  Icons.admin_panel_settings_outlined,
+                                  color: FlutterFlowTheme.of(context).text,
+                                  size: 40.0,
+                                ),
                               ),
                             ),
                           InkWell(
@@ -254,8 +262,8 @@ class _PerfilWidgetState extends State<PerfilWidget>
                           animationsMap['textOnPageLoadAnimation']!),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          30.0, 30.0, 30.0, 30.0),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(30.0, 10.0, 30.0, 5.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -283,62 +291,331 @@ class _PerfilWidgetState extends State<PerfilWidget>
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          20.0, 20.0, 20.0, 20.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Hello World',
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(24.0, 5.0, 24.0, 5.0),
+                      child: Container(
+                        width: double.infinity,
+                        height: 60.0,
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 5.0,
+                              color: Color(0x4D101213),
+                              offset: Offset(0.0, 2.0),
+                            )
+                          ],
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              5.0, 5.0, 5.0, 5.0),
+                          child: TextFormField(
+                            controller: _model.nameController,
+                            readOnly: true,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              labelStyle: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    color: Color(0xFF3E3E3E),
+                                  ),
+                              hintText: 'Nombre',
+                              hintStyle: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Lexend Deca',
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 0.0,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 0.0,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 0.0,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 0.0,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              filled: true,
+                              fillColor: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                            ),
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Poppins',
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  fontWeight: FontWeight.w600,
+                                ),
                             textAlign: TextAlign.start,
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Poppins',
-                                  color: FlutterFlowTheme.of(context).text,
-                                  fontSize: 20.0,
-                                ),
+                            validator: _model.nameControllerValidator
+                                .asValidator(context),
                           ),
-                        ],
+                        ),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          20.0, 20.0, 20.0, 20.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Hello World ',
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(24.0, 5.0, 24.0, 5.0),
+                      child: Container(
+                        width: double.infinity,
+                        height: 60.0,
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 5.0,
+                              color: Color(0x4D101213),
+                              offset: Offset(0.0, 2.0),
+                            )
+                          ],
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              5.0, 5.0, 5.0, 5.0),
+                          child: TextFormField(
+                            controller: _model.telefonoController,
+                            readOnly: true,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              labelStyle: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    color: Color(0xFF3E3E3E),
+                                  ),
+                              hintText: 'Telefono',
+                              hintStyle: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Lexend Deca',
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 0.0,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 0.0,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 0.0,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 0.0,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              filled: true,
+                              fillColor: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                            ),
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Poppins',
-                                  color: FlutterFlowTheme.of(context).text,
-                                  fontSize: 20.0,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  fontWeight: FontWeight.w600,
                                 ),
+                            textAlign: TextAlign.start,
+                            keyboardType: TextInputType.number,
+                            validator: _model.telefonoControllerValidator
+                                .asValidator(context),
                           ),
-                        ],
+                        ),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          20.0, 20.0, 20.0, 20.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Hello World',
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(24.0, 5.0, 24.0, 5.0),
+                      child: Container(
+                        width: double.infinity,
+                        height: 60.0,
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 5.0,
+                              color: Color(0x4D101213),
+                              offset: Offset(0.0, 2.0),
+                            )
+                          ],
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              5.0, 5.0, 5.0, 5.0),
+                          child: TextFormField(
+                            controller: _model.correoController,
+                            readOnly: true,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              labelStyle: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    color: Color(0xFF3E3E3E),
+                                  ),
+                              hintText: 'Correo',
+                              hintStyle: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Lexend Deca',
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 0.0,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 0.0,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 0.0,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 0.0,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              filled: true,
+                              fillColor: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                            ),
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Poppins',
-                                  color: FlutterFlowTheme.of(context).text,
-                                  fontSize: 20.0,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  fontWeight: FontWeight.w600,
                                 ),
+                            textAlign: TextAlign.start,
+                            keyboardType: TextInputType.emailAddress,
+                            validator: _model.correoControllerValidator
+                                .asValidator(context),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(20.0, 5.0, 20.0, 0.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 10.0, 0.0, 10.0),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  await showModalBottomSheet(
+                                    isScrollControlled: true,
+                                    backgroundColor: Colors.transparent,
+                                    enableDrag: false,
+                                    context: context,
+                                    builder: (context) {
+                                      return Padding(
+                                        padding:
+                                            MediaQuery.viewInsetsOf(context),
+                                        child:
+                                            BsOpcionentregaSeleccionarWidget(),
+                                      );
+                                    },
+                                  ).then((value) => safeSetState(() {}));
+                                },
+                                text: 'Mis direcciones',
+                                icon: Icon(
+                                  Icons.pin_drop,
+                                  size: 15.0,
+                                ),
+                                options: FFButtonOptions(
+                                  width: 120.0,
+                                  height: 50.0,
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color: FlutterFlowTheme.of(context).sideBar,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .titleMedium
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        color: Colors.white,
+                                      ),
+                                  elevation: 3.0,
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -369,7 +646,7 @@ class _PerfilWidgetState extends State<PerfilWidget>
                                     ),
                                   );
                                 },
-                              ).then((value) => setState(() {}));
+                              ).then((value) => safeSetState(() {}));
                             },
                             text: 'Editar',
                             options: FFButtonOptions(

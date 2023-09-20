@@ -1,5 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/components/bs_editar_perfil/bs_editar_perfil_widget.dart';
+import '/components/bs_opcionentrega_seleccionar/bs_opcionentrega_seleccionar_widget.dart';
 import '/components/menu_lateral/menu_lateral_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -15,6 +16,15 @@ import 'package:provider/provider.dart';
 class PerfilModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
+  // State field(s) for name widget.
+  TextEditingController? nameController;
+  String? Function(BuildContext, String?)? nameControllerValidator;
+  // State field(s) for telefono widget.
+  TextEditingController? telefonoController;
+  String? Function(BuildContext, String?)? telefonoControllerValidator;
+  // State field(s) for Correo widget.
+  TextEditingController? correoController;
+  String? Function(BuildContext, String?)? correoControllerValidator;
   // Model for MenuLateral component.
   late MenuLateralModel menuLateralModel;
 
@@ -25,6 +35,9 @@ class PerfilModel extends FlutterFlowModel {
   }
 
   void dispose() {
+    nameController?.dispose();
+    telefonoController?.dispose();
+    correoController?.dispose();
     menuLateralModel.dispose();
   }
 

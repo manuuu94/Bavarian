@@ -7,7 +7,7 @@ export '/pages/login/recuperacion_password/recuperacion_password_widget.dart'
 export '/pages/login/create_account/create_account_widget.dart'
     show CreateAccountWidget;
 export '/pages/perfil/perfil/perfil_widget.dart' show PerfilWidget;
-export '/pages/inventario/inventario/inventario_widget.dart'
+export '/pages/inventario_cliente/inventario/inventario_widget.dart'
     show InventarioWidget;
 export '/pages/cotizaciones/cotizaciones/cotizaciones_widget.dart'
     show CotizacionesWidget;
@@ -30,3 +30,9 @@ export '/pages/admin/solicitude_cotizaciones_admin_mod/solicitude_cotizaciones_a
     show SolicitudeCotizacionesAdminModWidget;
 export '/pages/admin/solicitudes_admin_usuario/solicitudes_admin_usuario_widget.dart'
     show SolicitudesAdminUsuarioWidget;
+export '/pages/admin/inventario_admin/inventario_admin_widget.dart'
+    show InventarioAdminWidget;
+export '/pages/admin/inventario_crear/inventario_crear_widget.dart'
+    show InventarioCrearWidget;
+export '/pages/admin/inventario_editar/inventario_editar_widget.dart'
+    show InventarioEditarWidget;

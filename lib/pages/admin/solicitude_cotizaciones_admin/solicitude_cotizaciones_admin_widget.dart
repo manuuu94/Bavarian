@@ -3,6 +3,7 @@ import '/components/menu_lateral/menu_lateral_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -108,19 +109,22 @@ class _SolicitudeCotizacionesAdminWidgetState
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          if (currentUserUid == '3TG5jvY5czerUIlvsS9CL9HU9AG3')
-                            InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                context.pushNamed('SolicitudesAdminMenu');
-                              },
-                              child: Icon(
-                                Icons.admin_panel_settings_outlined,
-                                color: FlutterFlowTheme.of(context).text,
-                                size: 40.0,
+                          if (valueOrDefault(currentUserDocument?.role, '') ==
+                              'Admin.')
+                            AuthUserStreamWidget(
+                              builder: (context) => InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  context.pushNamed('SolicitudesAdminMenu');
+                                },
+                                child: Icon(
+                                  Icons.admin_panel_settings_outlined,
+                                  color: FlutterFlowTheme.of(context).text,
+                                  size: 40.0,
+                                ),
                               ),
                             ),
                           InkWell(
@@ -173,7 +177,7 @@ class _SolicitudeCotizacionesAdminWidgetState
               ),
               Expanded(
                 child: Align(
-                  alignment: AlignmentDirectional(0.0, 0.0),
+                  alignment: AlignmentDirectional(0.00, 0.00),
                   child: Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
@@ -323,7 +327,7 @@ class _SolicitudeCotizacionesAdminWidgetState
                         ),
                         Expanded(
                           child: Align(
-                            alignment: AlignmentDirectional(0.0, 0.0),
+                            alignment: AlignmentDirectional(0.00, 0.00),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   20.0, 20.0, 20.0, 0.0),
@@ -360,7 +364,7 @@ class _SolicitudeCotizacionesAdminWidgetState
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                -0.9, -0.75),
+                                                                -0.90, -0.75),
                                                         child: Text(
                                                           'Hello World',
                                                           style: FlutterFlowTheme
@@ -369,6 +373,9 @@ class _SolicitudeCotizacionesAdminWidgetState
                                                               .override(
                                                                 fontFamily:
                                                                     'Poppins',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .gray600,
                                                                 fontSize: 16.0,
                                                                 fontWeight:
                                                                     FontWeight
@@ -390,7 +397,7 @@ class _SolicitudeCotizacionesAdminWidgetState
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                -0.31, 0.8),
+                                                                -0.31, 0.80),
                                                         child: AutoSizeText(
                                                           'Completado',
                                                           style: FlutterFlowTheme
@@ -435,7 +442,7 @@ class _SolicitudeCotizacionesAdminWidgetState
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                0.8, -0.03),
+                                                                0.80, -0.03),
                                                         child: Text(
                                                           'Hello World',
                                                           style: FlutterFlowTheme
@@ -453,7 +460,7 @@ class _SolicitudeCotizacionesAdminWidgetState
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                -0.66, 0.8),
+                                                                -0.66, 0.80),
                                                         child: Icon(
                                                           Icons
                                                               .check_circle_outline_rounded,
@@ -466,7 +473,7 @@ class _SolicitudeCotizacionesAdminWidgetState
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                -0.8, -0.12),
+                                                                -0.80, -0.12),
                                                         child: Text(
                                                           'Hello World',
                                                           style: FlutterFlowTheme
@@ -475,6 +482,9 @@ class _SolicitudeCotizacionesAdminWidgetState
                                                               .override(
                                                                 fontFamily:
                                                                     'Poppins',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,
@@ -538,7 +548,7 @@ class _SolicitudeCotizacionesAdminWidgetState
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                -0.9, -0.75),
+                                                                -0.90, -0.75),
                                                         child: Text(
                                                           'Hello World',
                                                           style: FlutterFlowTheme
@@ -568,7 +578,7 @@ class _SolicitudeCotizacionesAdminWidgetState
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                0.8, -0.03),
+                                                                0.80, -0.03),
                                                         child: Text(
                                                           'Hello World',
                                                           style: FlutterFlowTheme
@@ -610,7 +620,7 @@ class _SolicitudeCotizacionesAdminWidgetState
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                -0.31, 0.8),
+                                                                -0.31, 0.80),
                                                         child: AutoSizeText(
                                                           'Completado',
                                                           style: FlutterFlowTheme
@@ -631,7 +641,7 @@ class _SolicitudeCotizacionesAdminWidgetState
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                -0.66, 0.8),
+                                                                -0.66, 0.80),
                                                         child: Icon(
                                                           Icons
                                                               .check_circle_outline_rounded,
@@ -662,7 +672,7 @@ class _SolicitudeCotizacionesAdminWidgetState
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                -0.8, -0.12),
+                                                                -0.80, -0.12),
                                                         child: Text(
                                                           'Hello World',
                                                           style: FlutterFlowTheme

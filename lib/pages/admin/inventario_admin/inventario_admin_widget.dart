@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/components/bs_detalles_producto_eliminar/bs_detalles_producto_eliminar_widget.dart';
 import '/components/menu_lateral/menu_lateral_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -8,25 +9,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'inventario_model.dart';
-export 'inventario_model.dart';
+import 'inventario_admin_model.dart';
+export 'inventario_admin_model.dart';
 
-class InventarioWidget extends StatefulWidget {
-  const InventarioWidget({Key? key}) : super(key: key);
+class InventarioAdminWidget extends StatefulWidget {
+  const InventarioAdminWidget({Key? key}) : super(key: key);
 
   @override
-  _InventarioWidgetState createState() => _InventarioWidgetState();
+  _InventarioAdminWidgetState createState() => _InventarioAdminWidgetState();
 }
 
-class _InventarioWidgetState extends State<InventarioWidget> {
-  late InventarioModel _model;
+class _InventarioAdminWidgetState extends State<InventarioAdminWidget> {
+  late InventarioAdminModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => InventarioModel());
+    _model = createModel(context, () => InventarioAdminModel());
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
@@ -105,19 +106,22 @@ class _InventarioWidgetState extends State<InventarioWidget> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          if (currentUserUid == '3TG5jvY5czerUIlvsS9CL9HU9AG3')
-                            InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                context.pushNamed('SolicitudesAdminMenu');
-                              },
-                              child: Icon(
-                                Icons.admin_panel_settings_outlined,
-                                color: FlutterFlowTheme.of(context).text,
-                                size: 40.0,
+                          if (valueOrDefault(currentUserDocument?.role, '') ==
+                              'Admin.')
+                            AuthUserStreamWidget(
+                              builder: (context) => InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  context.pushNamed('SolicitudesAdminMenu');
+                                },
+                                child: Icon(
+                                  Icons.admin_panel_settings_outlined,
+                                  color: FlutterFlowTheme.of(context).text,
+                                  size: 40.0,
+                                ),
                               ),
                             ),
                           InkWell(
@@ -170,7 +174,7 @@ class _InventarioWidgetState extends State<InventarioWidget> {
               ),
               Expanded(
                 child: Align(
-                  alignment: AlignmentDirectional(0.0, 0.0),
+                  alignment: AlignmentDirectional(0.00, 0.00),
                   child: Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
@@ -302,9 +306,6 @@ class _InventarioWidgetState extends State<InventarioWidget> {
                                       setState(() {
                                         FFAppState().FullList = true;
                                       });
-                                      setState(() {
-                                        _model.txtSearchController?.clear();
-                                      });
                                     },
                                     child: Icon(
                                       Icons.clear,
@@ -319,7 +320,7 @@ class _InventarioWidgetState extends State<InventarioWidget> {
                         ),
                         Expanded(
                           child: Align(
-                            alignment: AlignmentDirectional(0.0, 0.0),
+                            alignment: AlignmentDirectional(0.00, 0.00),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   20.0, 20.0, 20.0, 0.0),
@@ -390,7 +391,14 @@ class _InventarioWidgetState extends State<InventarioWidget> {
                                                               TextAlign.center,
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .bodyMedium,
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Poppins',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                              ),
                                                         ),
                                                       ),
                                                     ],
@@ -411,42 +419,24 @@ class _InventarioWidgetState extends State<InventarioWidget> {
                                                                     5.0,
                                                                     5.0,
                                                                     5.0),
-                                                        child: InkWell(
-                                                          splashColor: Colors
-                                                              .transparent,
-                                                          focusColor: Colors
-                                                              .transparent,
-                                                          hoverColor: Colors
-                                                              .transparent,
-                                                          highlightColor: Colors
-                                                              .transparent,
-                                                          onTap: () async {
-                                                            setState(() {
-                                                              _model
-                                                                  .txtSearchController
-                                                                  ?.clear();
-                                                            });
-                                                          },
-                                                          child: Hero(
-                                                            tag: '',
-                                                            transitionOnUserGestures:
-                                                                true,
-                                                            child:
-                                                                Image.network(
-                                                              'https://picsum.photos/seed/140/600',
-                                                              width: MediaQuery
-                                                                          .sizeOf(
-                                                                              context)
-                                                                      .width *
-                                                                  0.35,
-                                                              height: MediaQuery
-                                                                          .sizeOf(
-                                                                              context)
-                                                                      .height *
-                                                                  0.1,
-                                                              fit: BoxFit
-                                                                  .scaleDown,
-                                                            ),
+                                                        child: Hero(
+                                                          tag: '',
+                                                          transitionOnUserGestures:
+                                                              true,
+                                                          child: Image.network(
+                                                            'https://picsum.photos/seed/140/600',
+                                                            width: MediaQuery
+                                                                        .sizeOf(
+                                                                            context)
+                                                                    .width *
+                                                                0.35,
+                                                            height: MediaQuery
+                                                                        .sizeOf(
+                                                                            context)
+                                                                    .height *
+                                                                0.1,
+                                                            fit: BoxFit
+                                                                .scaleDown,
                                                           ),
                                                         ),
                                                       ),
@@ -471,20 +461,21 @@ class _InventarioWidgetState extends State<InventarioWidget> {
                                                             padding:
                                                                 EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        0.0,
                                                                         1.0,
-                                                                        0.0,
+                                                                        1.0,
+                                                                        1.0,
                                                                         1.0),
                                                             child:
                                                                 FFButtonWidget(
-                                                              onPressed: () {
-                                                                print(
-                                                                    'Button pressed ...');
+                                                              onPressed:
+                                                                  () async {
+                                                                context.pushNamed(
+                                                                    'InventarioEditar');
                                                               },
                                                               text: '',
                                                               icon: Icon(
                                                                 Icons
-                                                                    .add_shopping_cart_outlined,
+                                                                    .edit_square,
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .primary,
@@ -534,25 +525,100 @@ class _InventarioWidgetState extends State<InventarioWidget> {
                                                             ),
                                                           ),
                                                         ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      5.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0),
-                                                          child: Text(
-                                                            'Hello World',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodySmall
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Poppins',
-                                                                  fontSize:
-                                                                      13.0,
+                                                        Expanded(
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0),
+                                                            child:
+                                                                FFButtonWidget(
+                                                              onPressed:
+                                                                  () async {
+                                                                await showModalBottomSheet(
+                                                                  isScrollControlled:
+                                                                      true,
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .transparent,
+                                                                  enableDrag:
+                                                                      false,
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (context) {
+                                                                    return Padding(
+                                                                      padding: MediaQuery
+                                                                          .viewInsetsOf(
+                                                                              context),
+                                                                      child:
+                                                                          Container(
+                                                                        height: MediaQuery.sizeOf(context).height *
+                                                                            0.8,
+                                                                        child:
+                                                                            BsDetallesProductoEliminarWidget(),
+                                                                      ),
+                                                                    );
+                                                                  },
+                                                                ).then((value) =>
+                                                                    safeSetState(
+                                                                        () {}));
+                                                              },
+                                                              text: '',
+                                                              icon: Icon(
+                                                                Icons
+                                                                    .delete_forever_rounded,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                                size: 20.0,
+                                                              ),
+                                                              options:
+                                                                  FFButtonOptions(
+                                                                width: 20.0,
+                                                                height: 40.0,
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                iconPadding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            5.0,
+                                                                            2.0,
+                                                                            0.0,
+                                                                            2.0),
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .error,
+                                                                textStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .displaySmall
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Poppins',
+                                                                      fontSize:
+                                                                          22.0,
+                                                                    ),
+                                                                elevation: 2.0,
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: Colors
+                                                                      .transparent,
+                                                                  width: 1.0,
                                                                 ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                              ),
+                                                            ),
                                                           ),
                                                         ),
                                                       ],
@@ -704,20 +770,21 @@ class _InventarioWidgetState extends State<InventarioWidget> {
                                                             padding:
                                                                 EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        0.0,
                                                                         1.0,
-                                                                        0.0,
+                                                                        1.0,
+                                                                        1.0,
                                                                         1.0),
                                                             child:
                                                                 FFButtonWidget(
-                                                              onPressed: () {
-                                                                print(
-                                                                    'Button pressed ...');
+                                                              onPressed:
+                                                                  () async {
+                                                                context.pushNamed(
+                                                                    'InventarioEditar');
                                                               },
                                                               text: '',
                                                               icon: Icon(
                                                                 Icons
-                                                                    .add_shopping_cart_outlined,
+                                                                    .edit_square,
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .primary,
@@ -767,25 +834,100 @@ class _InventarioWidgetState extends State<InventarioWidget> {
                                                             ),
                                                           ),
                                                         ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      5.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0),
-                                                          child: Text(
-                                                            'Hello World',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodySmall
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Poppins',
-                                                                  fontSize:
-                                                                      13.0,
+                                                        Expanded(
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0),
+                                                            child:
+                                                                FFButtonWidget(
+                                                              onPressed:
+                                                                  () async {
+                                                                await showModalBottomSheet(
+                                                                  isScrollControlled:
+                                                                      true,
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .transparent,
+                                                                  enableDrag:
+                                                                      false,
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (context) {
+                                                                    return Padding(
+                                                                      padding: MediaQuery
+                                                                          .viewInsetsOf(
+                                                                              context),
+                                                                      child:
+                                                                          Container(
+                                                                        height: MediaQuery.sizeOf(context).height *
+                                                                            0.8,
+                                                                        child:
+                                                                            BsDetallesProductoEliminarWidget(),
+                                                                      ),
+                                                                    );
+                                                                  },
+                                                                ).then((value) =>
+                                                                    safeSetState(
+                                                                        () {}));
+                                                              },
+                                                              text: '',
+                                                              icon: Icon(
+                                                                Icons
+                                                                    .delete_forever_rounded,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                                size: 20.0,
+                                                              ),
+                                                              options:
+                                                                  FFButtonOptions(
+                                                                width: 20.0,
+                                                                height: 40.0,
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                iconPadding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            5.0,
+                                                                            2.0,
+                                                                            0.0,
+                                                                            2.0),
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .error,
+                                                                textStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .displaySmall
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Poppins',
+                                                                      fontSize:
+                                                                          22.0,
+                                                                    ),
+                                                                elevation: 2.0,
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: Colors
+                                                                      .transparent,
+                                                                  width: 1.0,
                                                                 ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                              ),
+                                                            ),
                                                           ),
                                                         ),
                                                       ],
@@ -802,6 +944,44 @@ class _InventarioWidgetState extends State<InventarioWidget> {
                               ),
                             ),
                           ),
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    5.0, 5.0, 5.0, 5.0),
+                                child: FFButtonWidget(
+                                  onPressed: () async {
+                                    context.pushNamed('InventarioCrear');
+                                  },
+                                  text: 'Crear producto',
+                                  options: FFButtonOptions(
+                                    width: 20.0,
+                                    height: 40.0,
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                        5.0, 2.0, 0.0, 2.0),
+                                    color: Color(0xBF39EF40),
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .displaySmall
+                                        .override(
+                                          fontFamily: 'Poppins',
+                                          fontSize: 22.0,
+                                        ),
+                                    elevation: 2.0,
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),

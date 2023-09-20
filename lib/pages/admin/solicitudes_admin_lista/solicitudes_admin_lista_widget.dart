@@ -2,6 +2,7 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/components/menu_lateral/menu_lateral_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -104,19 +105,22 @@ class _SolicitudesAdminListaWidgetState
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          if (currentUserUid == '3TG5jvY5czerUIlvsS9CL9HU9AG3')
-                            InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                context.pushNamed('SolicitudesAdminMenu');
-                              },
-                              child: Icon(
-                                Icons.admin_panel_settings_outlined,
-                                color: FlutterFlowTheme.of(context).text,
-                                size: 40.0,
+                          if (valueOrDefault(currentUserDocument?.role, '') ==
+                              'Admin.')
+                            AuthUserStreamWidget(
+                              builder: (context) => InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  context.pushNamed('SolicitudesAdminMenu');
+                                },
+                                child: Icon(
+                                  Icons.admin_panel_settings_outlined,
+                                  color: FlutterFlowTheme.of(context).text,
+                                  size: 40.0,
+                                ),
                               ),
                             ),
                           InkWell(
@@ -217,7 +221,8 @@ class _SolicitudesAdminListaWidgetState
                                 scrollDirection: Axis.vertical,
                                 children: [
                                   Align(
-                                    alignment: AlignmentDirectional(-1.0, 0.0),
+                                    alignment:
+                                        AlignmentDirectional(-1.00, 0.00),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           5.0, 20.0, 10.0, 0.0),
@@ -283,7 +288,7 @@ class _SolicitudesAdminListaWidgetState
                                         ),
                                         Align(
                                           alignment:
-                                              AlignmentDirectional(0.0, 0.0),
+                                              AlignmentDirectional(0.00, 0.00),
                                           child: Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
@@ -367,7 +372,7 @@ class _SolicitudesAdminListaWidgetState
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0.0, 0.38),
+                alignment: AlignmentDirectional(0.00, 0.38),
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
                   child: Row(
@@ -392,7 +397,7 @@ class _SolicitudesAdminListaWidgetState
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0.0, 0.38),
+                alignment: AlignmentDirectional(0.00, 0.38),
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
                   child: Row(

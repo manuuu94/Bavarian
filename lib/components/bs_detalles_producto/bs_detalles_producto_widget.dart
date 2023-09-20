@@ -1,4 +1,4 @@
-import '/flutter_flow/flutter_flow_expanded_image_view.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -7,13 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'bs_detalles_producto_model.dart';
 export 'bs_detalles_producto_model.dart';
 
 class BsDetallesProductoWidget extends StatefulWidget {
-  const BsDetallesProductoWidget({Key? key}) : super(key: key);
+  const BsDetallesProductoWidget({
+    Key? key,
+    required this.producto,
+  }) : super(key: key);
+
+  final InventoryRecord? producto;
 
   @override
   _BsDetallesProductoWidgetState createState() =>
@@ -80,7 +84,7 @@ class _BsDetallesProductoWidgetState extends State<BsDetallesProductoWidget> {
           children: [
             Expanded(
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(20.0, 8.0, 20.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(20.0, 8.0, 20.0, 8.0),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -102,7 +106,7 @@ class _BsDetallesProductoWidgetState extends State<BsDetallesProductoWidget> {
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 4.0, 16.0, 10.0),
                               child: Text(
-                                'Change Photo',
+                                'Nombre del producto',
                                 style: FlutterFlowTheme.of(context)
                                     .headlineMedium
                                     .override(
@@ -122,7 +126,7 @@ class _BsDetallesProductoWidgetState extends State<BsDetallesProductoWidget> {
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 8.0, 0.0, 0.0),
                               child: Text(
-                                'Upload a new photo below in order to change your avatar seen by others.',
+                                'Descripción del producto.',
                                 style: FlutterFlowTheme.of(context)
                                     .bodySmall
                                     .override(
@@ -135,45 +139,84 @@ class _BsDetallesProductoWidgetState extends State<BsDetallesProductoWidget> {
                         ],
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            15.0, 15.0, 15.0, 15.0),
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 5.0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Expanded(
-                              child: InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  await Navigator.push(
-                                    context,
-                                    PageTransition(
-                                      type: PageTransitionType.fade,
-                                      child: FlutterFlowExpandedImageView(
-                                        image: Image.network(
-                                          'https://picsum.photos/seed/553/600',
-                                          fit: BoxFit.contain,
-                                        ),
-                                        allowRotation: false,
-                                        tag: '',
-                                        useHeroAnimation: true,
+                              child: Hero(
+                                tag: widget.producto!.image,
+                                transitionOnUserGestures: true,
+                                child: Image.network(
+                                  widget.producto!.image,
+                                  width:
+                                      MediaQuery.sizeOf(context).width * 0.65,
+                                  height:
+                                      MediaQuery.sizeOf(context).height * 0.4,
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 5.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Flexible(
+                              child: Container(
+                                width: 250.0,
+                                height: 25.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context).black600,
+                                ),
+                                child: Text(
+                                  'Cantidad disponible: 5',
+                                  textAlign: TextAlign.center,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodySmall
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        color:
+                                            FlutterFlowTheme.of(context).text,
                                       ),
-                                    ),
-                                  );
-                                },
-                                child: Hero(
-                                  tag: '',
-                                  transitionOnUserGestures: true,
-                                  child: Image.network(
-                                    'https://picsum.photos/seed/553/600',
-                                    width:
-                                        MediaQuery.sizeOf(context).width * 0.65,
-                                    height: MediaQuery.sizeOf(context).height *
-                                        0.65,
-                                    fit: BoxFit.contain,
-                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 5.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Flexible(
+                              child: Container(
+                                width: 250.0,
+                                height: 25.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context).black600,
+                                ),
+                                child: Text(
+                                  'Precio unitario: \$100',
+                                  textAlign: TextAlign.center,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodySmall
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        color:
+                                            FlutterFlowTheme.of(context).text,
+                                      ),
                                 ),
                               ),
                             ),
@@ -188,8 +231,8 @@ class _BsDetallesProductoWidgetState extends State<BsDetallesProductoWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
+                              onPressed: () async {
+                                context.pushNamed('Carrito');
                               },
                               text: 'Agregar al carrito',
                               options: FFButtonOptions(
@@ -224,8 +267,24 @@ class _BsDetallesProductoWidgetState extends State<BsDetallesProductoWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
+                              onPressed: () async {
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: Text('Mensaje enviado!'),
+                                      content: Text(
+                                          'Tu  mensaje consultndo acerca de este producto se ha enviado al vendedor por medio de whatsapp.'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('Ok'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
                               },
                               text: 'Contactanos',
                               icon: FaIcon(

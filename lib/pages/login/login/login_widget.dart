@@ -282,7 +282,13 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   ),
                                 ),
                               ),
-                              style: FlutterFlowTheme.of(context).bodyMedium,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
                               validator: _model.contraLoginControllerValidator
                                   .asValidator(context),
                             ),
@@ -383,7 +389,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             ),
           ),
           Align(
-            alignment: AlignmentDirectional(0.0, -1.0),
+            alignment: AlignmentDirectional(0.00, -0.99),
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 0.0),
               child: Row(

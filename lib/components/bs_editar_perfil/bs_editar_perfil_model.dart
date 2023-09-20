@@ -1,11 +1,9 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/backend/backend.dart';
 import '/components/bs_edita_imagen/bs_edita_imagen_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,8 +16,11 @@ class BsEditarPerfilModel extends FlutterFlowModel {
   TextEditingController? txtEditNameController;
   String? Function(BuildContext, String?)? txtEditNameControllerValidator;
   // State field(s) for txtPhone widget.
-  TextEditingController? txtPhoneController;
-  String? Function(BuildContext, String?)? txtPhoneControllerValidator;
+  TextEditingController? txtPhoneController1;
+  String? Function(BuildContext, String?)? txtPhoneController1Validator;
+  // State field(s) for txtPhone widget.
+  TextEditingController? txtPhoneController2;
+  String? Function(BuildContext, String?)? txtPhoneController2Validator;
 
   /// Initialization and disposal methods.
 
@@ -27,7 +28,8 @@ class BsEditarPerfilModel extends FlutterFlowModel {
 
   void dispose() {
     txtEditNameController?.dispose();
-    txtPhoneController?.dispose();
+    txtPhoneController1?.dispose();
+    txtPhoneController2?.dispose();
   }
 
   /// Action blocks are added here.

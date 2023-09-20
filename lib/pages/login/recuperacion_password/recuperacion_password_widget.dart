@@ -67,7 +67,7 @@ class _RecuperacionPasswordWidgetState
           mainAxisSize: MainAxisSize.max,
           children: [
             Align(
-              alignment: AlignmentDirectional(0.0, -1.0),
+              alignment: AlignmentDirectional(0.00, -0.99),
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(20.0, 30.0, 20.0, 0.0),
                 child: Row(
@@ -110,7 +110,7 @@ class _RecuperacionPasswordWidgetState
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).titleSmall.override(
                               fontFamily: 'Poppins',
-                              color: Colors.white,
+                              color: FlutterFlowTheme.of(context).text,
                               fontSize: 22.0,
                             ),
                       ),
@@ -230,6 +230,8 @@ class _RecuperacionPasswordWidgetState
                       );
                     },
                   );
+
+                  context.pushNamed('Login');
                 },
                 text: 'Enviar',
                 icon: Icon(
@@ -242,7 +244,7 @@ class _RecuperacionPasswordWidgetState
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  color: FlutterFlowTheme.of(context).sideBar,
+                  color: FlutterFlowTheme.of(context).sideBarMenu,
                   textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         fontFamily: 'Lexend Deca',
                         color: FlutterFlowTheme.of(context).secondaryBackground,

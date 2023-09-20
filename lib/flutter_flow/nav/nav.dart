@@ -183,6 +183,21 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'SolicitudesAdminUsuario',
               path: 'solicitudesAdminUsuario',
               builder: (context, params) => SolicitudesAdminUsuarioWidget(),
+            ),
+            FFRoute(
+              name: 'InventarioAdmin',
+              path: 'inventarioAdmin',
+              builder: (context, params) => InventarioAdminWidget(),
+            ),
+            FFRoute(
+              name: 'InventarioCrear',
+              path: 'inventarioCrear',
+              builder: (context, params) => InventarioCrearWidget(),
+            ),
+            FFRoute(
+              name: 'InventarioEditar',
+              path: 'inventarioEditar',
+              builder: (context, params) => InventarioEditarWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),

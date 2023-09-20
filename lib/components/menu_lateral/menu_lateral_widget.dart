@@ -115,7 +115,7 @@ class _MenuLateralWidgetState extends State<MenuLateralWidget> {
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
                                   fontFamily: 'Poppins',
-                                  color: Colors.white,
+                                  color: FlutterFlowTheme.of(context).text,
                                 ),
                         elevation: 2.0,
                         borderSide: BorderSide(
@@ -155,7 +155,7 @@ class _MenuLateralWidgetState extends State<MenuLateralWidget> {
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
                                   fontFamily: 'Poppins',
-                                  color: Colors.white,
+                                  color: FlutterFlowTheme.of(context).text,
                                 ),
                         elevation: 2.0,
                         borderSide: BorderSide(
@@ -195,7 +195,7 @@ class _MenuLateralWidgetState extends State<MenuLateralWidget> {
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
                                   fontFamily: 'Poppins',
-                                  color: Colors.white,
+                                  color: FlutterFlowTheme.of(context).text,
                                 ),
                         elevation: 2.0,
                         borderSide: BorderSide(
@@ -235,7 +235,7 @@ class _MenuLateralWidgetState extends State<MenuLateralWidget> {
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
                                   fontFamily: 'Poppins',
-                                  color: Colors.white,
+                                  color: FlutterFlowTheme.of(context).text,
                                 ),
                         elevation: 2.0,
                         borderSide: BorderSide(
@@ -275,7 +275,7 @@ class _MenuLateralWidgetState extends State<MenuLateralWidget> {
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
                                   fontFamily: 'Poppins',
-                                  color: Colors.white,
+                                  color: FlutterFlowTheme.of(context).text,
                                 ),
                         elevation: 2.0,
                         borderSide: BorderSide(

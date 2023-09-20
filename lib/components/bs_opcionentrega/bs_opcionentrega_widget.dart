@@ -1,3 +1,4 @@
+import '/components/bs_opcionentrega_enviar/bs_opcionentrega_enviar_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -103,8 +104,19 @@ class _BsOpcionentregaWidgetState extends State<BsOpcionentregaWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(
                           10.0, 10.0, 10.0, 10.0),
                       child: FFButtonWidget(
-                        onPressed: () {
-                          print('Button pressed ...');
+                        onPressed: () async {
+                          await showModalBottomSheet(
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            enableDrag: false,
+                            context: context,
+                            builder: (context) {
+                              return Padding(
+                                padding: MediaQuery.viewInsetsOf(context),
+                                child: BsOpcionentregaEnviarWidget(),
+                              );
+                            },
+                          ).then((value) => safeSetState(() {}));
                         },
                         text: 'Button',
                         options: FFButtonOptions(

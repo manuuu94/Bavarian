@@ -1,9 +1,7 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -32,11 +30,6 @@ class _BsDetallesCotizacionWidgetState
   void initState() {
     super.initState();
     _model = createModel(context, () => BsDetallesCotizacionModel());
-
-    // On component load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await actions.lockOrientation();
-    });
   }
 
   @override
@@ -90,6 +83,33 @@ class _BsDetallesCotizacionWidgetState
                         endIndent: 150.0,
                         color: FlutterFlowTheme.of(context).primaryBackground,
                       ),
+                      Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                context.safePop();
+                              },
+                              child: Text(
+                                '< Atras',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      color: FlutterFlowTheme.of(context).text,
+                                    ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                       Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -99,7 +119,7 @@ class _BsDetallesCotizacionWidgetState
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 4.0, 16.0, 0.0),
                               child: Text(
-                                'Change Photo',
+                                'Detalle de cotización',
                                 style: FlutterFlowTheme.of(context)
                                     .headlineMedium
                                     .override(
@@ -110,7 +130,7 @@ class _BsDetallesCotizacionWidgetState
                             ),
                           ),
                           Text(
-                            'Hello World',
+                            'Fecha',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
@@ -138,7 +158,7 @@ class _BsDetallesCotizacionWidgetState
                       ),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
-                            0.0, 30.0, 0.0, 10.0),
+                            0.0, 10.0, 0.0, 10.0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
@@ -401,7 +421,7 @@ class _BsDetallesCotizacionWidgetState
                       ),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
-                            0.0, 24.0, 0.0, 44.0),
+                            0.0, 24.0, 0.0, 10.0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -447,8 +467,8 @@ class _BsDetallesCotizacionWidgetState
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
+                              onPressed: () async {
+                                context.pushNamed('Carrito');
                               },
                               text: 'Aceptar cotizacion',
                               options: FFButtonOptions(

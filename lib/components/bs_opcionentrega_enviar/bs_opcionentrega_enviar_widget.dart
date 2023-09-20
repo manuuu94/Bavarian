@@ -1,3 +1,4 @@
+import '/components/bs_opcionentrega_seleccionar/bs_opcionentrega_seleccionar_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -187,14 +188,34 @@ class _BsOpcionentregaEnviarWidgetState
               children: [
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
-                  child: AutoSizeText(
-                    'Editar mis direcciones',
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Lato',
-                          color: FlutterFlowTheme.of(context).text,
-                          fontSize: 12.0,
-                          decoration: TextDecoration.underline,
-                        ),
+                  child: InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () async {
+                      await showModalBottomSheet(
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        enableDrag: false,
+                        context: context,
+                        builder: (context) {
+                          return Padding(
+                            padding: MediaQuery.viewInsetsOf(context),
+                            child: BsOpcionentregaSeleccionarWidget(),
+                          );
+                        },
+                      ).then((value) => safeSetState(() {}));
+                    },
+                    child: AutoSizeText(
+                      'Editar mis direcciones',
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Lato',
+                            color: FlutterFlowTheme.of(context).text,
+                            fontSize: 12.0,
+                            decoration: TextDecoration.underline,
+                          ),
+                    ),
                   ),
                 ),
               ],

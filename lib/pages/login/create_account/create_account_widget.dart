@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -664,6 +665,17 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                         return;
                       }
 
+                      await UsersRecord.collection
+                          .doc(user.uid)
+                          .update(createUsersRecordData(
+                            displayName: _model.nameController.text,
+                            phoneNumber: _model.phoneController.text,
+                            role: valueOrDefault<String>(
+                              'Client',
+                              'Client',
+                            ),
+                          ));
+
                       _navigate =
                           () => context.goNamedAuth('Index', context.mounted);
                       await showDialog(
@@ -689,7 +701,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                           return AlertDialog(
                             title: Text('Revisa los datos introducidos!'),
                             content: Text(
-                                'Verifica tu contraseña o los datos introducidos'),
+                                'Campos vacios o incorrectos. Por favor revisa los datos introducidos.'),
                             actions: [
                               TextButton(
                                 onPressed: () =>
