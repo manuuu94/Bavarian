@@ -1,3 +1,5 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/components/bs_opcionentrega_seleccionar/bs_opcionentrega_seleccionar_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -13,7 +15,12 @@ import 'bs_opcionentrega_enviar_model.dart';
 export 'bs_opcionentrega_enviar_model.dart';
 
 class BsOpcionentregaEnviarWidget extends StatefulWidget {
-  const BsOpcionentregaEnviarWidget({Key? key}) : super(key: key);
+  const BsOpcionentregaEnviarWidget({
+    Key? key,
+    required this.categoria,
+  }) : super(key: key);
+
+  final DeliveryOptionsRecord? categoria;
 
   @override
   _BsOpcionentregaEnviarWidgetState createState() =>
@@ -81,57 +88,93 @@ class _BsOpcionentregaEnviarWidgetState
           mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(
-              child: ListView(
-                padding: EdgeInsets.zero,
-                scrollDirection: Axis.vertical,
-                children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(5.0, 5.0, 5.0, 5.0),
-                    child: Slidable(
-                      endActionPane: ActionPane(
-                        motion: const ScrollMotion(),
-                        extentRatio: 0.25,
-                        children: [
-                          SlidableAction(
-                            label: 'Enviar',
-                            backgroundColor:
-                                FlutterFlowTheme.of(context).greenConfirm,
-                            icon: Icons.send,
-                            onPressed: (_) {
-                              print('SlidableActionWidget pressed ...');
-                            },
+              child: StreamBuilder<List<AddressesRecord>>(
+                stream: queryAddressesRecord(
+                  queryBuilder: (addressesRecord) => addressesRecord.where(
+                      'deliveryOption',
+                      isEqualTo: widget.categoria?.reference),
+                ),
+                builder: (context, snapshot) {
+                  // Customize what your widget looks like when it's loading.
+                  if (!snapshot.hasData) {
+                    return Center(
+                      child: SizedBox(
+                        width: 50.0,
+                        height: 50.0,
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            FlutterFlowTheme.of(context).primary,
                           ),
-                        ],
+                        ),
                       ),
-                      child: ListTile(
-                        title: Text(
-                          'Lorem ipsum dolor...',
-                          style: FlutterFlowTheme.of(context)
-                              .headlineSmall
-                              .override(
-                                fontFamily: 'Poppins',
-                                color: FlutterFlowTheme.of(context).text,
+                    );
+                  }
+                  List<AddressesRecord> listViewAddressesRecordList =
+                      snapshot.data!;
+                  return ListView.builder(
+                    padding: EdgeInsets.zero,
+                    scrollDirection: Axis.vertical,
+                    itemCount: listViewAddressesRecordList.length,
+                    itemBuilder: (context, listViewIndex) {
+                      final listViewAddressesRecord =
+                          listViewAddressesRecordList[listViewIndex];
+                      return Visibility(
+                        visible:
+                            (listViewAddressesRecord.uid == currentUserUid) ||
+                                (listViewAddressesRecord.uid ==
+                                    'idopcionentregasucursales'),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              5.0, 5.0, 5.0, 5.0),
+                          child: Slidable(
+                            endActionPane: ActionPane(
+                              motion: const ScrollMotion(),
+                              extentRatio: 0.25,
+                              children: [
+                                SlidableAction(
+                                  label: 'Enviar',
+                                  backgroundColor:
+                                      FlutterFlowTheme.of(context).greenConfirm,
+                                  icon: Icons.send,
+                                  onPressed: (_) {
+                                    print('SlidableActionWidget pressed ...');
+                                  },
+                                ),
+                              ],
+                            ),
+                            child: ListTile(
+                              title: Text(
+                                'Lorem ipsum dolor...',
+                                style: FlutterFlowTheme.of(context)
+                                    .headlineSmall
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      color: FlutterFlowTheme.of(context).text,
+                                    ),
                               ),
+                              subtitle: Text(
+                                'Lorem ipsum dolor...',
+                                style: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      color: FlutterFlowTheme.of(context).text,
+                                    ),
+                              ),
+                              trailing: Icon(
+                                Icons.chevron_left,
+                                color: Color(0xFFFF0004),
+                                size: 40.0,
+                              ),
+                              tileColor: Colors.black,
+                              dense: false,
+                            ),
+                          ),
                         ),
-                        subtitle: Text(
-                          'Lorem ipsum dolor...',
-                          style:
-                              FlutterFlowTheme.of(context).titleSmall.override(
-                                    fontFamily: 'Poppins',
-                                    color: FlutterFlowTheme.of(context).text,
-                                  ),
-                        ),
-                        trailing: Icon(
-                          Icons.chevron_left,
-                          color: Color(0xFFFF0004),
-                          size: 40.0,
-                        ),
-                        tileColor: Colors.black,
-                        dense: false,
-                      ),
-                    ),
-                  ),
-                ],
+                      );
+                    },
+                  );
+                },
               ),
             ),
             Row(

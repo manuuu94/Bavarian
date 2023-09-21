@@ -28,6 +28,42 @@ class _IndexWidgetState extends State<IndexWidget>
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   final animationsMap = {
+    'rowOnPageLoadAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(0.0, 0.0),
+          end: Offset(0.0, 0.0),
+        ),
+      ],
+    ),
+    'textOnPageLoadAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(0.0, 100.0),
+          end: Offset(0.0, 0.0),
+        ),
+      ],
+    ),
+    'expandableOnPageLoadAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(0.0, 100.0),
+          end: Offset(0.0, 0.0),
+        ),
+      ],
+    ),
     'imageOnPageLoadAnimation1': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       effects: [
@@ -210,7 +246,7 @@ class _IndexWidgetState extends State<IndexWidget>
                       ),
                     ),
                   ],
-                ),
+                ).animateOnPageLoad(animationsMap['rowOnPageLoadAnimation']!),
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 20.0),
@@ -224,9 +260,9 @@ class _IndexWidgetState extends State<IndexWidget>
                             fontFamily: 'Poppins',
                             color: FlutterFlowTheme.of(context).text,
                             fontSize: 30.0,
-                            decoration: TextDecoration.underline,
                           ),
-                    ),
+                    ).animateOnPageLoad(
+                        animationsMap['textOnPageLoadAnimation']!),
                   ],
                 ),
               ),
@@ -419,7 +455,8 @@ class _IndexWidgetState extends State<IndexWidget>
                         ),
                       ),
                     ),
-                  ),
+                  ).animateOnPageLoad(
+                      animationsMap['expandableOnPageLoadAnimation']!),
                 ),
               ),
               Padding(

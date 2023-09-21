@@ -4,9 +4,11 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'create_account_model.dart';
@@ -130,7 +132,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                     fontFamily: 'Poppins',
                                     color: Color(0xFF3E3E3E),
                                   ),
-                              hintText: 'Introduzca su nombre',
+                              hintText: 'Introduzca su nombre completo',
                               hintStyle: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
@@ -243,7 +245,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                     fontFamily: 'Poppins',
                                     color: Color(0xFF3E3E3E),
                                   ),
-                              hintText: 'Introduzca su telefono',
+                              hintText: 'Introduzca su telefono (solo números)',
                               hintStyle: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
@@ -308,9 +310,13 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                   fontWeight: FontWeight.w600,
                                 ),
                             textAlign: TextAlign.start,
-                            keyboardType: TextInputType.emailAddress,
+                            maxLength: 11,
+                            keyboardType: TextInputType.phone,
                             validator: _model.phoneControllerValidator
                                 .asValidator(context),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(RegExp('[0-9]'))
+                            ],
                           ),
                         ),
                       ),
@@ -678,6 +684,14 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
 
                       _navigate =
                           () => context.goNamedAuth('Index', context.mounted);
+
+                      await UsersLogRecord.collection
+                          .doc()
+                          .set(createUsersLogRecordData(
+                            description:
+                                'Usuario creado: ${_model.nameController.text} - ${_model.emailAddressController.text}',
+                            logDate: getCurrentTimestamp,
+                          ));
                       await showDialog(
                         context: context,
                         builder: (alertDialogContext) {

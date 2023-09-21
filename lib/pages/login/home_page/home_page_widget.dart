@@ -25,16 +25,51 @@ class _HomePageWidgetState extends State<HomePageWidget>
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   final animationsMap = {
+    'textOnPageLoadAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 910.ms,
+          begin: 0.0,
+          end: 1.0,
+        ),
+      ],
+    ),
     'imageOnPageLoadAnimation1': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       effects: [
-        ShakeEffect(
-          curve: Curves.linear,
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 420.ms,
+          duration: 910.ms,
+          begin: 0.0,
+          end: 1.0,
+        ),
+      ],
+    ),
+    'buttonOnPageLoadAnimation1': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
           delay: 0.ms,
-          duration: 890.ms,
-          hz: 9,
-          offset: Offset(0.0, 0.0),
-          rotation: 0.087,
+          duration: 420.ms,
+          begin: 0.0,
+          end: 1.0,
+        ),
+      ],
+    ),
+    'buttonOnPageLoadAnimation2': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 420.ms,
+          begin: 0.0,
+          end: 1.0,
         ),
       ],
     ),
@@ -102,7 +137,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
       onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        backgroundColor: Colors.black,
         body: SafeArea(
           top: true,
           child: Padding(
@@ -111,7 +146,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
               width: MediaQuery.sizeOf(context).width * 1.0,
               height: MediaQuery.sizeOf(context).height * 1.0,
               decoration: BoxDecoration(
-                color: Color(0x3AFFFFFF),
+                color: Colors.black,
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -124,13 +159,21 @@ class _HomePageWidgetState extends State<HomePageWidget>
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Bavarian Auto Shop',
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Noto Serif',
-                                    fontSize: 35.0,
-                                  ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 25.0, 0.0, 0.0),
+                          child: Text(
+                            'Bavarian Auto Shop',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Poppins',
+                                  color: FlutterFlowTheme.of(context).text,
+                                  fontSize: 35.0,
+                                  fontWeight: FontWeight.w200,
+                                ),
+                          ).animateOnPageLoad(
+                              animationsMap['textOnPageLoadAnimation']!),
                         ),
                       ],
                     ),
@@ -140,10 +183,10 @@ class _HomePageWidgetState extends State<HomePageWidget>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 50.0),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            0.0, 30.0, 0.0, 50.0),
                         child: Image.asset(
-                          'assets/images/Bav.png',
+                          'assets/images/car-logo-bmw-dark-wallpaper-preview.jpg',
                           width: 350.0,
                           height: 100.0,
                           fit: BoxFit.cover,
@@ -154,7 +197,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                   ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 80.0, 0.0, 0.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -175,7 +218,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                 0.0, 0.0, 0.0, 0.0),
                             iconPadding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 0.0),
-                            color: FlutterFlowTheme.of(context).primary,
+                            color: FlutterFlowTheme.of(context).grayIcon,
                             textStyle: FlutterFlowTheme.of(context)
                                 .titleSmall
                                 .override(
@@ -190,7 +233,8 @@ class _HomePageWidgetState extends State<HomePageWidget>
                             ),
                             borderRadius: BorderRadius.circular(100.0),
                           ),
-                        ),
+                        ).animateOnPageLoad(
+                            animationsMap['buttonOnPageLoadAnimation1']!),
                       ],
                     ),
                   ),
@@ -217,7 +261,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                 0.0, 0.0, 0.0, 0.0),
                             iconPadding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 0.0),
-                            color: FlutterFlowTheme.of(context).primary,
+                            color: FlutterFlowTheme.of(context).grayIcon,
                             textStyle: FlutterFlowTheme.of(context)
                                 .titleSmall
                                 .override(
@@ -232,7 +276,8 @@ class _HomePageWidgetState extends State<HomePageWidget>
                             ),
                             borderRadius: BorderRadius.circular(100.0),
                           ),
-                        ),
+                        ).animateOnPageLoad(
+                            animationsMap['buttonOnPageLoadAnimation2']!),
                       ],
                     ),
                   ),
@@ -257,8 +302,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                             },
                             child: Image.asset(
                               'assets/images/instagram.png',
-                              width: MediaQuery.sizeOf(context).width * 0.15,
-                              height: MediaQuery.sizeOf(context).height * 0.07,
+                              width: MediaQuery.sizeOf(context).width * 0.1,
                               fit: BoxFit.cover,
                             ),
                           ).animateOnPageLoad(
@@ -278,8 +322,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                             },
                             child: Image.asset(
                               'assets/images/facebook.png',
-                              width: MediaQuery.sizeOf(context).width * 0.15,
-                              height: MediaQuery.sizeOf(context).height * 0.07,
+                              width: MediaQuery.sizeOf(context).width * 0.1,
                               fit: BoxFit.cover,
                             ),
                           ).animateOnPageLoad(
@@ -299,8 +342,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                             },
                             child: Image.asset(
                               'assets/images/whatsapp_(1).png',
-                              width: MediaQuery.sizeOf(context).width * 0.15,
-                              height: MediaQuery.sizeOf(context).height * 0.07,
+                              width: MediaQuery.sizeOf(context).width * 0.1,
                               fit: BoxFit.cover,
                             ),
                           ).animateOnPageLoad(
@@ -323,6 +365,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Roboto Mono',
+                                  color: FlutterFlowTheme.of(context).grayIcon,
                                   fontSize: 10.0,
                                 ),
                           ),

@@ -1,5 +1,5 @@
 import '/backend/backend.dart';
-import '/components/bs_opcionentrega_enviar/bs_opcionentrega_enviar_widget.dart';
+import '/components/bs_opcionentrega_seleccionar_copy/bs_opcionentrega_seleccionar_copy_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -8,18 +8,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'bs_opcionentrega_model.dart';
-export 'bs_opcionentrega_model.dart';
+import 'bs_opcionentrega_copy_model.dart';
+export 'bs_opcionentrega_copy_model.dart';
 
-class BsOpcionentregaWidget extends StatefulWidget {
-  const BsOpcionentregaWidget({Key? key}) : super(key: key);
+class BsOpcionentregaCopyWidget extends StatefulWidget {
+  const BsOpcionentregaCopyWidget({Key? key}) : super(key: key);
 
   @override
-  _BsOpcionentregaWidgetState createState() => _BsOpcionentregaWidgetState();
+  _BsOpcionentregaCopyWidgetState createState() =>
+      _BsOpcionentregaCopyWidgetState();
 }
 
-class _BsOpcionentregaWidgetState extends State<BsOpcionentregaWidget> {
-  late BsOpcionentregaModel _model;
+class _BsOpcionentregaCopyWidgetState extends State<BsOpcionentregaCopyWidget> {
+  late BsOpcionentregaCopyModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -30,7 +31,7 @@ class _BsOpcionentregaWidgetState extends State<BsOpcionentregaWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => BsOpcionentregaModel());
+    _model = createModel(context, () => BsOpcionentregaCopyModel());
 
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
@@ -123,44 +124,51 @@ class _BsOpcionentregaWidgetState extends State<BsOpcionentregaWidget> {
                       itemBuilder: (context, gridViewIndex) {
                         final gridViewDeliveryOptionsRecord =
                             gridViewDeliveryOptionsRecordList[gridViewIndex];
-                        return Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              10.0, 10.0, 10.0, 10.0),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              await showModalBottomSheet(
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                enableDrag: false,
-                                context: context,
-                                builder: (context) {
-                                  return Padding(
-                                    padding: MediaQuery.viewInsetsOf(context),
-                                    child: BsOpcionentregaEnviarWidget(
-                                      categoria: gridViewDeliveryOptionsRecord,
+                        return Visibility(
+                          visible: gridViewDeliveryOptionsRecord.description ==
+                              'Mis Direcciones',
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                10.0, 10.0, 10.0, 10.0),
+                            child: FFButtonWidget(
+                              onPressed: () async {
+                                await showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  backgroundColor: Colors.transparent,
+                                  enableDrag: false,
+                                  context: context,
+                                  builder: (context) {
+                                    return Padding(
+                                      padding: MediaQuery.viewInsetsOf(context),
+                                      child:
+                                          BsOpcionentregaSeleccionarCopyWidget(
+                                        categoria:
+                                            gridViewDeliveryOptionsRecord,
+                                      ),
+                                    );
+                                  },
+                                ).then((value) => safeSetState(() {}));
+                              },
+                              text: gridViewDeliveryOptionsRecord.description,
+                              options: FFButtonOptions(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                color: FlutterFlowTheme.of(context).primary,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      color: Colors.white,
                                     ),
-                                  );
-                                },
-                              ).then((value) => safeSetState(() {}));
-                            },
-                            text: gridViewDeliveryOptionsRecord.description,
-                            options: FFButtonOptions(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              color: FlutterFlowTheme.of(context).primary,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    color: Colors.white,
-                                  ),
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).sideBarMenu,
-                                width: 5.0,
+                                borderSide: BorderSide(
+                                  color:
+                                      FlutterFlowTheme.of(context).sideBarMenu,
+                                  width: 5.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
                               ),
-                              borderRadius: BorderRadius.circular(8.0),
                             ),
                           ),
                         );
