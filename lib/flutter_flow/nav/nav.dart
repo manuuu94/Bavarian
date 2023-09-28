@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 import '/backend/backend.dart';
 
 import '../../auth/base_auth_user_provider.dart';
@@ -197,7 +198,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'InventarioEditar',
               path: 'inventarioEditar',
-              builder: (context, params) => InventarioEditarWidget(),
+              asyncParams: {
+                'producto': getDoc(['Inventory'], InventoryRecord.fromSnapshot),
+              },
+              builder: (context, params) => InventarioEditarWidget(
+                producto: params.getParam('producto', ParamType.Document),
+              ),
+            ),
+            FFRoute(
+              name: 'InventarioAdminCopy',
+              path: 'inventarioAdminCopy',
+              builder: (context, params) => InventarioAdminCopyWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
@@ -380,14 +391,10 @@ class FFRoute {
               : builder(context, ffParams);
           final child = appStateNotifier.loading
               ? Container(
-                  color: FlutterFlowTheme.of(context).primaryBackground,
-                  child: Center(
-                    child: Image.asset(
-                      'assets/images/Bavarian.png',
-                      width: MediaQuery.sizeOf(context).width * 1.0,
-                      height: MediaQuery.sizeOf(context).height * 1.0,
-                      fit: BoxFit.contain,
-                    ),
+                  color: Colors.transparent,
+                  child: Image.asset(
+                    'assets/images/car-logo-bmw-dark-wallpaper-preview.jpg',
+                    fit: BoxFit.fitHeight,
                   ),
                 )
               : page;
@@ -426,4 +433,24 @@ class TransitionInfo {
   final Alignment? alignment;
 
   static TransitionInfo appDefault() => TransitionInfo(hasTransition: false);
+}
+
+class RootPageContext {
+  const RootPageContext(this.isRootPage, [this.errorRoute]);
+  final bool isRootPage;
+  final String? errorRoute;
+
+  static bool isInactiveRootPage(BuildContext context) {
+    final rootPageContext = context.read<RootPageContext?>();
+    final isRootPage = rootPageContext?.isRootPage ?? false;
+    final location = GoRouter.of(context).location;
+    return isRootPage &&
+        location != '/' &&
+        location != rootPageContext?.errorRoute;
+  }
+
+  static Widget wrap(Widget child, {String? errorRoute}) => Provider.value(
+        value: RootPageContext(true, errorRoute),
+        child: child,
+      );
 }

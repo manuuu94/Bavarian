@@ -91,8 +91,9 @@ class _BsOpcionentregaEnviarWidgetState
               child: StreamBuilder<List<AddressesRecord>>(
                 stream: queryAddressesRecord(
                   queryBuilder: (addressesRecord) => addressesRecord.where(
-                      'deliveryOption',
-                      isEqualTo: widget.categoria?.reference),
+                    'deliveryOption',
+                    isEqualTo: widget.categoria?.reference,
+                  ),
                 ),
                 builder: (context, snapshot) {
                   // Customize what your widget looks like when it's loading.
@@ -222,6 +223,7 @@ class _BsOpcionentregaEnviarWidgetState
                     color: FlutterFlowTheme.of(context).primary,
                     width: 5.0,
                   ),
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
             ),

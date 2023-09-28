@@ -1,9 +1,12 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/components/menu_lateral/menu_lateral_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
+import '/flutter_flow/random_data_util.dart' as random_data;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -108,22 +111,19 @@ class _NuevaCotizacionWidgetState extends State<NuevaCotizacionWidget> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          if (valueOrDefault(currentUserDocument?.role, '') ==
-                              'Admin.')
-                            AuthUserStreamWidget(
-                              builder: (context) => InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  context.pushNamed('SolicitudesAdminMenu');
-                                },
-                                child: Icon(
-                                  Icons.admin_panel_settings_outlined,
-                                  color: FlutterFlowTheme.of(context).text,
-                                  size: 40.0,
-                                ),
+                          if (currentUserUid == 'm2CVamHMawQSkQh8MKlmRKMkgxn1')
+                            InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                context.pushNamed('SolicitudesAdminMenu');
+                              },
+                              child: Icon(
+                                Icons.admin_panel_settings_outlined,
+                                color: FlutterFlowTheme.of(context).text,
+                                size: 40.0,
                               ),
                             ),
                           InkWell(
@@ -185,14 +185,19 @@ class _NuevaCotizacionWidgetState extends State<NuevaCotizacionWidget> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          'Nueva Cotizacion',
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Poppins',
-                                    color: FlutterFlowTheme.of(context).text,
-                                    fontSize: 20.0,
-                                  ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 20.0, 0.0, 0.0),
+                          child: Text(
+                            'Nueva Cotizacion',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Poppins',
+                                  color: FlutterFlowTheme.of(context).text,
+                                  fontSize: 20.0,
+                                ),
+                          ),
                         ),
                         Expanded(
                           child: Align(
@@ -228,8 +233,7 @@ class _NuevaCotizacionWidgetState extends State<NuevaCotizacionWidget> {
                                                   width: 1.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        125.0),
+                                                    BorderRadius.circular(10.0),
                                               ),
                                               focusedBorder:
                                                   UnderlineInputBorder(
@@ -238,8 +242,7 @@ class _NuevaCotizacionWidgetState extends State<NuevaCotizacionWidget> {
                                                   width: 1.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        125.0),
+                                                    BorderRadius.circular(10.0),
                                               ),
                                               errorBorder: UnderlineInputBorder(
                                                 borderSide: BorderSide(
@@ -247,8 +250,7 @@ class _NuevaCotizacionWidgetState extends State<NuevaCotizacionWidget> {
                                                   width: 1.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        125.0),
+                                                    BorderRadius.circular(10.0),
                                               ),
                                               focusedErrorBorder:
                                                   UnderlineInputBorder(
@@ -257,8 +259,7 @@ class _NuevaCotizacionWidgetState extends State<NuevaCotizacionWidget> {
                                                   width: 1.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        125.0),
+                                                    BorderRadius.circular(10.0),
                                               ),
                                               filled: true,
                                               fillColor:
@@ -305,8 +306,7 @@ class _NuevaCotizacionWidgetState extends State<NuevaCotizacionWidget> {
                                                   width: 1.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        125.0),
+                                                    BorderRadius.circular(10.0),
                                               ),
                                               focusedBorder:
                                                   UnderlineInputBorder(
@@ -315,8 +315,7 @@ class _NuevaCotizacionWidgetState extends State<NuevaCotizacionWidget> {
                                                   width: 1.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        125.0),
+                                                    BorderRadius.circular(10.0),
                                               ),
                                               errorBorder: UnderlineInputBorder(
                                                 borderSide: BorderSide(
@@ -324,8 +323,7 @@ class _NuevaCotizacionWidgetState extends State<NuevaCotizacionWidget> {
                                                   width: 1.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        125.0),
+                                                    BorderRadius.circular(10.0),
                                               ),
                                               focusedErrorBorder:
                                                   UnderlineInputBorder(
@@ -334,8 +332,7 @@ class _NuevaCotizacionWidgetState extends State<NuevaCotizacionWidget> {
                                                   width: 1.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        125.0),
+                                                    BorderRadius.circular(10.0),
                                               ),
                                               filled: true,
                                               fillColor:
@@ -382,8 +379,7 @@ class _NuevaCotizacionWidgetState extends State<NuevaCotizacionWidget> {
                                                   width: 1.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        125.0),
+                                                    BorderRadius.circular(10.0),
                                               ),
                                               focusedBorder:
                                                   UnderlineInputBorder(
@@ -392,8 +388,7 @@ class _NuevaCotizacionWidgetState extends State<NuevaCotizacionWidget> {
                                                   width: 1.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        125.0),
+                                                    BorderRadius.circular(10.0),
                                               ),
                                               errorBorder: UnderlineInputBorder(
                                                 borderSide: BorderSide(
@@ -401,8 +396,7 @@ class _NuevaCotizacionWidgetState extends State<NuevaCotizacionWidget> {
                                                   width: 1.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        125.0),
+                                                    BorderRadius.circular(10.0),
                                               ),
                                               focusedErrorBorder:
                                                   UnderlineInputBorder(
@@ -411,8 +405,7 @@ class _NuevaCotizacionWidgetState extends State<NuevaCotizacionWidget> {
                                                   width: 1.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        125.0),
+                                                    BorderRadius.circular(10.0),
                                               ),
                                               filled: true,
                                               fillColor:
@@ -459,8 +452,7 @@ class _NuevaCotizacionWidgetState extends State<NuevaCotizacionWidget> {
                                                   width: 1.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        125.0),
+                                                    BorderRadius.circular(10.0),
                                               ),
                                               focusedBorder:
                                                   UnderlineInputBorder(
@@ -469,8 +461,7 @@ class _NuevaCotizacionWidgetState extends State<NuevaCotizacionWidget> {
                                                   width: 1.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        125.0),
+                                                    BorderRadius.circular(10.0),
                                               ),
                                               errorBorder: UnderlineInputBorder(
                                                 borderSide: BorderSide(
@@ -478,8 +469,7 @@ class _NuevaCotizacionWidgetState extends State<NuevaCotizacionWidget> {
                                                   width: 1.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        125.0),
+                                                    BorderRadius.circular(10.0),
                                               ),
                                               focusedErrorBorder:
                                                   UnderlineInputBorder(
@@ -488,8 +478,7 @@ class _NuevaCotizacionWidgetState extends State<NuevaCotizacionWidget> {
                                                   width: 1.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        125.0),
+                                                    BorderRadius.circular(10.0),
                                               ),
                                               filled: true,
                                               fillColor:
@@ -516,7 +505,87 @@ class _NuevaCotizacionWidgetState extends State<NuevaCotizacionWidget> {
                                         0.0, 40.0, 0.0, 0.0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
-                                        context.pushNamed('Cotizaciones');
+                                        if ((_model.txtNombreController.text !=
+                                                    null &&
+                                                _model.txtNombreController
+                                                        .text !=
+                                                    '') &&
+                                            (_model.txtPesoController.text !=
+                                                    null &&
+                                                _model.txtPesoController.text !=
+                                                    '') &&
+                                            (_model.txtTipoController.text !=
+                                                    null &&
+                                                _model.txtTipoController.text !=
+                                                    '') &&
+                                            (_model.txtEnlaceController.text !=
+                                                    null &&
+                                                _model.txtEnlaceController
+                                                        .text !=
+                                                    '')) {
+                                          await QuoteRequestsRecord.collection
+                                              .doc()
+                                              .set({
+                                            ...createQuoteRequestsRecordData(
+                                              uid: currentUserUid,
+                                              total: 0.0,
+                                              weight: int.tryParse(_model
+                                                  .txtPesoController.text),
+                                              productType:
+                                                  _model.txtTipoController.text,
+                                              refUrl: _model
+                                                  .txtEnlaceController.text,
+                                              productName: _model
+                                                  .txtNombreController.text,
+                                              price: 0.0,
+                                              taxes: 0.0,
+                                              shippingFees: 0.0,
+                                              ifCompleted: false,
+                                              idQuote: random_data
+                                                  .randomInteger(456, 1000000),
+                                            ),
+                                            ...mapToFirestore(
+                                              {
+                                                'date': FieldValue
+                                                    .serverTimestamp(),
+                                              },
+                                            ),
+                                          });
+                                          setState(() {
+                                            _model.txtNombreController?.clear();
+                                            _model.txtPesoController?.clear();
+                                            _model.txtTipoController?.clear();
+                                            _model.txtEnlaceController?.clear();
+                                          });
+
+                                          context.pushNamed('Cotizaciones');
+                                        } else {
+                                          await showDialog(
+                                            context: context,
+                                            builder: (alertDialogContext) {
+                                              return AlertDialog(
+                                                title:
+                                                    Text('Datos incorrectos'),
+                                                content: Text(
+                                                    'Por favor revise los datos introducidos!'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext),
+                                                    child: Text('Ok'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                          setState(() {
+                                            _model.txtNombreController?.clear();
+                                            _model.txtPesoController?.clear();
+                                            _model.txtTipoController?.clear();
+                                            _model.txtEnlaceController?.clear();
+                                          });
+                                        }
                                       },
                                       text: 'Cotizar',
                                       options: FFButtonOptions(
@@ -543,7 +612,7 @@ class _NuevaCotizacionWidgetState extends State<NuevaCotizacionWidget> {
                                           width: 1.0,
                                         ),
                                         borderRadius:
-                                            BorderRadius.circular(8.0),
+                                            BorderRadius.circular(10.0),
                                       ),
                                     ),
                                   ),

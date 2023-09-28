@@ -249,7 +249,7 @@ class _SolicitudesAdminMenuWidgetState
                                 color: Colors.transparent,
                                 width: 1.0,
                               ),
-                              borderRadius: BorderRadius.circular(8.0),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
                           ),
                         ),
@@ -299,7 +299,7 @@ class _SolicitudesAdminMenuWidgetState
                                 color: Colors.transparent,
                                 width: 1.0,
                               ),
-                              borderRadius: BorderRadius.circular(8.0),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
                           ),
                         ),
@@ -328,7 +328,7 @@ class _SolicitudesAdminMenuWidgetState
                               10.0, 10.0, 10.0, 10.0),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              context.pushNamed('InventarioAdmin');
+                              context.pushNamed('InventarioAdminCopy');
                             },
                             text: 'Inventario',
                             options: FFButtonOptions(
@@ -349,7 +349,7 @@ class _SolicitudesAdminMenuWidgetState
                                 color: Colors.transparent,
                                 width: 1.0,
                               ),
-                              borderRadius: BorderRadius.circular(8.0),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
                           ),
                         ),

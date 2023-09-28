@@ -134,7 +134,9 @@ class _HomePageWidgetState extends State<HomePageWidget>
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.black,
@@ -231,7 +233,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                               color: Colors.transparent,
                               width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(100.0),
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
                         ).animateOnPageLoad(
                             animationsMap['buttonOnPageLoadAnimation1']!),
@@ -261,7 +263,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                 0.0, 0.0, 0.0, 0.0),
                             iconPadding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 0.0),
-                            color: FlutterFlowTheme.of(context).grayIcon,
+                            color: FlutterFlowTheme.of(context).sideBarMenu,
                             textStyle: FlutterFlowTheme.of(context)
                                 .titleSmall
                                 .override(
@@ -274,7 +276,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                               color: Colors.transparent,
                               width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(100.0),
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
                         ).animateOnPageLoad(
                             animationsMap['buttonOnPageLoadAnimation2']!),

@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -93,68 +94,64 @@ class _BsOpcionentregaAnadirWidgetState
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        controller: _model.txtNombreDirController,
-                        autofocus: true,
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          hintText: 'Nombre de la dirección',
-                          hintStyle: FlutterFlowTheme.of(context).bodySmall,
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).sideBarMenu,
-                              width: 1.0,
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: _model.txtNombreDirController,
+                          autofocus: true,
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            hintText: 'Nombre de la dirección',
+                            hintStyle: FlutterFlowTheme.of(context).bodySmall,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).sideBarMenu,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(4.0),
-                              topRight: Radius.circular(4.0),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            filled: true,
+                            fillColor: FlutterFlowTheme.of(context).lineColor,
                           ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1.0,
-                            ),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(4.0),
-                              topRight: Radius.circular(4.0),
-                            ),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1.0,
-                            ),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(4.0),
-                              topRight: Radius.circular(4.0),
-                            ),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1.0,
-                            ),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(4.0),
-                              topRight: Radius.circular(4.0),
-                            ),
-                          ),
+                          style: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .override(
+                                fontFamily: 'Poppins',
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                              ),
+                          textAlign: TextAlign.start,
+                          validator: _model.txtNombreDirControllerValidator
+                              .asValidator(context),
                         ),
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Poppins',
-                              color: FlutterFlowTheme.of(context).text,
-                            ),
-                        textAlign: TextAlign.start,
-                        validator: _model.txtNombreDirControllerValidator
-                            .asValidator(context),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(20.0, 5.0, 20.0, 5.0),
@@ -162,7 +159,7 @@ class _BsOpcionentregaAnadirWidgetState
                     width: double.infinity,
                     height: 60.0,
                     decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      color: FlutterFlowTheme.of(context).lineColor,
                       boxShadow: [
                         BoxShadow(
                           blurRadius: 5.0,
@@ -170,7 +167,7 @@ class _BsOpcionentregaAnadirWidgetState
                           offset: Offset(0.0, 2.0),
                         )
                       ],
-                      borderRadius: BorderRadius.circular(8.0),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
@@ -178,7 +175,28 @@ class _BsOpcionentregaAnadirWidgetState
                       children: [
                         Flexible(
                           child: StreamBuilder<List<ProvincesRecord>>(
-                            stream: queryProvincesRecord(),
+                            stream: queryProvincesRecord()
+                              ..listen((snapshot) async {
+                                List<ProvincesRecord>
+                                    dDProvinciaProvincesRecordList = snapshot;
+                                if (_model.dDProvinciaProvincesRecordListPreviousSnapshot !=
+                                        null &&
+                                    !const ListEquality(
+                                            ProvincesRecordDocumentEquality())
+                                        .equals(
+                                            dDProvinciaProvincesRecordList,
+                                            _model
+                                                .dDProvinciaProvincesRecordListPreviousSnapshot)) {
+                                  setState(() {
+                                    _model.dDCantonValueController?.reset();
+                                    _model.dDDistritoValueController?.reset();
+                                  });
+
+                                  setState(() {});
+                                }
+                                _model.dDProvinciaProvincesRecordListPreviousSnapshot =
+                                    snapshot;
+                              }),
                             builder: (context, snapshot) {
                               // Customize what your widget looks like when it's loading.
                               if (!snapshot.hasData) {
@@ -195,17 +213,24 @@ class _BsOpcionentregaAnadirWidgetState
                                 );
                               }
                               List<ProvincesRecord>
-                                  dropDownProvincesRecordList = snapshot.data!;
+                                  dDProvinciaProvincesRecordList =
+                                  snapshot.data!;
                               return FlutterFlowDropDown<String>(
-                                controller: _model.dropDownValueController1 ??=
-                                    FormFieldController<String>(
-                                  _model.dropDownValue1 ??= '',
+                                controller:
+                                    _model.dDProvinciaValueController ??=
+                                        FormFieldController<String>(
+                                  _model.dDProvinciaValue ??= '',
                                 ),
-                                options: dropDownProvincesRecordList
+                                options: dDProvinciaProvincesRecordList
                                     .map((e) => e.name)
                                     .toList(),
-                                onChanged: (val) =>
-                                    setState(() => _model.dropDownValue1 = val),
+                                onChanged: (val) async {
+                                  setState(() => _model.dDProvinciaValue = val);
+                                  setState(() {
+                                    _model.dDCantonValueController?.reset();
+                                    _model.dDDistritoValueController?.reset();
+                                  });
+                                },
                                 width: 392.0,
                                 height: 50.0,
                                 searchHintTextStyle:
@@ -220,8 +245,8 @@ class _BsOpcionentregaAnadirWidgetState
                                       .secondaryText,
                                   size: 24.0,
                                 ),
-                                fillColor: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
+                                fillColor:
+                                    FlutterFlowTheme.of(context).lineColor,
                                 elevation: 2.0,
                                 borderColor:
                                     FlutterFlowTheme.of(context).alternate,
@@ -254,7 +279,7 @@ class _BsOpcionentregaAnadirWidgetState
                           offset: Offset(0.0, 2.0),
                         )
                       ],
-                      borderRadius: BorderRadius.circular(8.0),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
@@ -264,9 +289,30 @@ class _BsOpcionentregaAnadirWidgetState
                           child: StreamBuilder<List<CantonRecord>>(
                             stream: queryCantonRecord(
                               queryBuilder: (cantonRecord) =>
-                                  cantonRecord.where('province',
-                                      isEqualTo: _model.dropDownValue1),
-                            ),
+                                  cantonRecord.where(
+                                'province',
+                                isEqualTo: _model.dDProvinciaValue,
+                              ),
+                            )..listen((snapshot) async {
+                                List<CantonRecord> dDCantonCantonRecordList =
+                                    snapshot;
+                                if (_model.dDCantonCantonRecordListPreviousSnapshot !=
+                                        null &&
+                                    !const ListEquality(
+                                            CantonRecordDocumentEquality())
+                                        .equals(
+                                            dDCantonCantonRecordList,
+                                            _model
+                                                .dDCantonCantonRecordListPreviousSnapshot)) {
+                                  setState(() {
+                                    _model.dDDistritoValueController?.reset();
+                                  });
+
+                                  setState(() {});
+                                }
+                                _model.dDCantonCantonRecordListPreviousSnapshot =
+                                    snapshot;
+                              }),
                             builder: (context, snapshot) {
                               // Customize what your widget looks like when it's loading.
                               if (!snapshot.hasData) {
@@ -282,25 +328,29 @@ class _BsOpcionentregaAnadirWidgetState
                                   ),
                                 );
                               }
-                              List<CantonRecord> dropDownCantonRecordList =
+                              List<CantonRecord> dDCantonCantonRecordList =
                                   snapshot.data!;
                               return FlutterFlowDropDown<String>(
-                                controller: _model.dropDownValueController2 ??=
+                                controller: _model.dDCantonValueController ??=
                                     FormFieldController<String>(
-                                  _model.dropDownValue2 ??= '',
+                                  _model.dDCantonValue ??= '',
                                 ),
-                                options: dropDownCantonRecordList
+                                options: dDCantonCantonRecordList
                                     .map((e) => e.name)
                                     .toList(),
-                                onChanged: (val) =>
-                                    setState(() => _model.dropDownValue2 = val),
+                                onChanged: (val) async {
+                                  setState(() => _model.dDCantonValue = val);
+                                  setState(() {
+                                    _model.dDDistritoValueController?.reset();
+                                  });
+                                },
                                 width: 392.0,
                                 height: 50.0,
                                 searchHintTextStyle:
                                     FlutterFlowTheme.of(context).labelMedium,
                                 textStyle:
                                     FlutterFlowTheme.of(context).bodyMedium,
-                                hintText: 'Seleccione Canton...',
+                                hintText: 'Seleccione Cantón...',
                                 searchHintText: 'Search for an item...',
                                 icon: Icon(
                                   Icons.keyboard_arrow_down_rounded,
@@ -308,8 +358,8 @@ class _BsOpcionentregaAnadirWidgetState
                                       .secondaryText,
                                   size: 24.0,
                                 ),
-                                fillColor: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
+                                fillColor:
+                                    FlutterFlowTheme.of(context).lineColor,
                                 elevation: 2.0,
                                 borderColor:
                                     FlutterFlowTheme.of(context).alternate,
@@ -318,6 +368,7 @@ class _BsOpcionentregaAnadirWidgetState
                                 margin: EdgeInsetsDirectional.fromSTEB(
                                     16.0, 4.0, 16.0, 4.0),
                                 hidesUnderline: true,
+                                disabled: _model.dDProvinciaValue == '',
                                 isSearchable: true,
                                 isMultiSelect: false,
                               );
@@ -342,7 +393,7 @@ class _BsOpcionentregaAnadirWidgetState
                           offset: Offset(0.0, 2.0),
                         )
                       ],
-                      borderRadius: BorderRadius.circular(8.0),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
@@ -352,8 +403,10 @@ class _BsOpcionentregaAnadirWidgetState
                           child: StreamBuilder<List<DistrictsRecord>>(
                             stream: queryDistrictsRecord(
                               queryBuilder: (districtsRecord) =>
-                                  districtsRecord.where('canton',
-                                      isEqualTo: _model.dropDownValue2),
+                                  districtsRecord.where(
+                                'canton',
+                                isEqualTo: _model.dDCantonValue,
+                              ),
                             ),
                             builder: (context, snapshot) {
                               // Customize what your widget looks like when it's loading.
@@ -371,17 +424,18 @@ class _BsOpcionentregaAnadirWidgetState
                                 );
                               }
                               List<DistrictsRecord>
-                                  dropDownDistrictsRecordList = snapshot.data!;
+                                  dDDistritoDistrictsRecordList =
+                                  snapshot.data!;
                               return FlutterFlowDropDown<String>(
-                                controller: _model.dropDownValueController3 ??=
+                                controller: _model.dDDistritoValueController ??=
                                     FormFieldController<String>(
-                                  _model.dropDownValue3 ??= '',
+                                  _model.dDDistritoValue ??= '',
                                 ),
-                                options: dropDownDistrictsRecordList
+                                options: dDDistritoDistrictsRecordList
                                     .map((e) => e.name)
                                     .toList(),
-                                onChanged: (val) =>
-                                    setState(() => _model.dropDownValue3 = val),
+                                onChanged: (val) => setState(
+                                    () => _model.dDDistritoValue = val),
                                 width: 392.0,
                                 height: 50.0,
                                 searchHintTextStyle:
@@ -396,8 +450,8 @@ class _BsOpcionentregaAnadirWidgetState
                                       .secondaryText,
                                   size: 24.0,
                                 ),
-                                fillColor: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
+                                fillColor:
+                                    FlutterFlowTheme.of(context).lineColor,
                                 elevation: 2.0,
                                 borderColor:
                                     FlutterFlowTheme.of(context).alternate,
@@ -406,6 +460,7 @@ class _BsOpcionentregaAnadirWidgetState
                                 margin: EdgeInsetsDirectional.fromSTEB(
                                     16.0, 4.0, 16.0, 4.0),
                                 hidesUnderline: true,
+                                disabled: _model.dDCantonValue == '',
                                 isSearchable: true,
                                 isMultiSelect: false,
                               );
@@ -416,68 +471,64 @@ class _BsOpcionentregaAnadirWidgetState
                     ),
                   ),
                 ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        controller: _model.txtDirCompletaController,
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          hintText: 'Dirección exacta en la ubicación...',
-                          hintStyle: FlutterFlowTheme.of(context).bodySmall,
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).sideBarMenu,
-                              width: 1.0,
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: _model.txtDirCompletaController,
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            hintText: 'Dirección exacta en la ubicación...',
+                            hintStyle: FlutterFlowTheme.of(context).bodySmall,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).sideBarMenu,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(4.0),
-                              topRight: Radius.circular(4.0),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            filled: true,
+                            fillColor: FlutterFlowTheme.of(context).lineColor,
                           ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1.0,
-                            ),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(4.0),
-                              topRight: Radius.circular(4.0),
-                            ),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1.0,
-                            ),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(4.0),
-                              topRight: Radius.circular(4.0),
-                            ),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1.0,
-                            ),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(4.0),
-                              topRight: Radius.circular(4.0),
-                            ),
-                          ),
+                          style: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .override(
+                                fontFamily: 'Poppins',
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                              ),
+                          textAlign: TextAlign.start,
+                          maxLines: 5,
+                          validator: _model.txtDirCompletaControllerValidator
+                              .asValidator(context),
                         ),
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Poppins',
-                              color: FlutterFlowTheme.of(context).text,
-                            ),
-                        textAlign: TextAlign.start,
-                        maxLines: 5,
-                        validator: _model.txtDirCompletaControllerValidator
-                            .asValidator(context),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 Row(
                   mainAxisSize: MainAxisSize.max,
@@ -512,6 +563,7 @@ class _BsOpcionentregaAnadirWidgetState
                               color: FlutterFlowTheme.of(context).primary,
                               width: 5.0,
                             ),
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
                         ),
                       ),
@@ -522,23 +574,23 @@ class _BsOpcionentregaAnadirWidgetState
                             10.0, 16.0, 0.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            if ((_model.dropDownValue1 != '') &&
-                                (_model.dropDownValue2 != '') &&
-                                (_model.dropDownValue3 != '') &&
+                            if ((_model.dDProvinciaValue != '') &&
+                                (_model.dDCantonValue != '') &&
+                                (_model.dDDistritoValue != '') &&
                                 (_model.txtNombreDirController.text != '') &&
                                 (_model.txtDirCompletaController.text != '')) {
                               await AddressesRecord.collection
                                   .doc()
                                   .set(createAddressesRecordData(
                                     address:
-                                        '${_model.dropDownValue1}, ${_model.dropDownValue2}, ${_model.dropDownValue3}- ${_model.txtDirCompletaController.text}',
+                                        '${_model.dDProvinciaValue}, ${_model.dDCantonValue}, ${_model.dDDistritoValue}- ${_model.txtDirCompletaController.text}',
                                     nameAddress:
-                                        '${_model.txtNombreDirController.text}: ${_model.dropDownValue2}',
+                                        '${_model.txtNombreDirController.text}: ${_model.dDCantonValue}',
                                     uid: currentUserUid,
                                     deliveryOption: widget.opcion?.reference,
                                   ));
 
-                              context.pushNamed('Index');
+                              context.pushNamed('Perfil');
                             } else {
                               await showDialog(
                                 context: context,
@@ -546,7 +598,7 @@ class _BsOpcionentregaAnadirWidgetState
                                   return AlertDialog(
                                     title: Text('Campos vacios'),
                                     content: Text(
-                                        'Por favor, elija una Provincia, Canton y Distrito'),
+                                        '¡Por favor, ingrese todos los campos!'),
                                     actions: [
                                       TextButton(
                                         onPressed: () =>
@@ -578,7 +630,7 @@ class _BsOpcionentregaAnadirWidgetState
                               color: FlutterFlowTheme.of(context).success,
                               width: 5.0,
                             ),
-                            borderRadius: BorderRadius.circular(8.0),
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
                         ),
                       ),

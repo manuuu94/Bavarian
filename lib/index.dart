@@ -36,3 +36,5 @@ export '/pages/admin/inventario_crear/inventario_crear_widget.dart'
     show InventarioCrearWidget;
 export '/pages/admin/inventario_editar/inventario_editar_widget.dart'
     show InventarioEditarWidget;
+export '/pages/admin/inventario_admin_copy/inventario_admin_copy_widget.dart'
+    show InventarioAdminCopyWidget;

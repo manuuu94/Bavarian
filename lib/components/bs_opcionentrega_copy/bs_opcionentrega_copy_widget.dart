@@ -79,16 +79,6 @@ class _BsOpcionentregaCopyWidgetState extends State<BsOpcionentregaCopyWidget> {
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Opción de entrega',
-                  style: FlutterFlowTheme.of(context).bodyMedium,
-                ),
-              ],
-            ),
             Expanded(
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
@@ -117,7 +107,7 @@ class _BsOpcionentregaCopyWidgetState extends State<BsOpcionentregaCopyWidget> {
                         crossAxisCount: 2,
                         crossAxisSpacing: 1.0,
                         mainAxisSpacing: 1.0,
-                        childAspectRatio: 0.26,
+                        childAspectRatio: 0.3,
                       ),
                       scrollDirection: Axis.horizontal,
                       itemCount: gridViewDeliveryOptionsRecordList.length,
@@ -203,6 +193,7 @@ class _BsOpcionentregaCopyWidgetState extends State<BsOpcionentregaCopyWidget> {
                     color: FlutterFlowTheme.of(context).primary,
                     width: 5.0,
                   ),
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
             ),

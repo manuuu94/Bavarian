@@ -1,3 +1,4 @@
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -10,7 +11,12 @@ import 'bs_detalles_producto_eliminar_model.dart';
 export 'bs_detalles_producto_eliminar_model.dart';
 
 class BsDetallesProductoEliminarWidget extends StatefulWidget {
-  const BsDetallesProductoEliminarWidget({Key? key}) : super(key: key);
+  const BsDetallesProductoEliminarWidget({
+    Key? key,
+    this.producto,
+  }) : super(key: key);
+
+  final InventoryRecord? producto;
 
   @override
   _BsDetallesProductoEliminarWidgetState createState() =>
@@ -120,7 +126,7 @@ class _BsDetallesProductoEliminarWidgetState
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 8.0, 0.0, 0.0),
                               child: Text(
-                                'Nombre del producto.',
+                                widget.producto!.productName,
                                 style: FlutterFlowTheme.of(context)
                                     .bodySmall
                                     .override(
@@ -140,7 +146,7 @@ class _BsDetallesProductoEliminarWidgetState
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 8.0, 0.0, 0.0),
                               child: Text(
-                                'Descripción del producto.',
+                                widget.producto!.productDescription,
                                 style: FlutterFlowTheme.of(context)
                                     .bodySmall
                                     .override(
@@ -160,15 +166,18 @@ class _BsDetallesProductoEliminarWidgetState
                           children: [
                             Expanded(
                               child: Hero(
-                                tag: '',
+                                tag: widget.producto!.image,
                                 transitionOnUserGestures: true,
-                                child: Image.network(
-                                  'https://media.istockphoto.com/id/1324356458/vector/picture-icon-photo-frame-symbol-landscape-sign-photograph-gallery-logo-web-interface-and.jpg?s=612x612&w=0&k=20&c=ZmXO4mSgNDPzDRX-F8OKCfmMqqHpqMV6jiNi00Ye7rE=',
-                                  width:
-                                      MediaQuery.sizeOf(context).width * 0.65,
-                                  height:
-                                      MediaQuery.sizeOf(context).height * 0.4,
-                                  fit: BoxFit.contain,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  child: Image.network(
+                                    widget.producto!.image,
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 0.65,
+                                    height:
+                                        MediaQuery.sizeOf(context).height * 0.4,
+                                    fit: BoxFit.contain,
+                                  ),
                                 ),
                               ),
                             ),
@@ -191,7 +200,7 @@ class _BsDetallesProductoEliminarWidgetState
                                   color: FlutterFlowTheme.of(context).black600,
                                 ),
                                 child: Text(
-                                  'Cantidad disponible: 5',
+                                  'Cantidad disponible: ${widget.producto?.quantity?.toString()}',
                                   textAlign: TextAlign.center,
                                   style: FlutterFlowTheme.of(context)
                                       .bodySmall
@@ -222,7 +231,12 @@ class _BsDetallesProductoEliminarWidgetState
                                   color: FlutterFlowTheme.of(context).black600,
                                 ),
                                 child: Text(
-                                  'Precio unitario: \$100',
+                                  'Precio unitario: ${formatNumber(
+                                    widget.producto?.price,
+                                    formatType: FormatType.decimal,
+                                    decimalType: DecimalType.automatic,
+                                    currency: '₡',
+                                  )}',
                                   textAlign: TextAlign.center,
                                   style: FlutterFlowTheme.of(context)
                                       .bodySmall
@@ -246,7 +260,9 @@ class _BsDetallesProductoEliminarWidgetState
                           children: [
                             FFButtonWidget(
                               onPressed: () async {
-                                context.pushNamed('InventarioAdmin');
+                                await widget.producto!.reference.delete();
+
+                                context.pushNamed('InventarioAdminCopy');
                               },
                               text: 'Eliminar',
                               icon: Icon(
@@ -272,6 +288,7 @@ class _BsDetallesProductoEliminarWidgetState
                                   color: Colors.transparent,
                                   width: 1.0,
                                 ),
+                                borderRadius: BorderRadius.circular(10.0),
                               ),
                             ),
                           ],

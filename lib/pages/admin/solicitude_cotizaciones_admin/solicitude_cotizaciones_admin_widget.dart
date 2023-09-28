@@ -203,7 +203,7 @@ class _SolicitudeCotizacionesAdminWidgetState
                             height: 52.0,
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius: BorderRadius.circular(8.0),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
                             child: Stack(
                               children: [
@@ -352,6 +352,9 @@ class _SolicitudeCotizacionesAdminWidgetState
                                                     color: FlutterFlowTheme.of(
                                                             context)
                                                         .secondaryBackground,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
                                                     border: Border.all(
                                                       color:
                                                           FlutterFlowTheme.of(
@@ -536,6 +539,9 @@ class _SolicitudeCotizacionesAdminWidgetState
                                                     color: FlutterFlowTheme.of(
                                                             context)
                                                         .secondaryBackground,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
                                                     border: Border.all(
                                                       color:
                                                           FlutterFlowTheme.of(

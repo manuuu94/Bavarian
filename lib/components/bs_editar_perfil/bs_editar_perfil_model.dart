@@ -4,23 +4,21 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
+import 'bs_editar_perfil_widget.dart' show BsEditarPerfilWidget;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class BsEditarPerfilModel extends FlutterFlowModel {
+class BsEditarPerfilModel extends FlutterFlowModel<BsEditarPerfilWidget> {
   ///  State fields for stateful widgets in this component.
 
   // State field(s) for txtEditName widget.
   TextEditingController? txtEditNameController;
   String? Function(BuildContext, String?)? txtEditNameControllerValidator;
   // State field(s) for txtPhone widget.
-  TextEditingController? txtPhoneController1;
-  String? Function(BuildContext, String?)? txtPhoneController1Validator;
-  // State field(s) for txtPhone widget.
-  TextEditingController? txtPhoneController2;
-  String? Function(BuildContext, String?)? txtPhoneController2Validator;
+  TextEditingController? txtPhoneController;
+  String? Function(BuildContext, String?)? txtPhoneControllerValidator;
 
   /// Initialization and disposal methods.
 
@@ -28,8 +26,7 @@ class BsEditarPerfilModel extends FlutterFlowModel {
 
   void dispose() {
     txtEditNameController?.dispose();
-    txtPhoneController1?.dispose();
-    txtPhoneController2?.dispose();
+    txtPhoneController?.dispose();
   }
 
   /// Action blocks are added here.

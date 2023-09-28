@@ -93,8 +93,10 @@ class _BsOpcionentregaSeleccionarCopyWidgetState
             children: [
               StreamBuilder<List<AddressesRecord>>(
                 stream: queryAddressesRecord(
-                  queryBuilder: (addressesRecord) =>
-                      addressesRecord.where('uid', isEqualTo: currentUserUid),
+                  queryBuilder: (addressesRecord) => addressesRecord.where(
+                    'uid',
+                    isEqualTo: currentUserUid,
+                  ),
                 ),
                 builder: (context, snapshot) {
                   // Customize what your widget looks like when it's loading.
@@ -202,6 +204,7 @@ class _BsOpcionentregaSeleccionarCopyWidgetState
                             color: FlutterFlowTheme.of(context).primary,
                             width: 5.0,
                           ),
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
                     ),
@@ -245,7 +248,7 @@ class _BsOpcionentregaSeleccionarCopyWidgetState
                             color: Color(0xD2BC00FF),
                             width: 5.0,
                           ),
-                          borderRadius: BorderRadius.circular(8.0),
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
                     ),

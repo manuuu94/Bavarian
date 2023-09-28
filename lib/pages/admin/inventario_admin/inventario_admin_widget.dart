@@ -200,7 +200,7 @@ class _InventarioAdminWidgetState extends State<InventarioAdminWidget> {
                             height: 52.0,
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius: BorderRadius.circular(8.0),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
                             child: Stack(
                               children: [
@@ -351,6 +351,8 @@ class _InventarioAdminWidgetState extends State<InventarioAdminWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .secondaryBackground,
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
                                             ),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.min,
@@ -499,8 +501,9 @@ class _InventarioAdminWidgetState extends State<InventarioAdminWidget> {
                                                                             2.0,
                                                                             0.0,
                                                                             2.0),
-                                                                color: Color(
-                                                                    0xBF39EF40),
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .sideBarMenu,
                                                                 textStyle: FlutterFlowTheme.of(
                                                                         context)
                                                                     .displaySmall
@@ -520,7 +523,7 @@ class _InventarioAdminWidgetState extends State<InventarioAdminWidget> {
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
-                                                                            8.0),
+                                                                            10.0),
                                                               ),
                                                             ),
                                                           ),
@@ -596,7 +599,7 @@ class _InventarioAdminWidgetState extends State<InventarioAdminWidget> {
                                                                             2.0),
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .error,
+                                                                    .grayIcon,
                                                                 textStyle: FlutterFlowTheme.of(
                                                                         context)
                                                                     .displaySmall
@@ -616,7 +619,7 @@ class _InventarioAdminWidgetState extends State<InventarioAdminWidget> {
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
-                                                                            8.0),
+                                                                            10.0),
                                                               ),
                                                             ),
                                                           ),
@@ -655,6 +658,8 @@ class _InventarioAdminWidgetState extends State<InventarioAdminWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .secondaryBackground,
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
                                             ),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.max,
@@ -808,8 +813,9 @@ class _InventarioAdminWidgetState extends State<InventarioAdminWidget> {
                                                                             2.0,
                                                                             0.0,
                                                                             2.0),
-                                                                color: Color(
-                                                                    0xBF39EF40),
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .sideBarMenu,
                                                                 textStyle: FlutterFlowTheme.of(
                                                                         context)
                                                                     .displaySmall
@@ -829,7 +835,7 @@ class _InventarioAdminWidgetState extends State<InventarioAdminWidget> {
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
-                                                                            8.0),
+                                                                            10.0),
                                                               ),
                                                             ),
                                                           ),
@@ -905,7 +911,7 @@ class _InventarioAdminWidgetState extends State<InventarioAdminWidget> {
                                                                             2.0),
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .error,
+                                                                    .grayIcon,
                                                                 textStyle: FlutterFlowTheme.of(
                                                                         context)
                                                                     .displaySmall
@@ -925,7 +931,7 @@ class _InventarioAdminWidgetState extends State<InventarioAdminWidget> {
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
-                                                                            8.0),
+                                                                            10.0),
                                                               ),
                                                             ),
                                                           ),
@@ -964,7 +970,8 @@ class _InventarioAdminWidgetState extends State<InventarioAdminWidget> {
                                         0.0, 0.0, 0.0, 0.0),
                                     iconPadding: EdgeInsetsDirectional.fromSTEB(
                                         5.0, 2.0, 0.0, 2.0),
-                                    color: Color(0xBF39EF40),
+                                    color: FlutterFlowTheme.of(context)
+                                        .sideBarMenu,
                                     textStyle: FlutterFlowTheme.of(context)
                                         .displaySmall
                                         .override(
@@ -976,7 +983,7 @@ class _InventarioAdminWidgetState extends State<InventarioAdminWidget> {
                                       color: Colors.transparent,
                                       width: 1.0,
                                     ),
-                                    borderRadius: BorderRadius.circular(8.0),
+                                    borderRadius: BorderRadius.circular(10.0),
                                   ),
                                 ),
                               ),

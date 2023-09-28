@@ -240,13 +240,20 @@ class _PerfilWidgetState extends State<PerfilWidget>
                                     builder: (context) => ClipRRect(
                                       borderRadius: BorderRadius.circular(0.0),
                                       child: Image.network(
-                                        valueOrDefault<String>(
-                                          currentUserPhoto,
-                                          'Edite para añadir imagen',
-                                        ),
+                                        currentUserPhoto == ''
+                                            ? 'https://demofree.sirv.com/nope-not-here.jpg'
+                                            : currentUserPhoto,
                                         width: 120.0,
                                         height: 150.0,
                                         fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) =>
+                                                Image.asset(
+                                          'assets/images/error_image.png',
+                                          width: 120.0,
+                                          height: 150.0,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -427,7 +434,7 @@ class _PerfilWidgetState extends State<PerfilWidget>
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'Perfil: ',
+                                    'Ced: ',
                                     textAlign: TextAlign.start,
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
@@ -441,7 +448,7 @@ class _PerfilWidgetState extends State<PerfilWidget>
                                   AuthUserStreamWidget(
                                     builder: (context) => Text(
                                       valueOrDefault(
-                                          currentUserDocument?.role, ''),
+                                          currentUserDocument?.id, ''),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
@@ -492,8 +499,8 @@ class _PerfilWidgetState extends State<PerfilWidget>
                                   size: 15.0,
                                 ),
                                 options: FFButtonOptions(
-                                  width: 130.0,
-                                  height: 40.0,
+                                  width: 150.0,
+                                  height: 50.0,
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
                                   iconPadding: EdgeInsetsDirectional.fromSTEB(
@@ -512,7 +519,7 @@ class _PerfilWidgetState extends State<PerfilWidget>
                                     color: Colors.transparent,
                                     width: 1.0,
                                   ),
-                                  borderRadius: BorderRadius.circular(8.0),
+                                  borderRadius: BorderRadius.circular(10.0),
                                 ),
                               ),
                             ],
@@ -566,7 +573,7 @@ class _PerfilWidgetState extends State<PerfilWidget>
                                   color: Colors.transparent,
                                   width: 1.0,
                                 ),
-                                borderRadius: BorderRadius.circular(8.0),
+                                borderRadius: BorderRadius.circular(10.0),
                               ),
                             ),
                           ],

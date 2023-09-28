@@ -1,18 +1,16 @@
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'bs_detalles_producto_model.dart';
-export 'bs_detalles_producto_model.dart';
+import 'bs_detalles_producto_admin_model.dart';
+export 'bs_detalles_producto_admin_model.dart';
 
-class BsDetallesProductoWidget extends StatefulWidget {
-  const BsDetallesProductoWidget({
+class BsDetallesProductoAdminWidget extends StatefulWidget {
+  const BsDetallesProductoAdminWidget({
     Key? key,
     required this.producto,
   }) : super(key: key);
@@ -20,12 +18,13 @@ class BsDetallesProductoWidget extends StatefulWidget {
   final InventoryRecord? producto;
 
   @override
-  _BsDetallesProductoWidgetState createState() =>
-      _BsDetallesProductoWidgetState();
+  _BsDetallesProductoAdminWidgetState createState() =>
+      _BsDetallesProductoAdminWidgetState();
 }
 
-class _BsDetallesProductoWidgetState extends State<BsDetallesProductoWidget> {
-  late BsDetallesProductoModel _model;
+class _BsDetallesProductoAdminWidgetState
+    extends State<BsDetallesProductoAdminWidget> {
+  late BsDetallesProductoAdminModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -36,7 +35,7 @@ class _BsDetallesProductoWidgetState extends State<BsDetallesProductoWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => BsDetallesProductoModel());
+    _model = createModel(context, () => BsDetallesProductoAdminModel());
 
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
@@ -230,100 +229,6 @@ class _BsDetallesProductoWidgetState extends State<BsDetallesProductoWidget> {
                                             FlutterFlowTheme.of(context).text,
                                       ),
                                 ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            0.0, 24.0, 0.0, 10.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            FFButtonWidget(
-                              onPressed: () async {
-                                context.pushNamed('Carrito');
-                              },
-                              text: 'Agregar al carrito',
-                              options: FFButtonOptions(
-                                width: 150.0,
-                                height: 50.0,
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context).sideBarMenu,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Poppins',
-                                      color: FlutterFlowTheme.of(context).text,
-                                    ),
-                                elevation: 2.0,
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            0.0, 10.0, 0.0, 44.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            FFButtonWidget(
-                              onPressed: () async {
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title: Text('Mensaje enviado!'),
-                                      content: Text(
-                                          'Tu  mensaje consultndo acerca de este producto se ha enviado al vendedor por medio de whatsapp.'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(alertDialogContext),
-                                          child: Text('Ok'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              },
-                              text: 'Contactanos',
-                              icon: FaIcon(
-                                FontAwesomeIcons.whatsapp,
-                              ),
-                              options: FFButtonOptions(
-                                width: 150.0,
-                                height: 50.0,
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color:
-                                    FlutterFlowTheme.of(context).greenConfirm,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Poppins',
-                                      color: FlutterFlowTheme.of(context).text,
-                                    ),
-                                elevation: 2.0,
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(10.0),
                               ),
                             ),
                           ],

@@ -43,6 +43,7 @@ dependencies:
   firebase_crashlytics_platform_interface: 3.6.2
   flutter_animate: 4.1.1+1
   flutter_cache_manager: 3.3.0
+  flutter_linkify: ^5.0.2
   flutter_slidable: 
     git:
       url: https://github.com/letsar/flutter_slidable.git
@@ -58,6 +59,7 @@ dependencies:
   google_sign_in_web: 0.11.0+2
   intl: 0.18.0
   json_path: 0.6.2
+  mask_text_input_formatter: 2.4.0
   package_info_plus: ^3.0.1
   package_info_plus_platform_interface: ^2.0.1
   page_transition: 2.0.4
@@ -91,17 +93,20 @@ dependencies:
   cupertino_icons: ^1.0.0
 
 dev_dependencies:
-  flutter_launcher_icons: 0.12.0
+  flutter_launcher_icons: 0.13.1
+  image: 4.0.17
 
   flutter_test:
     sdk: flutter
 
 
-flutter_icons:
+flutter_launcher_icons:
   android: true
   ios: true
   remove_alpha_ios: true
-  image_path: 'assets/images/app_launcher_icon.png'
+  web:
+    generate: true
+  image_path: 'assets/images/app_launcher_icon.jpg'
 
 
 # For information on the generic Dart part of this file, see the

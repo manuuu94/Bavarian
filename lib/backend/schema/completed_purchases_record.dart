@@ -66,6 +66,11 @@ class CompletedPurchasesRecord extends FirestoreRecord {
   bool get ifCompleted => _ifCompleted ?? false;
   bool hasIfCompleted() => _ifCompleted != null;
 
+  // "price" field.
+  List<double>? _price;
+  List<double> get price => _price ?? const [];
+  bool hasPrice() => _price != null;
+
   void _initializeFields() {
     _products = getDataList(snapshotData['products']);
     _address = snapshotData['address'] as String?;
@@ -77,6 +82,7 @@ class CompletedPurchasesRecord extends FirestoreRecord {
     _customerName = snapshotData['customerName'] as String?;
     _customerPhone = snapshotData['customerPhone'] as String?;
     _ifCompleted = snapshotData['ifCompleted'] as bool?;
+    _price = getDataList(snapshotData['price']);
   }
 
   static CollectionReference get collection =>
@@ -156,7 +162,8 @@ class CompletedPurchasesRecordDocumentEquality
         e1?.email == e2?.email &&
         e1?.customerName == e2?.customerName &&
         e1?.customerPhone == e2?.customerPhone &&
-        e1?.ifCompleted == e2?.ifCompleted;
+        e1?.ifCompleted == e2?.ifCompleted &&
+        listEquality.equals(e1?.price, e2?.price);
   }
 
   @override
@@ -170,7 +177,8 @@ class CompletedPurchasesRecordDocumentEquality
         e?.email,
         e?.customerName,
         e?.customerPhone,
-        e?.ifCompleted
+        e?.ifCompleted,
+        e?.price
       ]);
 
   @override

@@ -38,8 +38,7 @@ class _BsEditarPerfilWidgetState extends State<BsEditarPerfilWidget> {
     });
 
     _model.txtEditNameController ??= TextEditingController();
-    _model.txtPhoneController1 ??= TextEditingController();
-    _model.txtPhoneController2 ??= TextEditingController();
+    _model.txtPhoneController ??= TextEditingController();
   }
 
   @override
@@ -92,9 +91,11 @@ class _BsEditarPerfilWidgetState extends State<BsEditarPerfilWidget> {
                   children: [
                     AuthUserStreamWidget(
                       builder: (context) => ClipRRect(
-                        borderRadius: BorderRadius.circular(40.0),
+                        borderRadius: BorderRadius.circular(10.0),
                         child: Image.network(
-                          currentUserPhoto,
+                          currentUserPhoto == ''
+                              ? 'https://demofree.sirv.com/nope-not-here.jpg'
+                              : currentUserPhoto,
                           width: MediaQuery.sizeOf(context).width * 0.4,
                           height: MediaQuery.sizeOf(context).height * 0.2,
                           fit: BoxFit.cover,
@@ -145,7 +146,7 @@ class _BsEditarPerfilWidgetState extends State<BsEditarPerfilWidget> {
                           color: Colors.transparent,
                           width: 1.0,
                         ),
-                        borderRadius: BorderRadius.circular(8.0),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
                   ],
@@ -174,28 +175,28 @@ class _BsEditarPerfilWidgetState extends State<BsEditarPerfilWidget> {
                               color: FlutterFlowTheme.of(context).sideBarMenu,
                               width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(8.0),
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
                               width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(8.0),
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
                           errorBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
                               width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(8.0),
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
                           focusedErrorBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
                               width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(8.0),
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
                         ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -218,8 +219,7 @@ class _BsEditarPerfilWidgetState extends State<BsEditarPerfilWidget> {
                   children: [
                     Expanded(
                       child: TextFormField(
-                        controller: _model.txtPhoneController1,
-                        autofocus: true,
+                        controller: _model.txtPhoneController,
                         obscureText: false,
                         decoration: InputDecoration(
                           hintText: 'Teléfono',
@@ -233,91 +233,34 @@ class _BsEditarPerfilWidgetState extends State<BsEditarPerfilWidget> {
                               color: FlutterFlowTheme.of(context).sideBarMenu,
                               width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(8.0),
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
                               width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(8.0),
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
                           errorBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
                               width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(8.0),
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
                           focusedErrorBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
                               width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(8.0),
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
                         ),
                         style: FlutterFlowTheme.of(context).bodyMedium,
                         textAlign: TextAlign.center,
                         keyboardType: TextInputType.number,
-                        validator: _model.txtPhoneController1Validator
-                            .asValidator(context),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(20.0, 5.0, 20.0, 0.0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        controller: _model.txtPhoneController2,
-                        autofocus: true,
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          hintText: 'Correo',
-                          hintStyle:
-                              FlutterFlowTheme.of(context).bodySmall.override(
-                                    fontFamily: 'Poppins',
-                                    color: FlutterFlowTheme.of(context).primary,
-                                  ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).sideBarMenu,
-                              width: 1.0,
-                            ),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1.0,
-                            ),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1.0,
-                            ),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1.0,
-                            ),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                        ),
-                        style: FlutterFlowTheme.of(context).bodyMedium,
-                        textAlign: TextAlign.center,
-                        keyboardType: TextInputType.emailAddress,
-                        validator: _model.txtPhoneController2Validator
+                        validator: _model.txtPhoneControllerValidator
                             .asValidator(context),
                       ),
                     ),
@@ -361,6 +304,7 @@ class _BsEditarPerfilWidgetState extends State<BsEditarPerfilWidget> {
                             color: Colors.transparent,
                             width: 1.0,
                           ),
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
                     ),

@@ -4,15 +4,17 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
+import 'create_account_widget.dart' show CreateAccountWidget;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 
-class CreateAccountModel extends FlutterFlowModel {
+class CreateAccountModel extends FlutterFlowModel<CreateAccountWidget> {
   ///  State fields for stateful widgets in this page.
 
   // State field(s) for name widget.
@@ -20,7 +22,12 @@ class CreateAccountModel extends FlutterFlowModel {
   String? Function(BuildContext, String?)? nameControllerValidator;
   // State field(s) for phone widget.
   TextEditingController? phoneController;
+  final phoneMask = MaskTextInputFormatter(mask: '#### ####');
   String? Function(BuildContext, String?)? phoneControllerValidator;
+  // State field(s) for id widget.
+  TextEditingController? idController;
+  final idMask = MaskTextInputFormatter(mask: '## # #### ####');
+  String? Function(BuildContext, String?)? idControllerValidator;
   // State field(s) for emailAddress widget.
   TextEditingController? emailAddressController;
   String? Function(BuildContext, String?)? emailAddressControllerValidator;
@@ -43,6 +50,7 @@ class CreateAccountModel extends FlutterFlowModel {
   void dispose() {
     nameController?.dispose();
     phoneController?.dispose();
+    idController?.dispose();
     emailAddressController?.dispose();
     passwordController?.dispose();
     confirmPasswordController?.dispose();

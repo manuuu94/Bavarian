@@ -1,8 +1,10 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -98,7 +100,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     width: double.infinity,
                     height: 60.0,
                     decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      color: FlutterFlowTheme.of(context).lineColor,
                       boxShadow: [
                         BoxShadow(
                           blurRadius: 5.0,
@@ -106,7 +108,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           offset: Offset(0.0, 2.0),
                         )
                       ],
-                      borderRadius: BorderRadius.circular(8.0),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
@@ -166,8 +168,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   borderRadius: BorderRadius.circular(12.0),
                                 ),
                                 filled: true,
-                                fillColor: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
+                                fillColor:
+                                    FlutterFlowTheme.of(context).lineColor,
                                 suffixIcon: _model
                                         .emailAddressController!.text.isNotEmpty
                                     ? InkWell(
@@ -201,7 +203,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     width: double.infinity,
                     height: 60.0,
                     decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      color: FlutterFlowTheme.of(context).lineColor,
                       boxShadow: [
                         BoxShadow(
                           blurRadius: 5.0,
@@ -209,7 +211,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           offset: Offset(0.0, 2.0),
                         )
                       ],
-                      borderRadius: BorderRadius.circular(8.0),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
@@ -264,8 +266,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   borderRadius: BorderRadius.circular(12.0),
                                 ),
                                 filled: true,
-                                fillColor: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
+                                fillColor:
+                                    FlutterFlowTheme.of(context).lineColor,
                                 suffixIcon: InkWell(
                                   onTap: () => setState(
                                     () => _model.contraLoginVisibility =
@@ -302,18 +304,68 @@ class _LoginWidgetState extends State<LoginWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      GoRouter.of(context).prepareAuthEvent();
+                      Function() _navigate = () {};
+                      if ((_model.emailAddressController.text != '') &&
+                          (_model.contraLoginController.text != '')) {
+                        GoRouter.of(context).prepareAuthEvent();
 
-                      final user = await authManager.signInWithEmail(
-                        context,
-                        _model.emailAddressController.text,
-                        _model.contraLoginController.text,
-                      );
-                      if (user == null) {
-                        return;
+                        final user = await authManager.signInWithEmail(
+                          context,
+                          _model.emailAddressController.text,
+                          _model.contraLoginController.text,
+                        );
+                        if (user == null) {
+                          return;
+                        }
+
+                        _navigate =
+                            () => context.goNamedAuth('Index', context.mounted);
+
+                        await UsersLogRecord.collection
+                            .doc()
+                            .set(createUsersLogRecordData(
+                              description:
+                                  'Ingreso aplicación: ${currentUserDisplayName}- ${currentUserEmail}',
+                              logDate: getCurrentTimestamp,
+                            ));
+                        await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: Text('Credenciales Correctas'),
+                              content: Text(
+                                  'Bienvenido/a ${currentUserDisplayName}! ¡Gracias por preferir Bavarian Auto Shop!'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: Text('Ok'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      } else {
+                        await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: Text('Introduzca credenciales'),
+                              content: Text(
+                                  'Introduzca su correo y contraseña o utilice la opción de olvidé mi contraseña!'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: Text('Ok'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       }
 
-                      context.goNamedAuth('Index', context.mounted);
+                      _navigate();
                     },
                     text: 'Entrar',
                     icon: Icon(
@@ -327,7 +379,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       iconPadding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      color: FlutterFlowTheme.of(context).grayIcon,
+                      color: FlutterFlowTheme.of(context).sideBarMenu,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
                                 fontFamily: 'Poppins',
@@ -339,7 +391,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                         color: Colors.transparent,
                         width: 1.0,
                       ),
-                      borderRadius: BorderRadius.circular(100.0),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
                 ),
@@ -381,7 +433,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                         color: Colors.transparent,
                         width: 1.0,
                       ),
-                      borderRadius: BorderRadius.circular(100.0),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
                 ),

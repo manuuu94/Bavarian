@@ -399,7 +399,8 @@ class _CarritoWidgetState extends State<CarritoWidget> {
                                           iconPadding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 0.0, 0.0, 0.0),
-                                          color: Color(0xFFFF0004),
+                                          color: FlutterFlowTheme.of(context)
+                                              .grayIcon,
                                           textStyle:
                                               FlutterFlowTheme.of(context)
                                                   .titleSmall
@@ -413,7 +414,7 @@ class _CarritoWidgetState extends State<CarritoWidget> {
                                             width: 1.0,
                                           ),
                                           borderRadius:
-                                              BorderRadius.circular(8.0),
+                                              BorderRadius.circular(10.0),
                                         ),
                                       ),
                                     ],
@@ -478,7 +479,7 @@ class _CarritoWidgetState extends State<CarritoWidget> {
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       iconPadding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      color: Color(0xFFFF0004),
+                      color: FlutterFlowTheme.of(context).grayIcon,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
                                 fontFamily: 'Poppins',
@@ -489,7 +490,7 @@ class _CarritoWidgetState extends State<CarritoWidget> {
                         color: Colors.transparent,
                         width: 1.0,
                       ),
-                      borderRadius: BorderRadius.circular(8.0),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
                   FFButtonWidget(
@@ -519,7 +520,7 @@ class _CarritoWidgetState extends State<CarritoWidget> {
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       iconPadding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      color: FlutterFlowTheme.of(context).greenConfirm,
+                      color: FlutterFlowTheme.of(context).sideBarMenu,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
                                 fontFamily: 'Poppins',
@@ -530,7 +531,7 @@ class _CarritoWidgetState extends State<CarritoWidget> {
                         color: Colors.transparent,
                         width: 1.0,
                       ),
-                      borderRadius: BorderRadius.circular(8.0),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
                 ],

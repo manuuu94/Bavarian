@@ -152,32 +152,31 @@ class _RecuperacionPasswordWidgetState
                               color: Color(0x00000000),
                               width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(8.0),
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
                               width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(8.0),
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
                           errorBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
                               width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(8.0),
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
                           focusedErrorBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
                               width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(8.0),
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
                           filled: true,
-                          fillColor:
-                              FlutterFlowTheme.of(context).primaryBackground,
+                          fillColor: FlutterFlowTheme.of(context).lineColor,
                           contentPadding: EdgeInsetsDirectional.fromSTEB(
                               8.0, 8.0, 8.0, 8.0),
                         ),
@@ -200,38 +199,41 @@ class _RecuperacionPasswordWidgetState
               padding: EdgeInsetsDirectional.fromSTEB(15.0, 20.0, 15.0, 15.0),
               child: FFButtonWidget(
                 onPressed: () async {
-                  if (_model.emailAddressController.text.isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          'Email required!',
-                        ),
-                      ),
+                  if (_model.emailAddressController.text == '') {
+                    await showDialog(
+                      context: context,
+                      builder: (alertDialogContext) {
+                        return AlertDialog(
+                          title: Text('Campo vacío'),
+                          content: Text('Introduzca un correo registrado!'),
+                          actions: [
+                            TextButton(
+                              onPressed: () =>
+                                  Navigator.pop(alertDialogContext),
+                              child: Text('Ok'),
+                            ),
+                          ],
+                        );
+                      },
                     );
-                    return;
-                  }
-                  await authManager.resetPassword(
-                    email: _model.emailAddressController.text,
-                    context: context,
-                  );
-                  await showDialog(
-                    context: context,
-                    builder: (alertDialogContext) {
-                      return AlertDialog(
-                        title: Text('Correo enviado!'),
-                        content: Text(
-                            'Verifica tu correo electronico y recupera el acceso a tu cuenta!'),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(alertDialogContext),
-                            child: Text('Ok'),
+                  } else {
+                    if (_model.emailAddressController.text.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Email required!',
                           ),
-                        ],
+                        ),
                       );
-                    },
-                  );
+                      return;
+                    }
+                    await authManager.resetPassword(
+                      email: _model.emailAddressController.text,
+                      context: context,
+                    );
 
-                  context.pushNamed('Login');
+                    context.pushNamed('Login');
+                  }
                 },
                 text: 'Enviar',
                 icon: Icon(
@@ -256,7 +258,7 @@ class _RecuperacionPasswordWidgetState
                     color: Colors.transparent,
                     width: 1.0,
                   ),
-                  borderRadius: BorderRadius.circular(40.0),
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
             ),

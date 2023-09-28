@@ -1,37 +1,38 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/bs_detalles_producto/bs_detalles_producto_widget.dart';
+import '/components/bs_detalles_producto_admin/bs_detalles_producto_admin_widget.dart';
+import '/components/bs_detalles_producto_eliminar/bs_detalles_producto_eliminar_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
-import '/flutter_flow/custom_functions.dart' as functions;
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:text_search/text_search.dart';
-import 'inventario_model.dart';
-export 'inventario_model.dart';
+import 'inventario_admin_copy_model.dart';
+export 'inventario_admin_copy_model.dart';
 
-class InventarioWidget extends StatefulWidget {
-  const InventarioWidget({Key? key}) : super(key: key);
+class InventarioAdminCopyWidget extends StatefulWidget {
+  const InventarioAdminCopyWidget({Key? key}) : super(key: key);
 
   @override
-  _InventarioWidgetState createState() => _InventarioWidgetState();
+  _InventarioAdminCopyWidgetState createState() =>
+      _InventarioAdminCopyWidgetState();
 }
 
-class _InventarioWidgetState extends State<InventarioWidget> {
-  late InventarioModel _model;
+class _InventarioAdminCopyWidgetState extends State<InventarioAdminCopyWidget> {
+  late InventarioAdminCopyModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => InventarioModel());
+    _model = createModel(context, () => InventarioAdminCopyModel());
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
@@ -568,7 +569,7 @@ class _InventarioWidgetState extends State<InventarioWidget> {
                                                                         height: MediaQuery.sizeOf(context).height *
                                                                             0.8,
                                                                         child:
-                                                                            BsDetallesProductoWidget(
+                                                                            BsDetallesProductoAdminWidget(
                                                                           producto:
                                                                               gridViewInventoryRecord,
                                                                         ),
@@ -602,13 +603,46 @@ class _InventarioWidgetState extends State<InventarioWidget> {
                                                                   height: MediaQuery.sizeOf(
                                                                               context)
                                                                           .height *
-                                                                      0.09,
+                                                                      0.069,
                                                                   fit: BoxFit
                                                                       .scaleDown,
                                                                 ),
                                                               ),
                                                             ),
                                                           ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text(
+                                                          'Unidades: ',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Poppins',
+                                                                fontSize: 12.0,
+                                                              ),
+                                                        ),
+                                                        Text(
+                                                          gridViewInventoryRecord
+                                                              .quantity
+                                                              .toString(),
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Poppins',
+                                                                fontSize: 12.0,
+                                                              ),
                                                         ),
                                                       ],
                                                     ),
@@ -626,7 +660,7 @@ class _InventarioWidgetState extends State<InventarioWidget> {
                                                               MainAxisSize.max,
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
-                                                                  .spaceAround,
+                                                                  .spaceBetween,
                                                           children: [
                                                             Expanded(
                                                               child: Padding(
@@ -635,33 +669,35 @@ class _InventarioWidgetState extends State<InventarioWidget> {
                                                                         .fromSTEB(
                                                                             0.0,
                                                                             1.0,
-                                                                            0.0,
+                                                                            1.5,
                                                                             1.0),
                                                                 child:
                                                                     FFButtonWidget(
                                                                   onPressed:
                                                                       () async {
-                                                                    await CartRecord
-                                                                        .collection
-                                                                        .doc()
-                                                                        .set(
-                                                                            createCartRecordData(
-                                                                          total:
-                                                                              functions.sumaPrecios2(gridViewInventoryRecord.price),
-                                                                          uid:
-                                                                              currentUserUid,
-                                                                          cartProductName:
-                                                                              '',
-                                                                          price:
-                                                                              gridViewInventoryRecord.price,
-                                                                          quantity:
-                                                                              gridViewInventoryRecord.quantity,
-                                                                        ));
+                                                                    context
+                                                                        .pushNamed(
+                                                                      'InventarioEditar',
+                                                                      queryParameters:
+                                                                          {
+                                                                        'producto':
+                                                                            serializeParam(
+                                                                          gridViewInventoryRecord,
+                                                                          ParamType
+                                                                              .Document,
+                                                                        ),
+                                                                      }.withoutNulls,
+                                                                      extra: <String,
+                                                                          dynamic>{
+                                                                        'producto':
+                                                                            gridViewInventoryRecord,
+                                                                      },
+                                                                    );
                                                                   },
                                                                   text: '',
                                                                   icon: Icon(
                                                                     Icons
-                                                                        .add_shopping_cart_outlined,
+                                                                        .edit_square,
                                                                     color: FlutterFlowTheme.of(
                                                                             context)
                                                                         .primary,
@@ -712,35 +748,97 @@ class _InventarioWidgetState extends State<InventarioWidget> {
                                                                 ),
                                                               ),
                                                             ),
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          5.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              child: Text(
-                                                                formatNumber(
-                                                                  gridViewInventoryRecord
-                                                                      .price,
-                                                                  formatType:
-                                                                      FormatType
-                                                                          .decimal,
-                                                                  decimalType:
-                                                                      DecimalType
-                                                                          .automatic,
-                                                                  currency: '₡',
-                                                                ),
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodySmall
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Poppins',
-                                                                      fontSize:
-                                                                          13.0,
+                                                            Expanded(
+                                                              child: Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            1.5,
+                                                                            1.0,
+                                                                            0.0,
+                                                                            1.0),
+                                                                child:
+                                                                    FFButtonWidget(
+                                                                  onPressed:
+                                                                      () async {
+                                                                    await showModalBottomSheet(
+                                                                      isScrollControlled:
+                                                                          true,
+                                                                      backgroundColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      enableDrag:
+                                                                          false,
+                                                                      context:
+                                                                          context,
+                                                                      builder:
+                                                                          (context) {
+                                                                        return Padding(
+                                                                          padding:
+                                                                              MediaQuery.viewInsetsOf(context),
+                                                                          child:
+                                                                              BsDetallesProductoEliminarWidget(
+                                                                            producto:
+                                                                                gridViewInventoryRecord,
+                                                                          ),
+                                                                        );
+                                                                      },
+                                                                    ).then((value) =>
+                                                                        safeSetState(
+                                                                            () {}));
+                                                                  },
+                                                                  text: '',
+                                                                  icon: Icon(
+                                                                    Icons
+                                                                        .delete_forever,
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primary,
+                                                                    size: 20.0,
+                                                                  ),
+                                                                  options:
+                                                                      FFButtonOptions(
+                                                                    width: 20.0,
+                                                                    height:
+                                                                        40.0,
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                    iconPadding:
+                                                                        EdgeInsetsDirectional.fromSTEB(
+                                                                            5.0,
+                                                                            2.0,
+                                                                            0.0,
+                                                                            2.0),
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .grayIcon,
+                                                                    textStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .displaySmall
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Poppins',
+                                                                          fontSize:
+                                                                              22.0,
+                                                                        ),
+                                                                    elevation:
+                                                                        2.0,
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                      color: Colors
+                                                                          .transparent,
+                                                                      width:
+                                                                          1.0,
                                                                     ),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            8.0),
+                                                                  ),
+                                                                ),
                                                               ),
                                                             ),
                                                           ],
@@ -757,327 +855,440 @@ class _InventarioWidgetState extends State<InventarioWidget> {
                                     ),
                                   if (!FFAppState().FullList)
                                     Expanded(
-                                      child: Builder(
-                                        builder: (context) {
-                                          final nombreprod = _model
-                                              .simpleSearchResults
-                                              .toList();
-                                          return GridView.builder(
-                                            padding: EdgeInsets.zero,
-                                            gridDelegate:
-                                                SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 2,
-                                              crossAxisSpacing: 8.0,
-                                              mainAxisSpacing: 10.0,
-                                              childAspectRatio: 1.0,
-                                            ),
-                                            scrollDirection: Axis.vertical,
-                                            itemCount: nombreprod.length,
-                                            itemBuilder:
-                                                (context, nombreprodIndex) {
-                                              final nombreprodItem =
-                                                  nombreprod[nombreprodIndex];
-                                              return Container(
-                                                width:
-                                                    MediaQuery.sizeOf(context)
-                                                            .width *
-                                                        0.916,
-                                                height:
-                                                    MediaQuery.sizeOf(context)
-                                                            .height *
-                                                        0.7,
-                                                decoration: BoxDecoration(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryBackground,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
-                                                ),
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Container(
-                                                            width: MediaQuery
-                                                                        .sizeOf(
-                                                                            context)
-                                                                    .width *
-                                                                0.3,
-                                                            height: MediaQuery
-                                                                        .sizeOf(
-                                                                            context)
-                                                                    .height *
-                                                                0.03,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .secondaryBackground,
-                                                            ),
-                                                            child: Text(
-                                                              nombreprodItem
-                                                                  .productName,
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Expanded(
-                                                          child: Padding(
-                                                            padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        5.0,
-                                                                        5.0,
-                                                                        5.0,
-                                                                        5.0),
-                                                            child: InkWell(
-                                                              splashColor: Colors
-                                                                  .transparent,
-                                                              focusColor: Colors
-                                                                  .transparent,
-                                                              hoverColor: Colors
-                                                                  .transparent,
-                                                              highlightColor:
-                                                                  Colors
-                                                                      .transparent,
-                                                              onTap: () async {
-                                                                await showModalBottomSheet(
-                                                                  isScrollControlled:
-                                                                      true,
-                                                                  backgroundColor:
-                                                                      Colors
-                                                                          .transparent,
-                                                                  barrierColor:
-                                                                      Color(
-                                                                          0x0095A1AC),
-                                                                  enableDrag:
-                                                                      false,
-                                                                  context:
-                                                                      context,
-                                                                  builder:
-                                                                      (context) {
-                                                                    return Padding(
-                                                                      padding: MediaQuery
-                                                                          .viewInsetsOf(
-                                                                              context),
-                                                                      child:
-                                                                          Container(
-                                                                        height: MediaQuery.sizeOf(context).height *
-                                                                            0.8,
-                                                                        child:
-                                                                            BsDetallesProductoWidget(
-                                                                          producto:
-                                                                              nombreprodItem,
-                                                                        ),
-                                                                      ),
-                                                                    );
-                                                                  },
-                                                                ).then((value) =>
-                                                                    safeSetState(
-                                                                        () {}));
-                                                              },
-                                                              child: Hero(
-                                                                tag:
-                                                                    nombreprodItem
-                                                                        .image,
-                                                                transitionOnUserGestures:
-                                                                    true,
-                                                                child: Image
-                                                                    .network(
-                                                                  nombreprodItem
-                                                                      .image,
-                                                                  width: MediaQuery.sizeOf(
-                                                                              context)
-                                                                          .width *
-                                                                      0.35,
-                                                                  height: MediaQuery.sizeOf(
-                                                                              context)
-                                                                          .height *
-                                                                      0.09,
-                                                                  fit: BoxFit
-                                                                      .scaleDown,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Expanded(
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    10.0,
-                                                                    5.0,
-                                                                    10.0,
-                                                                    5.0),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 15.0),
+                                        child: Builder(
+                                          builder: (context) {
+                                            final nombreprod = _model
+                                                .simpleSearchResults
+                                                .toList();
+                                            return GridView.builder(
+                                              padding: EdgeInsets.zero,
+                                              gridDelegate:
+                                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                                crossAxisCount: 2,
+                                                crossAxisSpacing: 8.0,
+                                                mainAxisSpacing: 10.0,
+                                                childAspectRatio: 1.0,
+                                              ),
+                                              scrollDirection: Axis.vertical,
+                                              itemCount: nombreprod.length,
+                                              itemBuilder:
+                                                  (context, nombreprodIndex) {
+                                                final nombreprodItem =
+                                                    nombreprod[nombreprodIndex];
+                                                return Container(
+                                                  width:
+                                                      MediaQuery.sizeOf(context)
+                                                              .width *
+                                                          0.916,
+                                                  height:
+                                                      MediaQuery.sizeOf(context)
+                                                              .height *
+                                                          0.7,
+                                                  decoration: BoxDecoration(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryBackground,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                  ),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Expanded(
                                                         child: Row(
                                                           mainAxisSize:
                                                               MainAxisSize.max,
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
-                                                                  .spaceAround,
+                                                                  .center,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
                                                           children: [
-                                                            Expanded(
-                                                              child: Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            1.0,
-                                                                            0.0,
-                                                                            1.0),
-                                                                child:
-                                                                    FFButtonWidget(
-                                                                  onPressed:
-                                                                      () async {
-                                                                    await CartRecord
-                                                                        .collection
-                                                                        .doc()
-                                                                        .set(
-                                                                            createCartRecordData(
-                                                                          total:
-                                                                              functions.sumaPrecios2(nombreprodItem.price),
-                                                                          uid:
-                                                                              currentUserUid,
-                                                                          cartProductName:
-                                                                              '',
-                                                                          price:
-                                                                              nombreprodItem.price,
-                                                                          quantity:
-                                                                              nombreprodItem.quantity,
-                                                                        ));
-                                                                  },
-                                                                  text: '',
-                                                                  icon: Icon(
-                                                                    Icons
-                                                                        .add_shopping_cart_outlined,
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primary,
-                                                                    size: 20.0,
-                                                                  ),
-                                                                  options:
-                                                                      FFButtonOptions(
-                                                                    width: 20.0,
-                                                                    height:
-                                                                        40.0,
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                    iconPadding:
-                                                                        EdgeInsetsDirectional.fromSTEB(
-                                                                            5.0,
-                                                                            2.0,
-                                                                            0.0,
-                                                                            2.0),
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .sideBarMenu,
-                                                                    textStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .displaySmall
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Poppins',
-                                                                          fontSize:
-                                                                              22.0,
-                                                                        ),
-                                                                    elevation:
-                                                                        2.0,
-                                                                    borderSide:
-                                                                        BorderSide(
-                                                                      color: Colors
-                                                                          .transparent,
-                                                                      width:
-                                                                          1.0,
-                                                                    ),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8.0),
-                                                                  ),
-                                                                ),
+                                                            Container(
+                                                              width: MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .width *
+                                                                  0.3,
+                                                              height: MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .height *
+                                                                  0.03,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryBackground,
                                                               ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          5.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
                                                               child: Text(
-                                                                formatNumber(
-                                                                  nombreprodItem
-                                                                      .price,
-                                                                  formatType:
-                                                                      FormatType
-                                                                          .decimal,
-                                                                  decimalType:
-                                                                      DecimalType
-                                                                          .automatic,
-                                                                  currency: '₡',
-                                                                ),
+                                                                nombreprodItem
+                                                                    .productName,
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodySmall
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Poppins',
-                                                                      fontSize:
-                                                                          13.0,
-                                                                    ),
+                                                                    .bodyMedium,
                                                               ),
                                                             ),
                                                           ],
                                                         ),
                                                       ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              );
-                                            },
-                                          );
-                                        },
+                                                      Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Expanded(
+                                                            child: Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          5.0,
+                                                                          5.0,
+                                                                          5.0,
+                                                                          5.0),
+                                                              child: InkWell(
+                                                                splashColor: Colors
+                                                                    .transparent,
+                                                                focusColor: Colors
+                                                                    .transparent,
+                                                                hoverColor: Colors
+                                                                    .transparent,
+                                                                highlightColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                onTap:
+                                                                    () async {
+                                                                  await showModalBottomSheet(
+                                                                    isScrollControlled:
+                                                                        true,
+                                                                    backgroundColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    barrierColor:
+                                                                        Color(
+                                                                            0x0095A1AC),
+                                                                    enableDrag:
+                                                                        false,
+                                                                    context:
+                                                                        context,
+                                                                    builder:
+                                                                        (context) {
+                                                                      return Padding(
+                                                                        padding:
+                                                                            MediaQuery.viewInsetsOf(context),
+                                                                        child:
+                                                                            Container(
+                                                                          height:
+                                                                              MediaQuery.sizeOf(context).height * 0.8,
+                                                                          child:
+                                                                              BsDetallesProductoWidget(
+                                                                            producto:
+                                                                                nombreprodItem,
+                                                                          ),
+                                                                        ),
+                                                                      );
+                                                                    },
+                                                                  ).then((value) =>
+                                                                      safeSetState(
+                                                                          () {}));
+
+                                                                  setState(() {
+                                                                    _model
+                                                                        .txtSearchController
+                                                                        ?.clear();
+                                                                  });
+                                                                },
+                                                                child: Hero(
+                                                                  tag: nombreprodItem
+                                                                      .image,
+                                                                  transitionOnUserGestures:
+                                                                      true,
+                                                                  child: Image
+                                                                      .network(
+                                                                    nombreprodItem
+                                                                        .image,
+                                                                    width: MediaQuery.sizeOf(context)
+                                                                            .width *
+                                                                        0.35,
+                                                                    height: MediaQuery.sizeOf(context)
+                                                                            .height *
+                                                                        0.069,
+                                                                    fit: BoxFit
+                                                                        .scaleDown,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text(
+                                                            nombreprodItem
+                                                                .quantity
+                                                                .toString(),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Poppins',
+                                                                  fontSize:
+                                                                      12.0,
+                                                                ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Expanded(
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      10.0,
+                                                                      5.0,
+                                                                      10.0,
+                                                                      5.0),
+                                                          child: Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceAround,
+                                                            children: [
+                                                              Expanded(
+                                                                child: Padding(
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          1.0,
+                                                                          1.5,
+                                                                          1.0),
+                                                                  child:
+                                                                      FFButtonWidget(
+                                                                    onPressed:
+                                                                        () async {
+                                                                      context.pushNamed(
+                                                                          'InventarioEditar');
+                                                                    },
+                                                                    text: '',
+                                                                    icon: Icon(
+                                                                      Icons
+                                                                          .edit_square,
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primary,
+                                                                      size:
+                                                                          20.0,
+                                                                    ),
+                                                                    options:
+                                                                        FFButtonOptions(
+                                                                      width:
+                                                                          20.0,
+                                                                      height:
+                                                                          40.0,
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                      iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                                                          5.0,
+                                                                          2.0,
+                                                                          0.0,
+                                                                          2.0),
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .sideBarMenu,
+                                                                      textStyle: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .displaySmall
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Poppins',
+                                                                            fontSize:
+                                                                                22.0,
+                                                                          ),
+                                                                      elevation:
+                                                                          2.0,
+                                                                      borderSide:
+                                                                          BorderSide(
+                                                                        color: Colors
+                                                                            .transparent,
+                                                                        width:
+                                                                            1.0,
+                                                                      ),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              8.0),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Expanded(
+                                                                child: Padding(
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          1.5,
+                                                                          1.0,
+                                                                          0.0,
+                                                                          1.0),
+                                                                  child:
+                                                                      FFButtonWidget(
+                                                                    onPressed:
+                                                                        () async {
+                                                                      await showModalBottomSheet(
+                                                                        isScrollControlled:
+                                                                            true,
+                                                                        backgroundColor:
+                                                                            Colors.transparent,
+                                                                        enableDrag:
+                                                                            false,
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (context) {
+                                                                          return Padding(
+                                                                            padding:
+                                                                                MediaQuery.viewInsetsOf(context),
+                                                                            child:
+                                                                                BsDetallesProductoEliminarWidget(),
+                                                                          );
+                                                                        },
+                                                                      ).then((value) =>
+                                                                          safeSetState(
+                                                                              () {}));
+                                                                    },
+                                                                    text: '',
+                                                                    icon: Icon(
+                                                                      Icons
+                                                                          .delete_forever,
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primary,
+                                                                      size:
+                                                                          20.0,
+                                                                    ),
+                                                                    options:
+                                                                        FFButtonOptions(
+                                                                      width:
+                                                                          20.0,
+                                                                      height:
+                                                                          40.0,
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                      iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                                                          5.0,
+                                                                          2.0,
+                                                                          0.0,
+                                                                          2.0),
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .grayIcon,
+                                                                      textStyle: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .displaySmall
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Poppins',
+                                                                            fontSize:
+                                                                                22.0,
+                                                                          ),
+                                                                      elevation:
+                                                                          2.0,
+                                                                      borderSide:
+                                                                          BorderSide(
+                                                                        color: Colors
+                                                                            .transparent,
+                                                                        width:
+                                                                            1.0,
+                                                                      ),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              8.0),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                        ),
                                       ),
                                     ),
                                 ],
                               ),
                             ),
                           ),
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    5.0, 5.0, 5.0, 5.0),
+                                child: FFButtonWidget(
+                                  onPressed: () async {
+                                    context.pushNamed('InventarioCrear');
+                                  },
+                                  text: 'Crear producto',
+                                  options: FFButtonOptions(
+                                    width: 20.0,
+                                    height: 40.0,
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                        5.0, 2.0, 0.0, 2.0),
+                                    color: FlutterFlowTheme.of(context)
+                                        .sideBarMenu,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .displaySmall
+                                        .override(
+                                          fontFamily: 'Poppins',
+                                          fontSize: 22.0,
+                                        ),
+                                    elevation: 2.0,
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),

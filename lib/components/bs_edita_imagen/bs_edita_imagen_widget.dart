@@ -179,6 +179,7 @@ class _BsEditaImagenWidgetState extends State<BsEditaImagenWidget> {
                         color: Colors.transparent,
                         width: 1.0,
                       ),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
                 ),

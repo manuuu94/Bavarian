@@ -102,7 +102,7 @@ class _InventarioCrearWidgetState extends State<InventarioCrearWidget> {
                         offset: Offset(0.0, 2.0),
                       )
                     ],
-                    borderRadius: BorderRadius.circular(8.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
@@ -217,7 +217,7 @@ class _InventarioCrearWidgetState extends State<InventarioCrearWidget> {
                         offset: Offset(0.0, 2.0),
                       )
                     ],
-                    borderRadius: BorderRadius.circular(8.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
@@ -333,7 +333,7 @@ class _InventarioCrearWidgetState extends State<InventarioCrearWidget> {
                         offset: Offset(0.0, 2.0),
                       )
                     ],
-                    borderRadius: BorderRadius.circular(8.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
@@ -451,7 +451,7 @@ class _InventarioCrearWidgetState extends State<InventarioCrearWidget> {
                           offset: Offset(0.0, 2.0),
                         )
                       ],
-                      borderRadius: BorderRadius.circular(8.0),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
@@ -567,7 +567,7 @@ class _InventarioCrearWidgetState extends State<InventarioCrearWidget> {
                           offset: Offset(0.0, 2.0),
                         )
                       ],
-                      borderRadius: BorderRadius.circular(8.0),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
@@ -689,7 +689,7 @@ class _InventarioCrearWidgetState extends State<InventarioCrearWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                     iconPadding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).grayIcon,
+                    color: FlutterFlowTheme.of(context).sideBarMenu,
                     textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                           fontFamily: 'Poppins',
                           color:
@@ -701,7 +701,7 @@ class _InventarioCrearWidgetState extends State<InventarioCrearWidget> {
                       color: Colors.transparent,
                       width: 1.0,
                     ),
-                    borderRadius: BorderRadius.circular(100.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
               ),

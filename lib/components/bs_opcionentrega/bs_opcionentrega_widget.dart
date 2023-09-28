@@ -160,7 +160,7 @@ class _BsOpcionentregaWidgetState extends State<BsOpcionentregaWidget> {
                                 color: FlutterFlowTheme.of(context).sideBarMenu,
                                 width: 5.0,
                               ),
-                              borderRadius: BorderRadius.circular(8.0),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
                           ),
                         );
@@ -195,6 +195,7 @@ class _BsOpcionentregaWidgetState extends State<BsOpcionentregaWidget> {
                     color: FlutterFlowTheme.of(context).primary,
                     width: 5.0,
                   ),
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
             ),

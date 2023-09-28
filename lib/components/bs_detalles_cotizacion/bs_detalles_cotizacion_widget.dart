@@ -1,6 +1,11 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/custom_code/widgets/index.dart' as custom_widgets;
+import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,7 +14,12 @@ import 'bs_detalles_cotizacion_model.dart';
 export 'bs_detalles_cotizacion_model.dart';
 
 class BsDetallesCotizacionWidget extends StatefulWidget {
-  const BsDetallesCotizacionWidget({Key? key}) : super(key: key);
+  const BsDetallesCotizacionWidget({
+    Key? key,
+    required this.cotizacion,
+  }) : super(key: key);
+
+  final QuoteRequestsRecord? cotizacion;
 
   @override
   _BsDetallesCotizacionWidgetState createState() =>
@@ -119,7 +129,7 @@ class _BsDetallesCotizacionWidgetState
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 4.0, 16.0, 0.0),
                               child: Text(
-                                'Detalle de cotización',
+                                widget.cotizacion!.productName,
                                 style: FlutterFlowTheme.of(context)
                                     .headlineMedium
                                     .override(
@@ -130,7 +140,7 @@ class _BsDetallesCotizacionWidgetState
                             ),
                           ),
                           Text(
-                            'Fecha',
+                            dateTimeFormat('yMMMd', widget.cotizacion!.date!),
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
@@ -145,7 +155,13 @@ class _BsDetallesCotizacionWidgetState
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Hello World',
+                            formatNumber(
+                              widget.cotizacion!.idQuote,
+                              formatType: FormatType.custom,
+                              currency: '#',
+                              format: '',
+                              locale: '',
+                            ),
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
@@ -178,15 +194,21 @@ class _BsDetallesCotizacionWidgetState
                                 ),
                               ),
                             ),
-                            Text(
-                              'Hello World',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    color: FlutterFlowTheme.of(context).text,
-                                  ),
-                            ),
+                            if (widget.cotizacion?.price != 0.0)
+                              Text(
+                                formatNumber(
+                                  widget.cotizacion!.price,
+                                  formatType: FormatType.decimal,
+                                  decimalType: DecimalType.automatic,
+                                  currency: '₡',
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      color: FlutterFlowTheme.of(context).text,
+                                    ),
+                              ),
                           ],
                         ),
                       ),
@@ -218,15 +240,21 @@ class _BsDetallesCotizacionWidgetState
                                 ),
                               ),
                             ),
-                            Text(
-                              'Hello World',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    color: FlutterFlowTheme.of(context).text,
-                                  ),
-                            ),
+                            if (widget.cotizacion?.taxes != 0.0)
+                              Text(
+                                formatNumber(
+                                  widget.cotizacion!.taxes,
+                                  formatType: FormatType.decimal,
+                                  decimalType: DecimalType.automatic,
+                                  currency: '₡',
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      color: FlutterFlowTheme.of(context).text,
+                                    ),
+                              ),
                           ],
                         ),
                       ),
@@ -256,15 +284,21 @@ class _BsDetallesCotizacionWidgetState
                                 ),
                               ),
                             ),
-                            Text(
-                              'Hello World',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    color: FlutterFlowTheme.of(context).text,
-                                  ),
-                            ),
+                            if (widget.cotizacion?.shippingFees != 0.0)
+                              Text(
+                                formatNumber(
+                                  widget.cotizacion!.shippingFees,
+                                  formatType: FormatType.decimal,
+                                  decimalType: DecimalType.automatic,
+                                  currency: '₡',
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      color: FlutterFlowTheme.of(context).text,
+                                    ),
+                              ),
                           ],
                         ),
                       ),
@@ -297,7 +331,11 @@ class _BsDetallesCotizacionWidgetState
                               ),
                             ),
                             Text(
-                              'Hello World',
+                              formatNumber(
+                                widget.cotizacion!.weight,
+                                formatType: FormatType.decimal,
+                                decimalType: DecimalType.automatic,
+                              ),
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
@@ -337,7 +375,7 @@ class _BsDetallesCotizacionWidgetState
                               ),
                             ),
                             Text(
-                              'Hello World',
+                              widget.cotizacion!.productType,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
@@ -376,6 +414,17 @@ class _BsDetallesCotizacionWidgetState
                                 ),
                               ),
                             ),
+                            Container(
+                              width: MediaQuery.sizeOf(context).width * 0.3,
+                              height: MediaQuery.sizeOf(context).height * 0.1,
+                              child: custom_widgets.Flutterlinkify(
+                                width: MediaQuery.sizeOf(context).width * 0.3,
+                                height: MediaQuery.sizeOf(context).height * 0.1,
+                                text: widget.cotizacion?.refUrl,
+                                fontSize: 14.0,
+                                color: FlutterFlowTheme.of(context).text,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -407,15 +456,21 @@ class _BsDetallesCotizacionWidgetState
                                 ),
                               ),
                             ),
-                            Text(
-                              'Hello World',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    color: FlutterFlowTheme.of(context).text,
-                                  ),
-                            ),
+                            if (widget.cotizacion?.total != 0.0)
+                              Text(
+                                formatNumber(
+                                  widget.cotizacion!.total,
+                                  formatType: FormatType.decimal,
+                                  decimalType: DecimalType.automatic,
+                                  currency: '₡',
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      color: FlutterFlowTheme.of(context).text,
+                                    ),
+                              ),
                           ],
                         ),
                       ),
@@ -454,6 +509,7 @@ class _BsDetallesCotizacionWidgetState
                                   color: Colors.transparent,
                                   width: 1.0,
                                 ),
+                                borderRadius: BorderRadius.circular(10.0),
                               ),
                             ),
                           ],
@@ -466,32 +522,77 @@ class _BsDetallesCotizacionWidgetState
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            FFButtonWidget(
-                              onPressed: () async {
-                                context.pushNamed('Carrito');
-                              },
-                              text: 'Aceptar cotizacion',
-                              options: FFButtonOptions(
-                                width: 150.0,
-                                height: 50.0,
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context).sideBarMenu,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Poppins',
-                                      color: FlutterFlowTheme.of(context).text,
-                                    ),
-                                elevation: 2.0,
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1.0,
+                            if (widget.cotizacion?.ifCompleted ?? true)
+                              FFButtonWidget(
+                                onPressed: () async {
+                                  var confirmDialogResponse = await showDialog<
+                                          bool>(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return AlertDialog(
+                                            title:
+                                                Text('Confirmacion de compra'),
+                                            content: Text(
+                                                'Al aceptar esta cotizacion, esta se agregara al carrito de compras. ¿Desea continuar?'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext, false),
+                                                child: Text('Cancelar'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext, true),
+                                                child: Text('Confirmar'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      ) ??
+                                      false;
+                                  if (confirmDialogResponse) {
+                                    await CartRecord.collection
+                                        .doc()
+                                        .set(createCartRecordData(
+                                          uid: widget.cotizacion?.uid,
+                                          total: functions.sumaPrecios2(
+                                              widget.cotizacion!.total),
+                                          cartProductName:
+                                              widget.cotizacion?.productName,
+                                          price: widget.cotizacion?.total,
+                                          quantity: 1,
+                                        ));
+
+                                    context.pushNamed('Cotizaciones');
+                                  } else {
+                                    return;
+                                  }
+                                },
+                                text: 'Aceptar cotizacion',
+                                options: FFButtonOptions(
+                                  width: 150.0,
+                                  height: 50.0,
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color:
+                                      FlutterFlowTheme.of(context).sideBarMenu,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        color:
+                                            FlutterFlowTheme.of(context).text,
+                                      ),
+                                  elevation: 2.0,
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10.0),
                                 ),
                               ),
-                            ),
                           ],
                         ),
                       ),

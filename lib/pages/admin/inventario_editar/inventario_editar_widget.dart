@@ -1,3 +1,4 @@
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -11,7 +12,12 @@ import 'inventario_editar_model.dart';
 export 'inventario_editar_model.dart';
 
 class InventarioEditarWidget extends StatefulWidget {
-  const InventarioEditarWidget({Key? key}) : super(key: key);
+  const InventarioEditarWidget({
+    Key? key,
+    this.producto,
+  }) : super(key: key);
+
+  final InventoryRecord? producto;
 
   @override
   _InventarioEditarWidgetState createState() => _InventarioEditarWidgetState();
@@ -32,9 +38,12 @@ class _InventarioEditarWidgetState extends State<InventarioEditarWidget> {
       await actions.lockOrientation();
     });
 
-    _model.nombreProductoController ??= TextEditingController();
-    _model.descripcionProductoController ??= TextEditingController();
-    _model.cantidadProductoController1 ??= TextEditingController();
+    _model.nombreProductoController ??=
+        TextEditingController(text: widget.producto?.productName);
+    _model.descripcionProductoController ??=
+        TextEditingController(text: widget.producto?.productDescription);
+    _model.cantidadProductoController1 ??=
+        TextEditingController(text: widget.producto?.quantity?.toString());
     _model.imageURLController ??= TextEditingController();
     _model.cantidadProductoController2 ??= TextEditingController();
   }
@@ -102,7 +111,7 @@ class _InventarioEditarWidgetState extends State<InventarioEditarWidget> {
                         offset: Offset(0.0, 2.0),
                       )
                     ],
-                    borderRadius: BorderRadius.circular(8.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
@@ -217,7 +226,7 @@ class _InventarioEditarWidgetState extends State<InventarioEditarWidget> {
                         offset: Offset(0.0, 2.0),
                       )
                     ],
-                    borderRadius: BorderRadius.circular(8.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
@@ -333,7 +342,7 @@ class _InventarioEditarWidgetState extends State<InventarioEditarWidget> {
                         offset: Offset(0.0, 2.0),
                       )
                     ],
-                    borderRadius: BorderRadius.circular(8.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
@@ -451,7 +460,7 @@ class _InventarioEditarWidgetState extends State<InventarioEditarWidget> {
                           offset: Offset(0.0, 2.0),
                         )
                       ],
-                      borderRadius: BorderRadius.circular(8.0),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
@@ -567,103 +576,108 @@ class _InventarioEditarWidgetState extends State<InventarioEditarWidget> {
                           offset: Offset(0.0, 2.0),
                         )
                       ],
-                      borderRadius: BorderRadius.circular(8.0),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Expanded(
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                5.0, 5.0, 5.0, 5.0),
-                            child: TextFormField(
-                              controller: _model.cantidadProductoController2,
-                              onChanged: (_) => EasyDebounce.debounce(
-                                '_model.cantidadProductoController2',
-                                Duration(milliseconds: 2000),
-                                () => setState(() {}),
-                              ),
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                labelStyle: FlutterFlowTheme.of(context)
-                                    .bodySmall
-                                    .override(
-                                      fontFamily: 'Poppins',
-                                      color: Color(0xFF3E3E3E),
+                          child: Opacity(
+                            opacity: widget.producto!.price,
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  5.0, 5.0, 5.0, 5.0),
+                              child: TextFormField(
+                                controller: _model.cantidadProductoController2,
+                                onChanged: (_) => EasyDebounce.debounce(
+                                  '_model.cantidadProductoController2',
+                                  Duration(milliseconds: 2000),
+                                  () => setState(() {}),
+                                ),
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  labelStyle: FlutterFlowTheme.of(context)
+                                      .bodySmall
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        color: Color(0xFF3E3E3E),
+                                      ),
+                                  hintText: 'Precio unitario',
+                                  hintStyle: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Lexend Deca',
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 0.0,
                                     ),
-                                hintText: 'Precio unitario',
-                                hintStyle: FlutterFlowTheme.of(context)
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 0.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 0.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 0.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  filled: true,
+                                  fillColor: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  suffixIcon: _model
+                                          .cantidadProductoController2!
+                                          .text
+                                          .isNotEmpty
+                                      ? InkWell(
+                                          onTap: () async {
+                                            _model.cantidadProductoController2
+                                                ?.clear();
+                                            setState(() {});
+                                          },
+                                          child: Icon(
+                                            Icons.clear,
+                                            color: Color(0xFF757575),
+                                            size: 22.0,
+                                          ),
+                                        )
+                                      : null,
+                                ),
+                                style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
-                                      fontFamily: 'Lexend Deca',
+                                      fontFamily: 'Poppins',
                                       color: FlutterFlowTheme.of(context)
                                           .secondaryText,
-                                      fontSize: 14.0,
-                                      fontWeight: FontWeight.normal,
+                                      fontWeight: FontWeight.w600,
                                     ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 0.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 0.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 0.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 0.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
-                                filled: true,
-                                fillColor: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                suffixIcon: _model.cantidadProductoController2!
-                                        .text.isNotEmpty
-                                    ? InkWell(
-                                        onTap: () async {
-                                          _model.cantidadProductoController2
-                                              ?.clear();
-                                          setState(() {});
-                                        },
-                                        child: Icon(
-                                          Icons.clear,
-                                          color: Color(0xFF757575),
-                                          size: 22.0,
-                                        ),
-                                      )
-                                    : null,
+                                textAlign: TextAlign.start,
+                                keyboardType:
+                                    const TextInputType.numberWithOptions(
+                                        decimal: true),
+                                validator: _model
+                                    .cantidadProductoController2Validator
+                                    .asValidator(context),
                               ),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                              textAlign: TextAlign.start,
-                              keyboardType:
-                                  const TextInputType.numberWithOptions(
-                                      decimal: true),
-                              validator: _model
-                                  .cantidadProductoController2Validator
-                                  .asValidator(context),
                             ),
                           ),
                         ),
@@ -689,7 +703,7 @@ class _InventarioEditarWidgetState extends State<InventarioEditarWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                     iconPadding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).grayIcon,
+                    color: FlutterFlowTheme.of(context).sideBarMenu,
                     textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                           fontFamily: 'Poppins',
                           color:
@@ -701,7 +715,7 @@ class _InventarioEditarWidgetState extends State<InventarioEditarWidget> {
                       color: Colors.transparent,
                       width: 1.0,
                     ),
-                    borderRadius: BorderRadius.circular(100.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
               ),
