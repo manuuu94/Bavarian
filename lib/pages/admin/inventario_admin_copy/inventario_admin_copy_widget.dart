@@ -3,6 +3,7 @@ import '/backend/backend.dart';
 import '/components/bs_detalles_producto/bs_detalles_producto_widget.dart';
 import '/components/bs_detalles_producto_admin/bs_detalles_producto_admin_widget.dart';
 import '/components/bs_detalles_producto_eliminar/bs_detalles_producto_eliminar_widget.dart';
+import '/components/menu_lateral/menu_lateral_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -56,6 +57,17 @@ class _InventarioAdminCopyWidgetState extends State<InventarioAdminCopyWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+      drawer: Container(
+        width: MediaQuery.sizeOf(context).width * 0.5,
+        child: Drawer(
+          elevation: 16.0,
+          child: wrapWithModel(
+            model: _model.menuLateralModel,
+            updateCallback: () => setState(() {}),
+            child: MenuLateralWidget(),
+          ),
+        ),
+      ),
       body: Stack(
         children: [
           Image.asset(
@@ -777,9 +789,13 @@ class _InventarioAdminCopyWidgetState extends State<InventarioAdminCopyWidget> {
                                                                           padding:
                                                                               MediaQuery.viewInsetsOf(context),
                                                                           child:
-                                                                              BsDetallesProductoEliminarWidget(
-                                                                            producto:
-                                                                                gridViewInventoryRecord,
+                                                                              Container(
+                                                                            height:
+                                                                                MediaQuery.sizeOf(context).height * 0.6,
+                                                                            child:
+                                                                                BsDetallesProductoEliminarWidget(
+                                                                              producto: gridViewInventoryRecord,
+                                                                            ),
                                                                           ),
                                                                         );
                                                                       },

@@ -77,7 +77,7 @@ class _BsOpcionentregaCopyWidgetState extends State<BsOpcionentregaCopyWidget> {
         padding: EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 20.0),
         child: Column(
           mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               child: Padding(
@@ -104,12 +104,12 @@ class _BsOpcionentregaCopyWidgetState extends State<BsOpcionentregaCopyWidget> {
                     return GridView.builder(
                       padding: EdgeInsets.zero,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 1.0,
-                        mainAxisSpacing: 1.0,
-                        childAspectRatio: 0.3,
+                        crossAxisCount: 1,
+                        crossAxisSpacing: 0.0,
+                        mainAxisSpacing: 0.0,
+                        childAspectRatio: 4.0,
                       ),
-                      scrollDirection: Axis.horizontal,
+                      scrollDirection: Axis.vertical,
                       itemCount: gridViewDeliveryOptionsRecordList.length,
                       itemBuilder: (context, gridViewIndex) {
                         final gridViewDeliveryOptionsRecord =

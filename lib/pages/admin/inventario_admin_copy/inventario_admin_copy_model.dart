@@ -3,6 +3,7 @@ import '/backend/backend.dart';
 import '/components/bs_detalles_producto/bs_detalles_producto_widget.dart';
 import '/components/bs_detalles_producto_admin/bs_detalles_producto_admin_widget.dart';
 import '/components/bs_detalles_producto_eliminar/bs_detalles_producto_eliminar_widget.dart';
+import '/components/menu_lateral/menu_lateral_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -23,13 +24,18 @@ class InventarioAdminCopyModel
   TextEditingController? txtSearchController;
   String? Function(BuildContext, String?)? txtSearchControllerValidator;
   List<InventoryRecord> simpleSearchResults = [];
+  // Model for MenuLateral component.
+  late MenuLateralModel menuLateralModel;
 
   /// Initialization and disposal methods.
 
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    menuLateralModel = createModel(context, () => MenuLateralModel());
+  }
 
   void dispose() {
     txtSearchController?.dispose();
+    menuLateralModel.dispose();
   }
 
   /// Action blocks are added here.

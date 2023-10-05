@@ -105,6 +105,7 @@ class _BsOpcionentregaAnadirWidgetState
                           autofocus: true,
                           obscureText: false,
                           decoration: InputDecoration(
+                            labelText: 'Nombre de la dirección',
                             hintText: 'Nombre de la dirección',
                             hintStyle: FlutterFlowTheme.of(context).bodySmall,
                             enabledBorder: OutlineInputBorder(
@@ -481,7 +482,8 @@ class _BsOpcionentregaAnadirWidgetState
                           controller: _model.txtDirCompletaController,
                           obscureText: false,
                           decoration: InputDecoration(
-                            hintText: 'Dirección exacta en la ubicación...',
+                            labelText: 'Dirección completa',
+                            hintText: 'Introduzca dirección completa...',
                             hintStyle: FlutterFlowTheme.of(context).bodySmall,
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -589,14 +591,13 @@ class _BsOpcionentregaAnadirWidgetState
                                     uid: currentUserUid,
                                     deliveryOption: widget.opcion?.reference,
                                   ));
-
-                              context.pushNamed('Perfil');
+                              Navigator.pop(context);
                             } else {
                               await showDialog(
                                 context: context,
                                 builder: (alertDialogContext) {
                                   return AlertDialog(
-                                    title: Text('Campos vacios'),
+                                    title: Text('Campos vacíos'),
                                     content: Text(
                                         '¡Por favor, ingrese todos los campos!'),
                                     actions: [

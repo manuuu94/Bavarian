@@ -1,6 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/bs_detalles_producto/bs_detalles_producto_widget.dart';
+import '/components/menu_lateral/menu_lateral_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -55,6 +56,17 @@ class _InventarioWidgetState extends State<InventarioWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+      drawer: Container(
+        width: MediaQuery.sizeOf(context).width * 0.5,
+        child: Drawer(
+          elevation: 16.0,
+          child: wrapWithModel(
+            model: _model.menuLateralModel,
+            updateCallback: () => setState(() {}),
+            child: MenuLateralWidget(),
+          ),
+        ),
+      ),
       body: Stack(
         children: [
           Image.asset(
@@ -410,6 +422,11 @@ class _InventarioWidgetState extends State<InventarioWidget> {
                                         stream: queryInventoryRecord(
                                           queryBuilder: (inventoryRecord) =>
                                               inventoryRecord
+                                                  .where(
+                                                    'quantity',
+                                                    isGreaterThan: 0,
+                                                  )
+                                                  .orderBy('quantity')
                                                   .orderBy('productName'),
                                         ),
                                         builder: (context, snapshot) {
@@ -460,7 +477,7 @@ class _InventarioWidgetState extends State<InventarioWidget> {
                                                 height:
                                                     MediaQuery.sizeOf(context)
                                                             .height *
-                                                        0.7,
+                                                        0.764,
                                                 decoration: BoxDecoration(
                                                   color: FlutterFlowTheme.of(
                                                           context)
@@ -618,9 +635,9 @@ class _InventarioWidgetState extends State<InventarioWidget> {
                                                             EdgeInsetsDirectional
                                                                 .fromSTEB(
                                                                     10.0,
-                                                                    5.0,
+                                                                    0.0,
                                                                     10.0,
-                                                                    5.0),
+                                                                    0.0),
                                                         child: Row(
                                                           mainAxisSize:
                                                               MainAxisSize.max,
@@ -638,77 +655,170 @@ class _InventarioWidgetState extends State<InventarioWidget> {
                                                                             0.0,
                                                                             1.0),
                                                                 child:
-                                                                    FFButtonWidget(
-                                                                  onPressed:
-                                                                      () async {
-                                                                    await CartRecord
-                                                                        .collection
-                                                                        .doc()
-                                                                        .set(
-                                                                            createCartRecordData(
-                                                                          total:
-                                                                              functions.sumaPrecios2(gridViewInventoryRecord.price),
-                                                                          uid:
-                                                                              currentUserUid,
-                                                                          cartProductName:
-                                                                              '',
-                                                                          price:
-                                                                              gridViewInventoryRecord.price,
-                                                                          quantity:
-                                                                              gridViewInventoryRecord.quantity,
-                                                                        ));
-                                                                  },
-                                                                  text: '',
-                                                                  icon: Icon(
-                                                                    Icons
-                                                                        .add_shopping_cart_outlined,
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primary,
-                                                                    size: 20.0,
+                                                                    FutureBuilder<
+                                                                        int>(
+                                                                  future:
+                                                                      queryCartRecordCount(
+                                                                    queryBuilder: (cartRecord) =>
+                                                                        cartRecord
+                                                                            .where(
+                                                                              'cartProductName',
+                                                                              isEqualTo: gridViewInventoryRecord.productName,
+                                                                            )
+                                                                            .where(
+                                                                              'uid',
+                                                                              isEqualTo: currentUserUid,
+                                                                            ),
                                                                   ),
-                                                                  options:
-                                                                      FFButtonOptions(
-                                                                    width: 20.0,
-                                                                    height:
-                                                                        40.0,
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
+                                                                  builder: (context,
+                                                                      snapshot) {
+                                                                    // Customize what your widget looks like when it's loading.
+                                                                    if (!snapshot
+                                                                        .hasData) {
+                                                                      return Center(
+                                                                        child:
+                                                                            SizedBox(
+                                                                          width:
+                                                                              50.0,
+                                                                          height:
+                                                                              50.0,
+                                                                          child:
+                                                                              CircularProgressIndicator(
+                                                                            valueColor:
+                                                                                AlwaysStoppedAnimation<Color>(
+                                                                              FlutterFlowTheme.of(context).primary,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      );
+                                                                    }
+                                                                    int buttonCount =
+                                                                        snapshot
+                                                                            .data!;
+                                                                    return FFButtonWidget(
+                                                                      onPressed:
+                                                                          () async {
+                                                                        if (buttonCount >
+                                                                            0) {
+                                                                          await showDialog(
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (alertDialogContext) {
+                                                                              return AlertDialog(
+                                                                                title: Text('Producto ya existe!'),
+                                                                                content: Text('Este producto ya se encuentra en el carrito!'),
+                                                                                actions: [
+                                                                                  TextButton(
+                                                                                    onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                    child: Text('Ok'),
+                                                                                  ),
+                                                                                ],
+                                                                              );
+                                                                            },
+                                                                          );
+                                                                        } else {
+                                                                          await CartRecord
+                                                                              .collection
+                                                                              .doc()
+                                                                              .set(createCartRecordData(
+                                                                                total: functions.sumaPrecios2(gridViewInventoryRecord.price),
+                                                                                uid: currentUserUid,
+                                                                                cartProductName: gridViewInventoryRecord.productName,
+                                                                                price: gridViewInventoryRecord.price,
+                                                                                quantity: 1,
+                                                                                img: gridViewInventoryRecord.image,
+                                                                              ));
+
+                                                                          await gridViewInventoryRecord
+                                                                              .reference
+                                                                              .update({
+                                                                            ...mapToFirestore(
+                                                                              {
+                                                                                'quantity': FieldValue.increment(-(1)),
+                                                                              },
+                                                                            ),
+                                                                          });
+                                                                          await showDialog(
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (alertDialogContext) {
+                                                                              return AlertDialog(
+                                                                                title: Text('Producto añadido!'),
+                                                                                content: Text('Se ha añadido ${gridViewInventoryRecord.productName} al carrito!'),
+                                                                                actions: [
+                                                                                  TextButton(
+                                                                                    onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                    child: Text('Ok'),
+                                                                                  ),
+                                                                                ],
+                                                                              );
+                                                                            },
+                                                                          );
+
+                                                                          context
+                                                                              .goNamed(
+                                                                            'Inventario',
+                                                                            extra: <String,
+                                                                                dynamic>{
+                                                                              kTransitionInfoKey: TransitionInfo(
+                                                                                hasTransition: true,
+                                                                                transitionType: PageTransitionType.fade,
+                                                                                duration: Duration(milliseconds: 0),
+                                                                              ),
+                                                                            },
+                                                                          );
+                                                                        }
+                                                                      },
+                                                                      text: '',
+                                                                      icon:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .add_shopping_cart_outlined,
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primary,
+                                                                        size:
+                                                                            18.0,
+                                                                      ),
+                                                                      options:
+                                                                          FFButtonOptions(
+                                                                        width:
+                                                                            20.0,
+                                                                        height:
+                                                                            40.0,
+                                                                        padding: EdgeInsetsDirectional.fromSTEB(
                                                                             0.0,
                                                                             0.0,
                                                                             0.0,
                                                                             0.0),
-                                                                    iconPadding:
-                                                                        EdgeInsetsDirectional.fromSTEB(
+                                                                        iconPadding: EdgeInsetsDirectional.fromSTEB(
                                                                             5.0,
                                                                             2.0,
                                                                             0.0,
                                                                             2.0),
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .sideBarMenu,
-                                                                    textStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .displaySmall
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Poppins',
-                                                                          fontSize:
-                                                                              22.0,
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .sideBarMenu,
+                                                                        textStyle: FlutterFlowTheme.of(context)
+                                                                            .displaySmall
+                                                                            .override(
+                                                                              fontFamily: 'Poppins',
+                                                                              fontSize: 22.0,
+                                                                            ),
+                                                                        elevation:
+                                                                            2.0,
+                                                                        borderSide:
+                                                                            BorderSide(
+                                                                          color:
+                                                                              Colors.transparent,
+                                                                          width:
+                                                                              1.0,
                                                                         ),
-                                                                    elevation:
-                                                                        2.0,
-                                                                    borderSide:
-                                                                        BorderSide(
-                                                                      color: Colors
-                                                                          .transparent,
-                                                                      width:
-                                                                          1.0,
-                                                                    ),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8.0),
-                                                                  ),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(8.0),
+                                                                      ),
+                                                                    );
+                                                                  },
                                                                 ),
                                                               ),
                                                             ),
@@ -747,6 +857,47 @@ class _InventarioWidgetState extends State<InventarioWidget> {
                                                         ),
                                                       ),
                                                     ),
+                                                    Expanded(
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    10.0,
+                                                                    5.0,
+                                                                    10.0,
+                                                                    5.0),
+                                                        child: Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          5.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                              child: Text(
+                                                                '${gridViewInventoryRecord.quantity.toString()} en stock!',
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodySmall
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Poppins',
+                                                                      fontSize:
+                                                                          8.0,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
                                                   ],
                                                 ),
                                               );
@@ -761,6 +912,7 @@ class _InventarioWidgetState extends State<InventarioWidget> {
                                         builder: (context) {
                                           final nombreprod = _model
                                               .simpleSearchResults
+                                              .where((e) => e.quantity > 0)
                                               .toList();
                                           return GridView.builder(
                                             padding: EdgeInsets.zero,
@@ -957,77 +1109,159 @@ class _InventarioWidgetState extends State<InventarioWidget> {
                                                                             0.0,
                                                                             1.0),
                                                                 child:
-                                                                    FFButtonWidget(
-                                                                  onPressed:
-                                                                      () async {
-                                                                    await CartRecord
-                                                                        .collection
-                                                                        .doc()
-                                                                        .set(
-                                                                            createCartRecordData(
-                                                                          total:
-                                                                              functions.sumaPrecios2(nombreprodItem.price),
-                                                                          uid:
-                                                                              currentUserUid,
-                                                                          cartProductName:
-                                                                              '',
-                                                                          price:
-                                                                              nombreprodItem.price,
-                                                                          quantity:
-                                                                              nombreprodItem.quantity,
-                                                                        ));
-                                                                  },
-                                                                  text: '',
-                                                                  icon: Icon(
-                                                                    Icons
-                                                                        .add_shopping_cart_outlined,
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primary,
-                                                                    size: 20.0,
+                                                                    FutureBuilder<
+                                                                        int>(
+                                                                  future:
+                                                                      queryCartRecordCount(
+                                                                    queryBuilder: (cartRecord) =>
+                                                                        cartRecord
+                                                                            .where(
+                                                                              'cartProductName',
+                                                                              isEqualTo: nombreprodItem.productName,
+                                                                            )
+                                                                            .where(
+                                                                              'uid',
+                                                                              isEqualTo: currentUserUid,
+                                                                            ),
                                                                   ),
-                                                                  options:
-                                                                      FFButtonOptions(
-                                                                    width: 20.0,
-                                                                    height:
-                                                                        40.0,
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
+                                                                  builder: (context,
+                                                                      snapshot) {
+                                                                    // Customize what your widget looks like when it's loading.
+                                                                    if (!snapshot
+                                                                        .hasData) {
+                                                                      return Center(
+                                                                        child:
+                                                                            SizedBox(
+                                                                          width:
+                                                                              50.0,
+                                                                          height:
+                                                                              50.0,
+                                                                          child:
+                                                                              CircularProgressIndicator(
+                                                                            valueColor:
+                                                                                AlwaysStoppedAnimation<Color>(
+                                                                              FlutterFlowTheme.of(context).primary,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      );
+                                                                    }
+                                                                    int buttonCount =
+                                                                        snapshot
+                                                                            .data!;
+                                                                    return FFButtonWidget(
+                                                                      onPressed:
+                                                                          () async {
+                                                                        if (buttonCount >
+                                                                            0) {
+                                                                          await showDialog(
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (alertDialogContext) {
+                                                                              return AlertDialog(
+                                                                                title: Text('Producto ya existe!'),
+                                                                                content: Text('Este producto ya se encuentra en el carrito!'),
+                                                                                actions: [
+                                                                                  TextButton(
+                                                                                    onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                    child: Text('Ok'),
+                                                                                  ),
+                                                                                ],
+                                                                              );
+                                                                            },
+                                                                          );
+                                                                        } else {
+                                                                          await CartRecord
+                                                                              .collection
+                                                                              .doc()
+                                                                              .set(createCartRecordData(
+                                                                                total: functions.sumaPrecios2(nombreprodItem.price),
+                                                                                uid: currentUserUid,
+                                                                                cartProductName: nombreprodItem.productName,
+                                                                                price: nombreprodItem.price,
+                                                                                quantity: 1,
+                                                                              ));
+                                                                          await showDialog(
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (alertDialogContext) {
+                                                                              return AlertDialog(
+                                                                                title: Text('Producto añadido!'),
+                                                                                content: Text('Se ha añadido ${nombreprodItem.productName} al carrito!'),
+                                                                                actions: [
+                                                                                  TextButton(
+                                                                                    onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                    child: Text('Ok'),
+                                                                                  ),
+                                                                                ],
+                                                                              );
+                                                                            },
+                                                                          );
+
+                                                                          context
+                                                                              .goNamed(
+                                                                            'Inventario',
+                                                                            extra: <String,
+                                                                                dynamic>{
+                                                                              kTransitionInfoKey: TransitionInfo(
+                                                                                hasTransition: true,
+                                                                                transitionType: PageTransitionType.fade,
+                                                                                duration: Duration(milliseconds: 0),
+                                                                              ),
+                                                                            },
+                                                                          );
+                                                                        }
+                                                                      },
+                                                                      text: '',
+                                                                      icon:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .add_shopping_cart_outlined,
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primary,
+                                                                        size:
+                                                                            20.0,
+                                                                      ),
+                                                                      options:
+                                                                          FFButtonOptions(
+                                                                        width:
+                                                                            20.0,
+                                                                        height:
+                                                                            40.0,
+                                                                        padding: EdgeInsetsDirectional.fromSTEB(
                                                                             0.0,
                                                                             0.0,
                                                                             0.0,
                                                                             0.0),
-                                                                    iconPadding:
-                                                                        EdgeInsetsDirectional.fromSTEB(
+                                                                        iconPadding: EdgeInsetsDirectional.fromSTEB(
                                                                             5.0,
                                                                             2.0,
                                                                             0.0,
                                                                             2.0),
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .sideBarMenu,
-                                                                    textStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .displaySmall
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Poppins',
-                                                                          fontSize:
-                                                                              22.0,
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .sideBarMenu,
+                                                                        textStyle: FlutterFlowTheme.of(context)
+                                                                            .displaySmall
+                                                                            .override(
+                                                                              fontFamily: 'Poppins',
+                                                                              fontSize: 22.0,
+                                                                            ),
+                                                                        elevation:
+                                                                            2.0,
+                                                                        borderSide:
+                                                                            BorderSide(
+                                                                          color:
+                                                                              Colors.transparent,
+                                                                          width:
+                                                                              1.0,
                                                                         ),
-                                                                    elevation:
-                                                                        2.0,
-                                                                    borderSide:
-                                                                        BorderSide(
-                                                                      color: Colors
-                                                                          .transparent,
-                                                                      width:
-                                                                          1.0,
-                                                                    ),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8.0),
-                                                                  ),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(8.0),
+                                                                      ),
+                                                                    );
+                                                                  },
                                                                 ),
                                                               ),
                                                             ),
@@ -1082,6 +1316,47 @@ class _InventarioWidgetState extends State<InventarioWidget> {
                       ],
                     ),
                   ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        context.pushNamed('Carrito');
+                      },
+                      child: Icon(
+                        Icons.shopping_cart,
+                        color: FlutterFlowTheme.of(context).text,
+                        size: 24.0,
+                      ),
+                    ),
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        context.pushNamed('Carrito');
+                      },
+                      child: Text(
+                        'Ver Carrito',
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Poppins',
+                              color: FlutterFlowTheme.of(context).text,
+                              fontSize: 15.0,
+                              decoration: TextDecoration.underline,
+                            ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Padding(

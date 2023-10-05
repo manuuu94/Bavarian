@@ -23,9 +23,6 @@ class InventarioEditarModel extends FlutterFlowModel<InventarioEditarWidget> {
   // State field(s) for cantidadProducto widget.
   TextEditingController? cantidadProductoController1;
   String? Function(BuildContext, String?)? cantidadProductoController1Validator;
-  // State field(s) for imageURL widget.
-  TextEditingController? imageURLController;
-  String? Function(BuildContext, String?)? imageURLControllerValidator;
   // State field(s) for cantidadProducto widget.
   TextEditingController? cantidadProductoController2;
   String? Function(BuildContext, String?)? cantidadProductoController2Validator;
@@ -38,7 +35,6 @@ class InventarioEditarModel extends FlutterFlowModel<InventarioEditarWidget> {
     nombreProductoController?.dispose();
     descripcionProductoController?.dispose();
     cantidadProductoController1?.dispose();
-    imageURLController?.dispose();
     cantidadProductoController2?.dispose();
   }
 

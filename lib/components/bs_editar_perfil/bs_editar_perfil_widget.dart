@@ -1,9 +1,11 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/components/bs_edita_imagen/bs_edita_imagen_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -37,8 +39,10 @@ class _BsEditarPerfilWidgetState extends State<BsEditarPerfilWidget> {
       await actions.lockOrientation();
     });
 
-    _model.txtEditNameController ??= TextEditingController();
-    _model.txtPhoneController ??= TextEditingController();
+    _model.txtEditNameController ??=
+        TextEditingController(text: currentUserDisplayName);
+    _model.txtPhoneController ??=
+        TextEditingController(text: currentPhoneNumber);
   }
 
   @override
@@ -93,9 +97,12 @@ class _BsEditarPerfilWidgetState extends State<BsEditarPerfilWidget> {
                       builder: (context) => ClipRRect(
                         borderRadius: BorderRadius.circular(10.0),
                         child: Image.network(
-                          currentUserPhoto == ''
-                              ? 'https://demofree.sirv.com/nope-not-here.jpg'
-                              : currentUserPhoto,
+                          valueOrDefault<String>(
+                            currentUserPhoto == ''
+                                ? 'https://demofree.sirv.com/nope-not-here.jpg'
+                                : currentUserPhoto,
+                            'https://demofree.sirv.com/nope-not-here.jpg',
+                          ),
                           width: MediaQuery.sizeOf(context).width * 0.4,
                           height: MediaQuery.sizeOf(context).height * 0.2,
                           fit: BoxFit.cover,
@@ -127,7 +134,7 @@ class _BsEditarPerfilWidgetState extends State<BsEditarPerfilWidget> {
                           },
                         ).then((value) => safeSetState(() {}));
                       },
-                      text: 'Editar URL imagen',
+                      text: 'Cambiar foto URL',
                       options: FFButtonOptions(
                         width: 200.0,
                         height: 40.0,
@@ -159,53 +166,59 @@ class _BsEditarPerfilWidgetState extends State<BsEditarPerfilWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
-                      child: TextFormField(
-                        controller: _model.txtEditNameController,
-                        textCapitalization: TextCapitalization.sentences,
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          hintText: 'Nombre',
-                          hintStyle:
-                              FlutterFlowTheme.of(context).bodySmall.override(
-                                    fontFamily: 'Poppins',
-                                    color: FlutterFlowTheme.of(context).primary,
-                                  ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).sideBarMenu,
-                              width: 1.0,
+                      child: AuthUserStreamWidget(
+                        builder: (context) => TextFormField(
+                          controller: _model.txtEditNameController,
+                          textCapitalization: TextCapitalization.sentences,
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            labelText: 'Nombre',
+                            hintText: 'Nombre',
+                            hintStyle: FlutterFlowTheme.of(context)
+                                .bodySmall
+                                .override(
+                                  fontFamily: 'Poppins',
+                                  color: FlutterFlowTheme.of(context).primary,
+                                ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).sideBarMenu,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1.0,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1.0,
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1.0,
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
-                            borderRadius: BorderRadius.circular(10.0),
                           ),
+                          style: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .override(
+                                fontFamily: 'Poppins',
+                                color: FlutterFlowTheme.of(context).primaryText,
+                              ),
+                          textAlign: TextAlign.center,
+                          validator: _model.txtEditNameControllerValidator
+                              .asValidator(context),
                         ),
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Poppins',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                            ),
-                        textAlign: TextAlign.center,
-                        validator: _model.txtEditNameControllerValidator
-                            .asValidator(context),
                       ),
                     ),
                   ],
@@ -218,50 +231,54 @@ class _BsEditarPerfilWidgetState extends State<BsEditarPerfilWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
-                      child: TextFormField(
-                        controller: _model.txtPhoneController,
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          hintText: 'Teléfono',
-                          hintStyle:
-                              FlutterFlowTheme.of(context).bodySmall.override(
-                                    fontFamily: 'Poppins',
-                                    color: FlutterFlowTheme.of(context).primary,
-                                  ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).sideBarMenu,
-                              width: 1.0,
+                      child: AuthUserStreamWidget(
+                        builder: (context) => TextFormField(
+                          controller: _model.txtPhoneController,
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            labelText: 'Teléfono',
+                            hintText: 'Teléfono',
+                            hintStyle: FlutterFlowTheme.of(context)
+                                .bodySmall
+                                .override(
+                                  fontFamily: 'Poppins',
+                                  color: FlutterFlowTheme.of(context).primary,
+                                ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).sideBarMenu,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1.0,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1.0,
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1.0,
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
-                            borderRadius: BorderRadius.circular(10.0),
                           ),
+                          style: FlutterFlowTheme.of(context).bodyMedium,
+                          textAlign: TextAlign.center,
+                          keyboardType: TextInputType.number,
+                          validator: _model.txtPhoneControllerValidator
+                              .asValidator(context),
                         ),
-                        style: FlutterFlowTheme.of(context).bodyMedium,
-                        textAlign: TextAlign.center,
-                        keyboardType: TextInputType.number,
-                        validator: _model.txtPhoneControllerValidator
-                            .asValidator(context),
                       ),
                     ),
                   ],
@@ -279,9 +296,76 @@ class _BsEditarPerfilWidgetState extends State<BsEditarPerfilWidget> {
                           EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 44.0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          context.goNamed('Perfil');
+                          if ((_model.txtEditNameController.text != '') &&
+                              (_model.txtPhoneController.text != '')) {
+                            var confirmDialogResponse = await showDialog<bool>(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: Text('Confirmar'),
+                                      content: Text(
+                                          'Estás seguro de querer guardar los cambios?'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () => Navigator.pop(
+                                              alertDialogContext, false),
+                                          child: Text('Cancelar'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () => Navigator.pop(
+                                              alertDialogContext, true),
+                                          child: Text('Confirmar'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ) ??
+                                false;
+                            if (confirmDialogResponse) {
+                              await currentUserReference!
+                                  .update(createUsersRecordData(
+                                displayName: _model.txtEditNameController.text,
+                                phoneNumber: _model.txtPhoneController.text,
+                              ));
+                              await showDialog(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: Text('Datos actualizados'),
+                                    content: Text(
+                                        'Se ha guardado sus datos con éxito!'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(alertDialogContext),
+                                        child: Text('Ok'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                          } else {
+                            await showDialog(
+                              context: context,
+                              builder: (alertDialogContext) {
+                                return AlertDialog(
+                                  title: Text('Datos vacíos!'),
+                                  content: Text(
+                                      'Por favor, ingrese todos lo campos!'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(alertDialogContext),
+                                      child: Text('Ok'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
                         },
-                        text: '',
+                        text: 'Guardar',
                         icon: Icon(
                           Icons.save_outlined,
                           size: 15.0,

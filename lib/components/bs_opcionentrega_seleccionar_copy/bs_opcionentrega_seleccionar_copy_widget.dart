@@ -91,86 +91,128 @@ class _BsOpcionentregaSeleccionarCopyWidgetState
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              StreamBuilder<List<AddressesRecord>>(
-                stream: queryAddressesRecord(
-                  queryBuilder: (addressesRecord) => addressesRecord.where(
-                    'uid',
-                    isEqualTo: currentUserUid,
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Direcciones',
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          fontFamily: 'Poppins',
+                          color: FlutterFlowTheme.of(context).text,
+                        ),
                   ),
-                ),
-                builder: (context, snapshot) {
-                  // Customize what your widget looks like when it's loading.
-                  if (!snapshot.hasData) {
-                    return Center(
-                      child: SizedBox(
-                        width: 50.0,
-                        height: 50.0,
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            FlutterFlowTheme.of(context).primary,
-                          ),
-                        ),
-                      ),
-                    );
-                  }
-                  List<AddressesRecord> listViewAddressesRecordList =
-                      snapshot.data!;
-                  return ListView.builder(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    itemCount: listViewAddressesRecordList.length,
-                    itemBuilder: (context, listViewIndex) {
-                      final listViewAddressesRecord =
-                          listViewAddressesRecordList[listViewIndex];
-                      return Slidable(
-                        endActionPane: ActionPane(
-                          motion: const ScrollMotion(),
-                          extentRatio: 0.25,
-                          children: [
-                            SlidableAction(
-                              label: 'Borrar',
-                              backgroundColor: Color(0xFFFF0004),
-                              icon: Icons.delete,
-                              onPressed: (_) async {
-                                await listViewAddressesRecord.reference
-                                    .delete();
-                              },
+                ],
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                child: StreamBuilder<List<AddressesRecord>>(
+                  stream: queryAddressesRecord(
+                    queryBuilder: (addressesRecord) => addressesRecord.where(
+                      'uid',
+                      isEqualTo: currentUserUid,
+                    ),
+                  ),
+                  builder: (context, snapshot) {
+                    // Customize what your widget looks like when it's loading.
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: SizedBox(
+                          width: 50.0,
+                          height: 50.0,
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              FlutterFlowTheme.of(context).primary,
                             ),
-                          ],
-                        ),
-                        child: ListTile(
-                          title: Text(
-                            listViewAddressesRecord.nameAddress,
-                            style: FlutterFlowTheme.of(context)
-                                .headlineSmall
-                                .override(
-                                  fontFamily: 'Poppins',
-                                  color: FlutterFlowTheme.of(context).text,
-                                ),
                           ),
-                          subtitle: Text(
-                            listViewAddressesRecord.address,
-                            style: FlutterFlowTheme.of(context)
-                                .titleSmall
-                                .override(
-                                  fontFamily: 'Poppins',
-                                  color: FlutterFlowTheme.of(context).text,
-                                ),
-                          ),
-                          trailing: Icon(
-                            Icons.arrow_back_ios,
-                            color: Color(0xFFFF0004),
-                            size: 20.0,
-                          ),
-                          tileColor:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          dense: false,
                         ),
                       );
-                    },
-                  );
-                },
+                    }
+                    List<AddressesRecord> listViewAddressesRecordList =
+                        snapshot.data!;
+                    return ListView.builder(
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount: listViewAddressesRecordList.length,
+                      itemBuilder: (context, listViewIndex) {
+                        final listViewAddressesRecord =
+                            listViewAddressesRecordList[listViewIndex];
+                        return Slidable(
+                          endActionPane: ActionPane(
+                            motion: const ScrollMotion(),
+                            extentRatio: 0.25,
+                            children: [
+                              SlidableAction(
+                                label: 'Borrar',
+                                backgroundColor: Color(0xFFFF0004),
+                                icon: Icons.delete,
+                                onPressed: (_) async {
+                                  var confirmDialogResponse = await showDialog<
+                                          bool>(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return AlertDialog(
+                                            title: Text('Eliminar dirección'),
+                                            content: Text(
+                                                'Desea eliminar esta dirección?'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext, false),
+                                                child: Text('Cancelar'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext, true),
+                                                child: Text('Eliminar'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      ) ??
+                                      false;
+                                  if (confirmDialogResponse) {
+                                    await listViewAddressesRecord.reference
+                                        .delete();
+                                  }
+                                },
+                              ),
+                            ],
+                          ),
+                          child: ListTile(
+                            title: Text(
+                              listViewAddressesRecord.nameAddress,
+                              style: FlutterFlowTheme.of(context)
+                                  .headlineSmall
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    color: FlutterFlowTheme.of(context).text,
+                                  ),
+                            ),
+                            subtitle: Text(
+                              listViewAddressesRecord.address,
+                              style: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    color: FlutterFlowTheme.of(context).text,
+                                  ),
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_back_ios,
+                              color: Color(0xFFFF0004),
+                              size: 20.0,
+                            ),
+                            tileColor: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            dense: false,
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
               Row(
                 mainAxisSize: MainAxisSize.max,

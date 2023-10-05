@@ -40,6 +40,12 @@ class FFAppState extends ChangeNotifier {
   set CostoTotal(double _value) {
     _CostoTotal = _value;
   }
+
+  String _validatePass = '';
+  String get validatePass => _validatePass;
+  set validatePass(String _value) {
+    _validatePass = _value;
+  }
 }
 
 LatLng? _latLngFromString(String? val) {

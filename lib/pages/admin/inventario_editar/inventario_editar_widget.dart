@@ -44,8 +44,13 @@ class _InventarioEditarWidgetState extends State<InventarioEditarWidget> {
         TextEditingController(text: widget.producto?.productDescription);
     _model.cantidadProductoController1 ??=
         TextEditingController(text: widget.producto?.quantity?.toString());
-    _model.imageURLController ??= TextEditingController();
-    _model.cantidadProductoController2 ??= TextEditingController();
+    _model.cantidadProductoController2 ??= TextEditingController(
+        text: formatNumber(
+      widget.producto?.price,
+      formatType: FormatType.decimal,
+      decimalType: DecimalType.automatic,
+      currency: '₡',
+    ));
   }
 
   @override
@@ -441,122 +446,6 @@ class _InventarioEditarWidgetState extends State<InventarioEditarWidget> {
                         ),
                       ),
                     ],
-                  ),
-                ),
-              ),
-              Flexible(
-                child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(24.0, 20.0, 24.0, 20.0),
-                  child: Container(
-                    width: double.infinity,
-                    height: 60.0,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 5.0,
-                          color: Color(0x4D101213),
-                          offset: Offset(0.0, 2.0),
-                        )
-                      ],
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                5.0, 5.0, 5.0, 5.0),
-                            child: TextFormField(
-                              controller: _model.imageURLController,
-                              onChanged: (_) => EasyDebounce.debounce(
-                                '_model.imageURLController',
-                                Duration(milliseconds: 2000),
-                                () => setState(() {}),
-                              ),
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                labelStyle: FlutterFlowTheme.of(context)
-                                    .bodySmall
-                                    .override(
-                                      fontFamily: 'Poppins',
-                                      color: Color(0xFF3E3E3E),
-                                    ),
-                                hintText: 'Enlace de imagen',
-                                hintStyle: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Lexend Deca',
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      fontSize: 14.0,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 0.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 0.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 0.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 0.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
-                                filled: true,
-                                fillColor: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                suffixIcon: _model
-                                        .imageURLController!.text.isNotEmpty
-                                    ? InkWell(
-                                        onTap: () async {
-                                          _model.imageURLController?.clear();
-                                          setState(() {});
-                                        },
-                                        child: Icon(
-                                          Icons.clear,
-                                          color: Color(0xFF757575),
-                                          size: 22.0,
-                                        ),
-                                      )
-                                    : null,
-                              ),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Poppins',
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                              textAlign: TextAlign.start,
-                              validator: _model.imageURLControllerValidator
-                                  .asValidator(context),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
                 ),
               ),

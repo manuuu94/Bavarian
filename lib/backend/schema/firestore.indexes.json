@@ -1,6 +1,20 @@
 {
   "indexes": [
     {
+      "collectionGroup": "Inventory",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "quantity",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "productName",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
       "collectionGroup": "QuoteRequests",
       "queryScope": "COLLECTION",
       "fields": [

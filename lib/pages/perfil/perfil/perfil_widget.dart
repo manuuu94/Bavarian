@@ -1,4 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/backend/firebase_storage/storage.dart';
 import '/components/bs_editar_perfil/bs_editar_perfil_widget.dart';
 import '/components/bs_opcionentrega_copy/bs_opcionentrega_copy_widget.dart';
 import '/components/menu_lateral/menu_lateral_widget.dart';
@@ -6,7 +8,10 @@ import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/upload_data.dart';
 import '/custom_code/actions/index.dart' as actions;
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -237,22 +242,104 @@ class _PerfilWidgetState extends State<PerfilWidget>
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   AuthUserStreamWidget(
-                                    builder: (context) => ClipRRect(
-                                      borderRadius: BorderRadius.circular(0.0),
-                                      child: Image.network(
-                                        currentUserPhoto == ''
-                                            ? 'https://demofree.sirv.com/nope-not-here.jpg'
-                                            : currentUserPhoto,
-                                        width: 120.0,
-                                        height: 150.0,
-                                        fit: BoxFit.cover,
-                                        errorBuilder:
-                                            (context, error, stackTrace) =>
-                                                Image.asset(
-                                          'assets/images/error_image.png',
+                                    builder: (context) => InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        final selectedMedia =
+                                            await selectMediaWithSourceBottomSheet(
+                                          context: context,
+                                          allowPhoto: true,
+                                        );
+                                        if (selectedMedia != null &&
+                                            selectedMedia.every((m) =>
+                                                validateFileFormat(
+                                                    m.storagePath, context))) {
+                                          setState(() =>
+                                              _model.isDataUploading = true);
+                                          var selectedUploadedFiles =
+                                              <FFUploadedFile>[];
+
+                                          var downloadUrls = <String>[];
+                                          try {
+                                            selectedUploadedFiles =
+                                                selectedMedia
+                                                    .map((m) => FFUploadedFile(
+                                                          name: m.storagePath
+                                                              .split('/')
+                                                              .last,
+                                                          bytes: m.bytes,
+                                                          height: m.dimensions
+                                                              ?.height,
+                                                          width: m.dimensions
+                                                              ?.width,
+                                                          blurHash: m.blurHash,
+                                                        ))
+                                                    .toList();
+
+                                            downloadUrls = (await Future.wait(
+                                              selectedMedia.map(
+                                                (m) async => await uploadData(
+                                                    m.storagePath, m.bytes),
+                                              ),
+                                            ))
+                                                .where((u) => u != null)
+                                                .map((u) => u!)
+                                                .toList();
+                                          } finally {
+                                            _model.isDataUploading = false;
+                                          }
+                                          if (selectedUploadedFiles.length ==
+                                                  selectedMedia.length &&
+                                              downloadUrls.length ==
+                                                  selectedMedia.length) {
+                                            setState(() {
+                                              _model.uploadedLocalFile =
+                                                  selectedUploadedFiles.first;
+                                              _model.uploadedFileUrl =
+                                                  downloadUrls.first;
+                                            });
+                                          } else {
+                                            setState(() {});
+                                            return;
+                                          }
+                                        }
+
+                                        await currentUserReference!
+                                            .update(createUsersRecordData(
+                                          photoUrl: _model.uploadedFileUrl,
+                                        ));
+                                      },
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        child: CachedNetworkImage(
+                                          fadeInDuration:
+                                              Duration(milliseconds: 500),
+                                          fadeOutDuration:
+                                              Duration(milliseconds: 500),
+                                          imageUrl: valueOrDefault<String>(
+                                            (currentUserPhoto == null ||
+                                                        currentUserPhoto ==
+                                                            '') ||
+                                                    (currentUserPhoto == '')
+                                                ? 'https://demofree.sirv.com/nope-not-here.jpg'
+                                                : currentUserPhoto,
+                                            'https://demofree.sirv.com/nope-not-here.jpg',
+                                          ),
                                           width: 120.0,
                                           height: 150.0,
-                                          fit: BoxFit.cover,
+                                          fit: BoxFit.contain,
+                                          errorWidget:
+                                              (context, error, stackTrace) =>
+                                                  Image.asset(
+                                            'assets/images/error_image.png',
+                                            width: 120.0,
+                                            height: 150.0,
+                                            fit: BoxFit.contain,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -261,6 +348,16 @@ class _PerfilWidgetState extends State<PerfilWidget>
                               ),
                             ],
                           ),
+                        ),
+                        Text(
+                          'Toca la imagen para cargar desde galería',
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Poppins',
+                                    color: FlutterFlowTheme.of(context).text,
+                                    fontSize: 9.0,
+                                    decoration: TextDecoration.underline,
+                                  ),
                         ),
                         Container(
                           width: MediaQuery.sizeOf(context).width * 1.0,
@@ -278,20 +375,24 @@ class _PerfilWidgetState extends State<PerfilWidget>
                                 20.0, 20.0, 20.0, 20.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Flexible(
-                                  child: Text(
-                                    'Nombre: ',
-                                    textAlign: TextAlign.start,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Poppins',
-                                          color:
-                                              FlutterFlowTheme.of(context).text,
-                                          fontSize: 20.0,
-                                        ),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 50.0, 0.0),
+                                    child: Text(
+                                      'Nombre: ',
+                                      textAlign: TextAlign.start,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            color: FlutterFlowTheme.of(context)
+                                                .text,
+                                            fontSize: 17.0,
+                                          ),
+                                    ),
                                   ),
                                 ),
                                 Flexible(
@@ -304,7 +405,7 @@ class _PerfilWidgetState extends State<PerfilWidget>
                                           .override(
                                             fontFamily: 'Poppins',
                                             color: FlutterFlowTheme.of(context)
-                                                .text,
+                                                .grayIcon,
                                             fontSize: 20.0,
                                           ),
                                     ),
@@ -330,31 +431,36 @@ class _PerfilWidgetState extends State<PerfilWidget>
                                 20.0, 20.0, 20.0, 20.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Flexible(
-                                  child: Text(
-                                    'Correo: ',
-                                    textAlign: TextAlign.start,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Poppins',
-                                          color:
-                                              FlutterFlowTheme.of(context).text,
-                                          fontSize: 20.0,
-                                        ),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 62.0, 0.0),
+                                    child: Text(
+                                      'Correo: ',
+                                      textAlign: TextAlign.start,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            color: FlutterFlowTheme.of(context)
+                                                .text,
+                                            fontSize: 17.0,
+                                          ),
+                                    ),
                                   ),
                                 ),
                                 Flexible(
                                   child: Text(
                                     currentUserEmail,
+                                    textAlign: TextAlign.start,
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
                                           fontFamily: 'Poppins',
-                                          color:
-                                              FlutterFlowTheme.of(context).text,
+                                          color: FlutterFlowTheme.of(context)
+                                              .grayIcon,
                                           fontSize: 20.0,
                                         ),
                                   ),
@@ -380,61 +486,13 @@ class _PerfilWidgetState extends State<PerfilWidget>
                                 20.0, 20.0, 20.0, 20.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text(
-                                  'Tel #: ',
-                                  textAlign: TextAlign.start,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Poppins',
-                                        color:
-                                            FlutterFlowTheme.of(context).text,
-                                        fontSize: 20.0,
-                                      ),
-                                ),
-                                AuthUserStreamWidget(
-                                  builder: (context) => Text(
-                                    currentPhoneNumber,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Poppins',
-                                          color:
-                                              FlutterFlowTheme.of(context).text,
-                                          fontSize: 20.0,
-                                        ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 10.0),
-                          child: Container(
-                            width: MediaQuery.sizeOf(context).width * 1.0,
-                            height: 100.0,
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 4.0,
-                                  color: Color(0x44E367AE),
-                                  offset: Offset(0.0, 2.0),
-                                )
-                              ],
-                            ),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  20.0, 20.0, 20.0, 20.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Ced: ',
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 80.0, 0.0),
+                                  child: Text(
+                                    'Tel #: ',
                                     textAlign: TextAlign.start,
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
@@ -442,25 +500,25 @@ class _PerfilWidgetState extends State<PerfilWidget>
                                           fontFamily: 'Poppins',
                                           color:
                                               FlutterFlowTheme.of(context).text,
+                                          fontSize: 17.0,
+                                        ),
+                                  ),
+                                ),
+                                AuthUserStreamWidget(
+                                  builder: (context) => Text(
+                                    currentPhoneNumber,
+                                    textAlign: TextAlign.start,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Poppins',
+                                          color: FlutterFlowTheme.of(context)
+                                              .grayIcon,
                                           fontSize: 20.0,
                                         ),
                                   ),
-                                  AuthUserStreamWidget(
-                                    builder: (context) => Text(
-                                      valueOrDefault(
-                                          currentUserDocument?.id, ''),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Poppins',
-                                            color: FlutterFlowTheme.of(context)
-                                                .text,
-                                            fontSize: 20.0,
-                                          ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -549,7 +607,7 @@ class _PerfilWidgetState extends State<PerfilWidget>
                                   },
                                 ).then((value) => safeSetState(() {}));
                               },
-                              text: 'Mis Direcciones',
+                              text: 'Direcciones',
                               icon: Icon(
                                 Icons.map_outlined,
                                 size: 15.0,

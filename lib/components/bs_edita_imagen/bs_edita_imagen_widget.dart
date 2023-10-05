@@ -91,8 +91,8 @@ class _BsEditaImagenWidgetState extends State<BsEditaImagenWidget> {
                       controller: _model.txtURLController,
                       obscureText: false,
                       decoration: InputDecoration(
-                        hintText: 'Url imagen',
-                        hintStyle: FlutterFlowTheme.of(context).bodySmall,
+                        labelText: 'URL de foto',
+                        hintText: 'URL de la foto',
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: FlutterFlowTheme.of(context).sideBarMenu,
@@ -136,6 +136,7 @@ class _BsEditaImagenWidgetState extends State<BsEditaImagenWidget> {
                       ),
                       style: FlutterFlowTheme.of(context).bodyMedium,
                       textAlign: TextAlign.center,
+                      keyboardType: TextInputType.url,
                       validator:
                           _model.txtURLControllerValidator.asValidator(context),
                     ),
@@ -152,11 +153,53 @@ class _BsEditaImagenWidgetState extends State<BsEditaImagenWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 44.0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      await currentUserReference!.update(createUsersRecordData(
-                        photoUrl: _model.txtURLController.text,
-                      ));
+                      var confirmDialogResponse = await showDialog<bool>(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                title: Text('Confirmar'),
+                                content: Text(
+                                    'Estás seguro de querer guardar los cambios?'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(
+                                        alertDialogContext, false),
+                                    child: Text('Cancelar'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext, true),
+                                    child: Text('Confirmar'),
+                                  ),
+                                ],
+                              );
+                            },
+                          ) ??
+                          false;
+                      if (confirmDialogResponse) {
+                        await currentUserReference!
+                            .update(createUsersRecordData(
+                          photoUrl: _model.txtURLController.text,
+                        ));
+                        await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: Text('URL guardado'),
+                              content: Text('Se ha guardado el URL nuevo!'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: Text('Ok'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
                     },
-                    text: '',
+                    text: 'Guardar',
                     icon: Icon(
                       Icons.save_outlined,
                       size: 15.0,
